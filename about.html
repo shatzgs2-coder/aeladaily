@@ -1,0 +1,672 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Story — AELADAILY · Natural Daily</title>
+    <meta name="description" content="The story of AELADAILY: natural materials, wabi-sabi aesthetics, and handcrafted home decor made for daily life.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Italianno&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-about">
+
+<!-- ============ MOBILE MENU OVERLAY ============ -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <button class="mobile-close" onclick="toggleMobileMenu()" aria-label="Close menu">&times;</button>
+        <div class="mobile-logo">
+            <span class="logo-wordmark">aeladaily</span>
+            <span class="logo-subtitle">Natural Daily</span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="collection.html" class="mobile-link">Shop All</a>
+            <div class="mobile-submenu">
+                <span class="mobile-submenu-title">Collections</span>
+                <a href="collection.html?cat=linen" class="mobile-sublink">Linen &amp; Textiles</a>
+                <a href="collection.html?cat=woven" class="mobile-sublink">Woven Decor</a>
+                <a href="collection.html?cat=kitchen" class="mobile-sublink">Kitchen Naturals</a>
+                <a href="collection.html?cat=aromatherapy" class="mobile-sublink">Aromatherapy</a>
+                <a href="collection.html?cat=lifestyle" class="mobile-sublink">Lifestyle</a>
+                <a href="collection.html?cat=sale" class="mobile-sublink sale">Sale</a>
+            </div>
+            <a href="about.html" class="mobile-link">Our Story</a>
+            <a href="#" class="mobile-link">Journal</a>
+            <a href="#" class="mobile-link">Contact</a>
+        </nav>
+        <div class="mobile-footer">
+            <a href="#">Account</a>
+            <a href="#">Cart (2)</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-content">
+        <button class="overlay-close" onclick="toggleSearch()" aria-label="Close search">&times;</button>
+        <p class="search-label">Search</p>
+        <input type="text" placeholder="What are you looking for?" class="search-input" id="searchInput">
+        <div class="search-suggestions">
+            <p class="search-hint">Popular searches</p>
+            <div class="search-tags">
+                <button class="search-tag" onclick="searchFor('Tablecloth')">Tablecloth</button>
+                <button class="search-tag" onclick="searchFor('Basket')">Basket</button>
+                <button class="search-tag" onclick="searchFor('Candle')">Candle</button>
+                <button class="search-tag" onclick="searchFor('Cushion')">Cushion</button>
+                <button class="search-tag" onclick="searchFor('Macrame')">Macrame</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3 class="cart-title">Your Cart <span class="cart-count-inline">(2)</span></h3>
+        <button class="overlay-close small" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-free-ship-bar">
+        <div class="free-ship-progress" style="width: 100%;"></div>
+        <p class="free-ship-text">You've unlocked free shipping! &#127881;</p>
+    </div>
+    <div class="cart-items">
+        <div class="cart-item">
+            <div class="cart-item-img linen-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><rect x="8" y="14" width="44" height="32" rx="2" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="8" y1="20" x2="52" y2="20" stroke="#8B7355" stroke-width="0.8"/><line x1="8" y1="40" x2="52" y2="40" stroke="#8B7355" stroke-width="0.8"/><circle cx="30" cy="30" r="8" fill="#D4C5A9" opacity="0.4"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Cotton Linen Tablecloth with Tassels</p>
+                <p class="cart-item-variant">Size: 140&times;200cm &middot; Natural White</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;23.10</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+        <div class="cart-item">
+            <div class="cart-item-img woven-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><path d="M15 12h30v40H15z" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="15" y1="20" x2="45" y2="20" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="28" x2="45" y2="28" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="36" x2="45" y2="36" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="44" x2="45" y2="44" stroke="#8B7355" stroke-width="0.6"/><circle cx="30" cy="32" r="6" fill="#D4C5A9" opacity="0.3"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Macrame Wall Hanging &mdash; Large</p>
+                <p class="cart-item-variant">Color: Natural &middot; 60&times;100cm</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;33.80</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-note">
+            <input type="checkbox" id="giftWrap" class="cart-checkbox">
+            <label for="giftWrap">Add gift wrapping <span class="gift-price">(+&euro;3.50)</span></label>
+        </div>
+        <div class="cart-summary">
+            <span>Subtotal</span>
+            <span>&euro;56.90</span>
+        </div>
+        <div class="cart-summary">
+            <span>Shipping</span>
+            <span class="free-shipping">FREE &#10003;</span>
+        </div>
+        <div class="cart-summary total">
+            <span>Total</span>
+            <span>&euro;56.90</span>
+        </div>
+        <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+        <button class="btn-primary btn-full" onclick="window.location.href='#'">Checkout &rarr;</button>
+        <button class="btn-text btn-full" onclick="toggleCart()">Continue Shopping</button>
+    </div>
+</aside>
+
+<!-- ============ ANNOUNCEMENT BAR ============ -->
+<div class="announcement-bar" id="announcementBar">
+    <div class="announcement-track">
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+    </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+    <div class="header-inner">
+        <nav class="nav-left">
+            <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-dropdown">
+                <a href="collection.html" class="nav-link">Shop <span class="nav-caret">&#8964;</span></a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Collections</h5>
+                            <a href="collection.html?cat=linen" class="mega-link">Linen &amp; Textiles</a>
+                            <a href="collection.html?cat=woven" class="mega-link">Woven Decor</a>
+                            <a href="collection.html?cat=kitchen" class="mega-link">Kitchen Naturals</a>
+                            <a href="collection.html?cat=aromatherapy" class="mega-link">Aromatherapy</a>
+                            <a href="collection.html?cat=lifestyle" class="mega-link">Lifestyle</a>
+                        </div>
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Featured</h5>
+                            <a href="collection.html?cat=sale" class="mega-link sale">Sale</a>
+                            <a href="#" class="mega-link">New Arrivals</a>
+                            <a href="#" class="mega-link">Bestsellers</a>
+                            <a href="#" class="mega-link">Gift Cards</a>
+                            <a href="#" class="mega-link">Gift Guides</a>
+                        </div>
+                        <div class="mega-feature">
+                            <div class="mega-feature-img autumn-bg">
+                                <svg viewBox="0 0 200 120" width="100%" height="100%"><rect width="200" height="120" fill="#E8E0D5"/><circle cx="100" cy="60" r="30" fill="#D4C5A9" opacity="0.4"/><text x="100" y="65" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" font-style="italic">Autumn Edit</text></svg>
+                            </div>
+                            <p class="mega-feature-text">Cozy textures for the season</p>
+                            <a href="collection.html" class="mega-feature-link">Discover &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="about.html" class="nav-link active">Our Story</a>
+            <a href="#" class="nav-link">Journal</a>
+        </nav>
+        <div class="logo-center">
+            <a href="index.html" class="logo">
+                <span class="logo-wordmark">aeladaily</span>
+                <span class="logo-subtitle">Natural Daily</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+            <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <span class="cart-count">2</span>
+            </button>
+        </div>
+    </div>
+    <div class="category-bar">
+        <div class="category-inner">
+            <a href="collection.html?cat=linen" class="cat-link">Linen &amp; Textiles</a>
+            <a href="collection.html?cat=woven" class="cat-link">Woven Decor</a>
+            <a href="collection.html?cat=kitchen" class="cat-link">Kitchen Naturals</a>
+            <a href="collection.html?cat=aromatherapy" class="cat-link">Aromatherapy</a>
+            <a href="collection.html?cat=lifestyle" class="cat-link">Lifestyle</a>
+            <span class="cat-divider"></span>
+            <a href="collection.html?cat=new" class="cat-link">New In</a>
+            <a href="collection.html?cat=sale" class="cat-link sale-link">Sale</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============ ABOUT HERO ============ -->
+<section class="about-hero">
+    <div class="about-hero-bg">
+        <div class="about-hero-texture"></div>
+        <div class="container">
+            <div class="about-hero-content">
+                <p class="about-hero-eyebrow"><span class="hero-eyebrow-line"></span> Est. 2026 <span class="hero-eyebrow-line"></span></p>
+                <h1 class="about-hero-title">Our <em>Story</em></h1>
+                <p class="about-hero-subtitle">Natural materials. Handcrafted with care. Made for the rituals of everyday life.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BREADCRUMB ============ -->
+<div class="about-breadcrumb">
+    <div class="container">
+        <a href="index.html">Home</a> <span class="crumb-sep">/</span> <span class="crumb-current">Our Story</span>
+    </div>
+</div>
+
+<!-- ============ PHILOSOPHY SECTION ============ -->
+<section class="section about-philosophy">
+    <div class="container">
+        <div class="about-split">
+            <div class="about-visual">
+                <div class="about-visual-frame">
+                    <svg viewBox="0 0 520 620" width="100%" height="100%">
+                        <rect width="520" height="620" fill="#E8E0D5"/>
+                        <!-- Abstract wabi-sabi vessel -->
+                        <ellipse cx="260" cy="520" rx="170" ry="30" fill="#D4C5A9" opacity="0.4"/>
+                        <path d="M160 280 Q175 200 240 200 Q280 170 310 200 Q380 195 395 280 Q410 350 380 400 Q360 430 260 440 Q160 430 140 400 Q110 350 160 280Z" fill="#8B7355" opacity="0.18"/>
+                        <!-- Branch with leaves -->
+                        <g stroke="#3D3530" stroke-width="1.5" fill="none" opacity="0.3">
+                            <path d="M170 260 Q200 230 230 250"/>
+                            <path d="M200 275 Q230 245 260 265"/>
+                            <path d="M230 290 Q260 260 290 280"/>
+                        </g>
+                        <g fill="#A8B5A0" opacity="0.3">
+                            <ellipse cx="195" cy="235" rx="8" ry="4" transform="rotate(-30 195 235)"/>
+                            <ellipse cx="225" cy="248" rx="8" ry="4" transform="rotate(-30 225 248)"/>
+                            <ellipse cx="255" cy="262" rx="8" ry="4" transform="rotate(-30 255 262)"/>
+                            <ellipse cx="285" cy="276" rx="8" ry="4" transform="rotate(-30 285 276)"/>
+                        </g>
+                        <!-- Texture marks -->
+                        <g stroke="#8B7355" stroke-width="0.6" opacity="0.25">
+                            <path d="M190 240 L185 220 M210 235 L208 212 M230 230 L230 207"/>
+                            <path d="M250 235 L252 212 M270 240 L275 218 M290 245 L295 222 M310 250 L316 228"/>
+                        </g>
+                        <!-- Stamp -->
+                        <circle cx="260" cy="150" r="50" fill="none" stroke="#8B7355" stroke-width="0.8" opacity="0.2"/>
+                        <text x="260" y="148" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" opacity="0.3" font-style="italic">wabi</text>
+                        <text x="260" y="165" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" opacity="0.3" font-style="italic">sabi</text>
+                        <!-- Bottom label -->
+                        <text x="260" y="570" text-anchor="middle" font-family="Jost" font-size="10" fill="#8B7355" opacity="0.2" letter-spacing="4">NATURAL DAILY</text>
+                    </svg>
+                </div>
+                <div class="about-visual-badge">
+                    <span class="story-badge-num">100%</span>
+                    <span class="story-badge-text">Natural<br>Materials</span>
+                </div>
+            </div>
+            <div class="about-text">
+                <span class="section-eyebrow">Our Philosophy</span>
+                <h2 class="section-title story-title">We believe the objects we live with should be <em>honest, natural,</em> and made to last.</h2>
+                <div class="story-body">
+                    <p>The word <strong>aela</strong> comes from an old Germanic root meaning "to nourish." We believe nourishment isn't a luxury reserved for special occasions &mdash; it's a daily practice. Every meal at the table. Every morning cup of tea. Every moment of rest.</p>
+                    <p>AELADAILY draws from <strong>Wabi-Sabi</strong> &mdash; the Japanese aesthetic philosophy that finds beauty in imperfection, simplicity, and the natural aging of materials. A cotton linen tablecloth that softens with each wash. A hand-woven rope basket that tells the story of its maker. A soy wax candle whose scent shifts subtly with the seasons.</p>
+                    <p>We don't chase trends. We make objects that earn their place in your home through daily use &mdash; objects that become more beautiful, not less, as they live with you.</p>
+                </div>
+                <div class="story-values">
+                    <div class="story-value">
+                        <span class="story-value-icon">&#127807;</span>
+                        <span class="story-value-text">Natural</span>
+                    </div>
+                    <div class="story-value">
+                        <span class="story-value-icon">&#9995;</span>
+                        <span class="story-value-text">Artisanal</span>
+                    </div>
+                    <div class="story-value">
+                        <span class="story-value-icon">&#129506;</span>
+                        <span class="story-value-text">Mindful</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ VALUES BANNER ============ -->
+<section class="about-values-banner">
+    <div class="container">
+        <div class="values-banner-grid">
+            <div class="value-banner-item">
+                <div class="value-banner-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M20 5C14 10 8 16 8 24a12 12 0 0024 0c0-8-6-14-12-19z"/><line x1="20" y1="8" x2="20" y2="35"/></svg>
+                </div>
+                <h3>Natural Materials</h3>
+                <p>Cotton linen, beeswax, soy wax, natural wood, cork, sisal. Never synthetic. Never plastic.</p>
+            </div>
+            <div class="value-banner-item">
+                <div class="value-banner-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M28 14q-6 0-12 5T10 30"/><path d="M28 14c0-3.5-3-6.5-7-6.5"/><circle cx="28" cy="14" r="1.2" fill="currentColor"/></svg>
+                </div>
+                <h3>Handcrafted</h3>
+                <p>Every piece is made by hand. No mass production. No factory lines. Just skilled artisans and patient work.</p>
+            </div>
+            <div class="value-banner-item">
+                <div class="value-banner-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 25l5-10h18l5 10"/><path d="M6 25v5h28v-5"/><circle cx="14" cy="30" r="2.5"/><circle cx="26" cy="30" r="2.5"/></svg>
+                </div>
+                <h3>Plastic-Free</h3>
+                <p>100% biodegradable packaging. Recycled paper, natural twine, compostable mailers. Zero plastic, always.</p>
+            </div>
+            <div class="value-banner-item">
+                <div class="value-banner-icon">
+                    <svg width="40" height="40" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="10" y="10" width="20" height="20" rx="3"/><path d="M16 20l3 3 5-5"/></svg>
+                </div>
+                <h3>Made to Last</h3>
+                <p>We design for longevity, not obsolescence. Our products are repairable, reusable, and meant to age gracefully.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ JOURNEY / TIMELINE ============ -->
+<section class="section about-journey">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">How It Began</span>
+            <h2 class="section-title">Our Journey</h2>
+        </div>
+        <div class="timeline">
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2024 &middot; The Idea</span>
+                    <h3 class="timeline-title">A Seed Is Planted</h3>
+                    <p>Living in Germany, surrounded by European craft traditions but frustrated by the flood of disposable, plastic-heavy home goods, we began imagining a different kind of store &mdash; one that sold only natural materials, made by hand, designed to be used every day.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2025 &middot; Sourcing</span>
+                    <h3 class="timeline-title">Finding Our Artisans</h3>
+                    <p>We traveled through China's craft regions &mdash; the cotton linen mills of Shandong, the rope workshops of Yiwu, the soy candle makers of Hangzhou. We selected partners who shared our commitment to natural materials and fair labor practices.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-line"></div>
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">Early 2026 &middot; Building</span>
+                    <h3 class="timeline-title">Brand &amp; Compliance</h3>
+                    <p>We registered our trademark, completed EU compliance (CE marking, REACH, VerpackG/LUCID registration), set up VAT structures, and built our Shopify DTC store. Every detail &mdash; from packaging design to legal pages &mdash; was crafted to reflect our wabi-sabi ethos.</p>
+                </div>
+            </div>
+            <div class="timeline-item">
+                <div class="timeline-marker">
+                    <div class="timeline-dot active"></div>
+                </div>
+                <div class="timeline-content">
+                    <span class="timeline-date">2026 &middot; Launch</span>
+                    <h3 class="timeline-title">AELADAILY Goes Live</h3>
+                    <p>Our first 50 SKUs are here. Cotton linen textiles, hand-woven decor, natural kitchen tools, and aromatherapy. We ship across Europe with plastic-free packaging and a 30-day return policy. This is just the beginning.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ ARTISAN CRAFT SECTION ============ -->
+<section class="section about-craft">
+    <div class="container">
+        <div class="about-split reverse">
+            <div class="about-visual">
+                <div class="about-visual-frame">
+                    <svg viewBox="0 0 520 620" width="100%" height="100%">
+                        <rect width="520" height="620" fill="#F5F1EA"/>
+                        <!-- Hands crafting macrame -->
+                        <ellipse cx="260" cy="540" rx="180" ry="28" fill="#D4C5A9" opacity="0.35"/>
+                        <!-- Macrame pattern -->
+                        <rect x="160" y="60" width="200" height="16" rx="3" fill="#8B7355" opacity="0.3"/>
+                        <g stroke="#8B7355" stroke-width="1.2" fill="none" opacity="0.45">
+                            <path d="M175 76 L175 160 M195 76 L195 180 M215 76 L215 200 M235 76 L235 215 M255 76 L255 225 M275 76 L275 215 M295 76 L295 200 M315 76 L315 180 M335 76 L335 160"/>
+                        </g>
+                        <g stroke="#8B7355" stroke-width="0.8" fill="none" opacity="0.35">
+                            <path d="M175 160 Q185 195 175 230 Q185 265 175 300 Q185 335 175 370"/>
+                            <path d="M335 160 Q325 195 335 230 Q325 265 335 300 Q325 335 335 370"/>
+                            <path d="M195 180 Q205 220 195 260 Q205 300 195 340 Q205 380 195 400"/>
+                            <path d="M315 180 Q305 220 315 260 Q305 300 315 340 Q305 380 315 400"/>
+                            <path d="M215 200 Q225 245 215 290 Q225 335 215 380 Q225 420 215 440"/>
+                            <path d="M295 200 Q285 245 295 290 Q285 335 295 380 Q285 420 295 440"/>
+                            <path d="M235 215 Q245 265 235 315 Q245 365 235 415 Q245 460 235 480"/>
+                            <path d="M275 215 Q265 265 275 315 Q265 365 275 415 Q265 460 275 480"/>
+                            <path d="M255 225 Q265 280 255 335 Q265 390 255 445 Q265 490 255 510"/>
+                        </g>
+                        <!-- Decorative knots -->
+                        <circle cx="175" cy="160" r="4" fill="#8B7355" opacity="0.25"/>
+                        <circle cx="335" cy="160" r="4" fill="#8B7355" opacity="0.25"/>
+                        <circle cx="255" cy="225" r="5" fill="#8B7355" opacity="0.25"/>
+                        <!-- Label -->
+                        <text x="260" y="580" text-anchor="middle" font-family="Cormorant Garamond" font-size="16" fill="#8B7355" opacity="0.3" font-style="italic">handcrafted</text>
+                        <text x="260" y="598" text-anchor="middle" font-family="Jost" font-size="8" fill="#8B7355" opacity="0.2" letter-spacing="3">WITH CARE</text>
+                    </svg>
+                </div>
+            </div>
+            <div class="about-text">
+                <span class="section-eyebrow">The Craft</span>
+                <h2 class="section-title story-title">Every piece carries the <em>mark of its maker.</em></h2>
+                <div class="story-body">
+                    <p>We work directly with small workshops and family-run studios. No middlemen, no agents, no anonymous factories. When you buy a macrame wall hanging from AELADAILY, you're supporting the hands that knotted every strand.</p>
+                    <p>Our cotton linen is woven on traditional looms in Shandong, where weavers have practiced their craft for generations. Our rope baskets are hand-coiled and stitched in a small workshop with fewer than 20 artisans. Our soy candles are poured in small batches, each one labeled with its pour date.</p>
+                    <p>This is slow commerce. It takes longer. It costs a little more. But the result is objects with soul &mdash; objects you'll keep for years, not seasons.</p>
+                </div>
+                <a href="collection.html" class="btn-secondary">Explore the Collection &rarr;</a>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SUSTAINABILITY SECTION ============ -->
+<section class="section about-sustainability">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Our Commitment</span>
+            <h2 class="section-title">Sustainability Is Not a <em>Marketing Term</em></h2>
+            <p class="section-desc">It's the foundation of everything we do. Here's what that actually means in practice.</p>
+        </div>
+        <div class="sustain-grid">
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M18 4C12 9 7 15 7 22a11 11 0 0022 0c0-7-5-13-11-18z"/><line x1="18" y1="7" x2="18" y2="33"/></svg>
+                </div>
+                <h3>Material Sourcing</h3>
+                <p>Every material is traceable to its origin. Cotton linen from certified mills. Beeswax from European apiaries. Soy wax from non-GMO soybeans. Wood from FSC-certified forests.</p>
+            </div>
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="6" y="8" width="24" height="20" rx="2"/><path d="M6 14h24"/><path d="M12 20l3 3 5-5"/></svg>
+                </div>
+                <h3>Plastic-Free Packaging</h3>
+                <p>Recycled kraft paper. Natural cotton twine. Compostable mailers made from corn starch. Water-activated paper tape. Zero plastic in any package, ever.</p>
+            </div>
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><circle cx="18" cy="18" r="12"/><path d="M18 6v24M6 18h24"/><path d="M9 9l18 18M27 9L9 27" opacity="0.3"/></svg>
+                </div>
+                <h3>Carbon-Conscious Shipping</h3>
+                <p>We consolidate shipments to reduce air freight. Sea freight for bulk inventory. Carbon offset for every package shipped. We track and publish our emissions quarterly.</p>
+            </div>
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M8 28V14l10-8 10 8v14"/><path d="M14 28v-8h8v8"/></svg>
+                </div>
+                <h3>Fair Labor</h3>
+                <p>We pay above-market wages to our artisan partners. No child labor, no forced overtime. We visit every workshop at least once per year to verify working conditions.</p>
+            </div>
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M6 30c0-8 6-14 12-14s12 6 12 14"/><circle cx="18" cy="10" r="4"/></svg>
+                </div>
+                <h3>EPR Compliance</h3>
+                <p>Registered with Germany's LUCID/VerpackG system. EU EPR compliant for packaging, electronics, and textiles. We take responsibility for the full lifecycle of our products.</p>
+            </div>
+            <div class="sustain-card">
+                <div class="sustain-icon">
+                    <svg width="36" height="36" viewBox="0 0 36 36" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M18 4l4 8 9 1-7 6 2 9-8-5-8 5 2-9-7-6 9-1z"/></svg>
+                </div>
+                <h3>Give-Back Program</h3>
+                <p>1% of annual revenue goes to environmental nonprofits. Customers can round up their order to support reforestation projects in Europe.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ QUOTE BANNER ============ -->
+<section class="quote-banner">
+    <div class="container">
+        <p class="quote-mark">&ldquo;</p>
+        <blockquote class="quote-text">Beauty is not in the perfection of the object, but in the relationship between the object and the life lived around it.</blockquote>
+        <p class="quote-attribute">&mdash; The AELADAILY Philosophy</p>
+    </div>
+</section>
+
+<!-- ============ TEAM / FOUNDER ============ -->
+<section class="section about-founder">
+    <div class="container">
+        <div class="founder-card">
+            <div class="founder-image">
+                <svg viewBox="0 0 320 380" width="100%" height="100%">
+                    <rect width="320" height="380" fill="#E8E0D5"/>
+                    <!-- Abstract founder portrait -->
+                    <ellipse cx="160" cy="340" rx="100" ry="20" fill="#D4C5A9" opacity="0.35"/>
+                    <!-- Shoulders -->
+                    <path d="M80 340 Q80 260 120 240 L200 240 Q240 260 240 340Z" fill="#8B7355" opacity="0.2"/>
+                    <!-- Head -->
+                    <ellipse cx="160" cy="170" rx="48" ry="55" fill="#D4C5A9" opacity="0.4"/>
+                    <!-- Hair -->
+                    <path d="M115 150 Q115 105 160 100 Q205 105 205 150 Q205 130 180 120 Q160 115 140 120 Q115 130 115 150Z" fill="#3D3530" opacity="0.2"/>
+                    <!-- Texture details -->
+                    <g stroke="#8B7355" stroke-width="0.5" opacity="0.15">
+                        <path d="M130 165 Q140 160 150 165"/>
+                        <path d="M170 165 Q180 160 190 165"/>
+                        <path d="M155 185 Q160 190 165 185"/>
+                        <path d="M150 205 Q160 210 170 205"/>
+                    </g>
+                    <!-- Name overlay -->
+                    <text x="160" y="280" text-anchor="middle" font-family="Cormorant Garamond" font-size="18" fill="#8B7355" opacity="0.4" font-style="italic">Founder</text>
+                    <text x="160" y="298" text-anchor="middle" font-family="Jost" font-size="9" fill="#8B7355" opacity="0.25" letter-spacing="3">AELADAILY</text>
+                </svg>
+            </div>
+            <div class="founder-text">
+                <span class="section-eyebrow">A Word From Us</span>
+                <h2 class="section-title story-title">Why we started AELADAILY</h2>
+                <div class="story-body">
+                    <p>"I moved to Germany for my studies and fell in love with the European appreciation for craft &mdash; the way a wooden cutting board is passed down through generations, the way a linen tablecloth gets softer and more beautiful with each wash."</p>
+                    <p>"But I also saw how much plastic and how many disposable products had crept into daily life. I wanted to offer an alternative: objects made from natural materials, by hand, that you could use every day without guilt. Objects that would age with you, not against you."</p>
+                    <p>"AELADAILY is my answer to the question: what if everything in your home was natural, beautiful, and made to last?"</p>
+                </div>
+                <p class="founder-signature">aeladaily team</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ CTA SECTION ============ -->
+<section class="section about-cta">
+    <div class="container">
+        <div class="about-cta-box">
+            <span class="newsletter-script">Join us</span>
+            <h2 class="section-title">Become part of the<br>natural living community</h2>
+            <p>Get <strong>10% off your first order</strong>. Plus: new arrivals, artisan stories, and slow living inspiration.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter();">
+                <input type="email" placeholder="Your email address" required class="newsletter-input" id="newsletterEmail">
+                <button type="submit" class="btn-primary" id="newsletterBtn">Subscribe</button>
+            </form>
+            <p class="newsletter-fineprint">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="logo footer-logo">
+                        <span class="logo-wordmark">aeladaily</span>
+                        <span class="logo-subtitle">Natural Daily</span>
+                    </div>
+                    <p class="footer-desc">Natural materials. Handcrafted. Made for daily life. We bring wabi-sabi aesthetics into everyday European homes.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Pinterest"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 20l4-8M12 4c-3 0-5 2-5 4s2 3 3 3 2-1 2-3"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="collection.html">All Products</a></li>
+                        <li><a href="collection.html?cat=linen">Linen &amp; Textiles</a></li>
+                        <li><a href="collection.html?cat=woven">Woven Decor</a></li>
+                        <li><a href="collection.html?cat=kitchen">Kitchen Naturals</a></li>
+                        <li><a href="collection.html?cat=aromatherapy">Aromatherapy</a></li>
+                        <li><a href="collection.html?cat=lifestyle">Lifestyle</a></li>
+                        <li><a href="collection.html?cat=sale">Sale</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="#">Journal</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Wholesale</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Help &amp; Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping &amp; Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                    <p class="footer-contact-email">hello@aeladaily.com</p>
+                    <p class="footer-contact-hours">Mon&ndash;Fri 9&ndash;17 CET</p>
+                    <div class="payment-icons">
+                        <span class="pay-icon">VISA</span>
+                        <span class="pay-icon">MC</span>
+                        <span class="pay-icon">PayPal</span>
+                        <span class="pay-icon">Klarna</span>
+                        <span class="pay-icon">&#63743;Pay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-legal">
+        <div class="container">
+            <div class="legal-inner">
+                <p>&copy; 2026 AELADAILY &middot; Natural Daily</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Impressum</a>
+                    <a href="#">Widerrufsrecht</a>
+                    <a href="#" onclick="openCookieSettings(); return false;">Cookie Settings</a>
+                </div>
+                <p class="made-with">Made with &#10084; for natural living</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ============ COOKIE BANNER ============ -->
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-content">
+        <p>We use cookies to enhance your browsing experience. By continuing to browse, you agree to our <a href="#">Cookie Policy</a>.</p>
+        <div class="cookie-actions">
+            <button class="btn-text" onclick="openCookieSettings()">Settings</button>
+            <button class="btn-primary btn-small" onclick="acceptCookies()">Accept All</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

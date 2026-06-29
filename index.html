@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AELADAILY — Natural Daily · Handcrafted Home Decor</title>
+    <meta name="description" content="Natural materials. Handcrafted. Made for daily life. Shop cotton linen textiles, woven decor, and aromatherapy for your wabi-sabi home.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Italianno&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-home">
+
+<!-- ============ MOBILE MENU OVERLAY ============ -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <button class="mobile-close" onclick="toggleMobileMenu()" aria-label="Close menu">&times;</button>
+        <div class="mobile-logo">
+            <span class="logo-wordmark">aeladaily</span>
+            <span class="logo-subtitle">Natural Daily</span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="collection.html" class="mobile-link">Shop All</a>
+            <div class="mobile-submenu">
+                <span class="mobile-submenu-title">Collections</span>
+                <a href="collection.html?cat=linen" class="mobile-sublink">Linen &amp; Textiles</a>
+                <a href="collection.html?cat=woven" class="mobile-sublink">Woven Decor</a>
+                <a href="collection.html?cat=kitchen" class="mobile-sublink">Kitchen Naturals</a>
+                <a href="collection.html?cat=aromatherapy" class="mobile-sublink">Aromatherapy</a>
+                <a href="collection.html?cat=lifestyle" class="mobile-sublink">Lifestyle</a>
+                <a href="collection.html?cat=sale" class="mobile-sublink sale">Sale</a>
+            </div>
+            <a href="about.html" class="mobile-link">Our Story</a>
+            <a href="#" class="mobile-link">Journal</a>
+            <a href="#" class="mobile-link">Contact</a>
+        </nav>
+        <div class="mobile-footer">
+            <a href="#">Account</a>
+            <a href="#">Cart (2)</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-content">
+        <button class="overlay-close" onclick="toggleSearch()" aria-label="Close search">&times;</button>
+        <p class="search-label">Search</p>
+        <input type="text" placeholder="What are you looking for?" class="search-input" id="searchInput" autofocus>
+        <div class="search-suggestions">
+            <p class="search-hint">Popular searches</p>
+            <div class="search-tags">
+                <button class="search-tag" onclick="searchFor('Tablecloth')">Tablecloth</button>
+                <button class="search-tag" onclick="searchFor('Basket')">Basket</button>
+                <button class="search-tag" onclick="searchFor('Candle')">Candle</button>
+                <button class="search-tag" onclick="searchFor('Cushion')">Cushion</button>
+                <button class="search-tag" onclick="searchFor('Macrame')">Macrame</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3 class="cart-title">Your Cart <span class="cart-count-inline">(2)</span></h3>
+        <button class="overlay-close small" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-free-ship-bar">
+        <div class="free-ship-progress" style="width: 100%;"></div>
+        <p class="free-ship-text">You've unlocked free shipping! &#127881;</p>
+    </div>
+    <div class="cart-items">
+        <div class="cart-item">
+            <div class="cart-item-img linen-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><rect x="8" y="14" width="44" height="32" rx="2" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="8" y1="20" x2="52" y2="20" stroke="#8B7355" stroke-width="0.8"/><line x1="8" y1="40" x2="52" y2="40" stroke="#8B7355" stroke-width="0.8"/><circle cx="30" cy="30" r="8" fill="#D4C5A9" opacity="0.4"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Cotton Linen Tablecloth with Tassels</p>
+                <p class="cart-item-variant">Size: 140&times;200cm &middot; Natural White</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;23.10</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+        <div class="cart-item">
+            <div class="cart-item-img woven-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><path d="M15 12h30v40H15z" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="15" y1="20" x2="45" y2="20" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="28" x2="45" y2="28" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="36" x2="45" y2="36" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="44" x2="45" y2="44" stroke="#8B7355" stroke-width="0.6"/><circle cx="30" cy="32" r="6" fill="#D4C5A9" opacity="0.3"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Macrame Wall Hanging — Large</p>
+                <p class="cart-item-variant">Color: Natural &middot; 60&times;100cm</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;33.80</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-note">
+            <input type="checkbox" id="giftWrap" class="cart-checkbox">
+            <label for="giftWrap">Add gift wrapping <span class="gift-price">(+&euro;3.50)</span></label>
+        </div>
+        <div class="cart-summary">
+            <span>Subtotal</span>
+            <span>&euro;56.90</span>
+        </div>
+        <div class="cart-summary">
+            <span>Shipping</span>
+            <span class="free-shipping">FREE &#10003;</span>
+        </div>
+        <div class="cart-summary total">
+            <span>Total</span>
+            <span>&euro;56.90</span>
+        </div>
+        <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+        <button class="btn-primary btn-full" onclick="window.location.href='#'">Checkout &rarr;</button>
+        <button class="btn-text btn-full" onclick="toggleCart()">Continue Shopping</button>
+    </div>
+</aside>
+
+<!-- ============ ANNOUNCEMENT BAR ============ -->
+<div class="announcement-bar" id="announcementBar">
+    <div class="announcement-track">
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+    </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+    <div class="header-inner">
+        <nav class="nav-left">
+            <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-dropdown">
+                <a href="collection.html" class="nav-link">Shop <span class="nav-caret">&#8964;</span></a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Collections</h5>
+                            <a href="collection.html?cat=linen" class="mega-link">Linen &amp; Textiles</a>
+                            <a href="collection.html?cat=woven" class="mega-link">Woven Decor</a>
+                            <a href="collection.html?cat=kitchen" class="mega-link">Kitchen Naturals</a>
+                            <a href="collection.html?cat=aromatherapy" class="mega-link">Aromatherapy</a>
+                            <a href="collection.html?cat=lifestyle" class="mega-link">Lifestyle</a>
+                        </div>
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Featured</h5>
+                            <a href="collection.html?cat=sale" class="mega-link sale">Sale</a>
+                            <a href="#" class="mega-link">New Arrivals</a>
+                            <a href="#" class="mega-link">Bestsellers</a>
+                            <a href="#" class="mega-link">Gift Cards</a>
+                            <a href="#" class="mega-link">Gift Guides</a>
+                        </div>
+                        <div class="mega-feature">
+                            <div class="mega-feature-img autumn-bg">
+                                <svg viewBox="0 0 200 120" width="100%" height="100%"><rect width="200" height="120" fill="#E8E0D5"/><circle cx="100" cy="60" r="30" fill="#D4C5A9" opacity="0.4"/><text x="100" y="65" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" font-style="italic">Autumn Edit</text></svg>
+                            </div>
+                            <p class="mega-feature-text">Cozy textures for the season</p>
+                            <a href="collection.html" class="mega-feature-link">Discover &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="about.html" class="nav-link">Our Story</a>
+            <a href="#" class="nav-link">Journal</a>
+        </nav>
+        <div class="logo-center">
+            <a href="index.html" class="logo">
+                <span class="logo-wordmark">aeladaily</span>
+                <span class="logo-subtitle">Natural Daily</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+            <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <span class="cart-count">2</span>
+            </button>
+        </div>
+    </div>
+    <!-- Category Bar -->
+    <div class="category-bar">
+        <div class="category-inner">
+            <a href="collection.html?cat=linen" class="cat-link">Linen &amp; Textiles</a>
+            <a href="collection.html?cat=woven" class="cat-link">Woven Decor</a>
+            <a href="collection.html?cat=kitchen" class="cat-link">Kitchen Naturals</a>
+            <a href="collection.html?cat=aromatherapy" class="cat-link">Aromatherapy</a>
+            <a href="collection.html?cat=lifestyle" class="cat-link">Lifestyle</a>
+            <span class="cat-divider"></span>
+            <a href="collection.html?cat=new" class="cat-link">New In</a>
+            <a href="collection.html?cat=sale" class="cat-link sale-link">Sale</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============ HERO BANNER ============ -->
+<section class="hero" id="hero">
+    <div class="hero-bg">
+        <div class="hero-texture"></div>
+        <div class="hero-content">
+            <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span> Natural Daily <span class="hero-eyebrow-line"></span></p>
+            <h1 class="hero-title">Bring nature<br><em>home.</em></h1>
+            <p class="hero-subtitle">Natural materials. Handcrafted with care.<br>Made for the rituals of everyday life.</p>
+            <div class="hero-actions">
+                <a href="collection.html" class="btn-primary btn-large">Shop the Collection</a>
+                <a href="about.html" class="btn-ghost-light">Our Story</a>
+            </div>
+        </div>
+        <div class="hero-scroll-indicator">
+            <span>Scroll</span>
+            <div class="scroll-line"></div>
+        </div>
+        <div class="hero-badge">
+            <div class="hero-badge-circle">
+                <svg viewBox="0 0 100 100" width="100%" height="100%">
+                    <defs><path id="circle-path" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
+                    <text font-size="9" font-family="Jost" letter-spacing="2" fill="#8B7355"><textPath href="#circle-path">NATURAL MATERIALS &bull; HANDCRAFTED &bull; PLASTIC FREE &bull; </textPath></text>
+                </svg>
+                <div class="hero-badge-center">&#10047;</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ VALUE PROPOSITION STRIP ============ -->
+<section class="value-strip">
+    <div class="container">
+        <div class="value-grid">
+            <div class="value-item">
+                <div class="value-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M14 3C9 7 5 11 5 16a9 9 0 0018 0c0-5-4-9-9-13z"/><line x1="14" y1="6" x2="14" y2="25"/></svg></div>
+                <div class="value-text">
+                    <h4>Natural Materials</h4>
+                    <p>Cotton linen, beeswax, wood, cork</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M19 10q-4 0-8 3.5T7 21"/><path d="M19 10c0-2.5-2-4.5-4.5-4.5"/><circle cx="19" cy="10" r="0.8" fill="currentColor"/></svg></div>
+                <div class="value-text">
+                    <h4>Handcrafted</h4>
+                    <p>Every piece made by artisans</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.2"><path d="M5 18l3.5-7h11L23 18"/><path d="M5 18v3.5h18V18"/><circle cx="10" cy="21.5" r="1.8"/><circle cx="18" cy="21.5" r="1.8"/></svg></div>
+                <div class="value-text">
+                    <h4>Plastic-Free</h4>
+                    <p>100% biodegradable packaging</p>
+                </div>
+            </div>
+            <div class="value-item">
+                <div class="value-icon"><svg width="28" height="28" viewBox="0 0 28 28" fill="none" stroke="currentColor" stroke-width="1.2"><rect x="7" y="7" width="14" height="14" rx="2"/><path d="M12 14l2 2 3-3"/></svg></div>
+                <div class="value-text">
+                    <h4>Free EU Shipping</h4>
+                    <p>On all orders over &euro;49</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ SHOP BY CATEGORY ============ -->
+<section class="section section-categories" id="shop">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Explore</span>
+            <h2 class="section-title">Shop by Category</h2>
+        </div>
+        <div class="category-grid">
+            <a href="collection.html?cat=linen" class="category-tile">
+                <div class="cat-img-wrap">
+                    <svg class="cat-img" viewBox="0 0 240 240" width="100%" height="100%">
+                        <rect width="240" height="240" fill="#F5F1EA"/>
+                        <rect x="30" y="50" width="180" height="140" rx="2" fill="#E8E0D5"/>
+                        <line x1="30" y1="62" x2="210" y2="62" stroke="#C4B59A" stroke-width="1"/>
+                        <line x1="30" y1="178" x2="210" y2="178" stroke="#C4B59A" stroke-width="1"/>
+                        <circle cx="120" cy="120" r="22" fill="none" stroke="#8B7355" stroke-width="1"/>
+                        <circle cx="120" cy="120" r="12" fill="#D4C5A9" opacity="0.5"/>
+                        <path d="M30 190 L34 200 M50 190 L54 200 M70 190 L74 200 M90 190 L94 200 M110 190 L114 200 M130 190 L134 200 M150 190 L154 200 M170 190 L174 200 M190 190 L194 200" stroke="#8B7355" stroke-width="0.8"/>
+                    </svg>
+                    <div class="cat-overlay"><span class="cat-cta">Shop Now &rarr;</span></div>
+                </div>
+                <div class="cat-info">
+                    <h3>Linen &amp; Textiles</h3>
+                    <p>17 products</p>
+                </div>
+            </a>
+            <a href="collection.html?cat=woven" class="category-tile">
+                <div class="cat-img-wrap">
+                    <svg class="cat-img" viewBox="0 0 240 240" width="100%" height="100%">
+                        <rect width="240" height="240" fill="#E8E0D5"/>
+                        <rect x="80" y="30" width="80" height="6" rx="1" fill="#8B7355" opacity="0.4"/>
+                        <g stroke="#8B7355" stroke-width="1.2" fill="none" opacity="0.6">
+                            <path d="M85 40 L85 80 M95 40 L95 90 M105 40 L105 100 M115 40 L115 110 M125 40 L125 115 M135 40 L135 110 M145 40 L145 100 M155 40 L155 90 M165 40 L165 80"/>
+                        </g>
+                        <g stroke="#8B7355" stroke-width="0.8" fill="none" opacity="0.4">
+                            <path d="M85 80 Q95 95 85 110 Q95 125 85 140 Q95 155 85 170 Q95 185 85 200"/>
+                            <path d="M165 80 Q155 95 165 110 Q155 125 165 140 Q155 155 165 170 Q155 185 165 200"/>
+                            <path d="M105 100 Q115 120 105 140 Q115 160 105 180 Q115 200 105 220"/>
+                            <path d="M145 100 Q135 120 145 140 Q135 160 145 180 Q135 200 145 220"/>
+                            <path d="M125 115 Q135 140 125 165 Q135 190 125 215"/>
+                        </g>
+                    </svg>
+                    <div class="cat-overlay"><span class="cat-cta">Shop Now &rarr;</span></div>
+                </div>
+                <div class="cat-info">
+                    <h3>Woven Decor</h3>
+                    <p>12 products</p>
+                </div>
+            </a>
+            <a href="collection.html?cat=kitchen" class="category-tile">
+                <div class="cat-img-wrap">
+                    <svg class="cat-img" viewBox="0 0 240 240" width="100%" height="100%">
+                        <rect width="240" height="240" fill="#F5F1EA"/>
+                        <circle cx="90" cy="120" r="35" fill="#D4C5A9" opacity="0.5"/>
+                        <circle cx="150" cy="120" r="35" fill="#C4B59A" opacity="0.35"/>
+                        <rect x="65" y="165" width="110" height="25" rx="3" fill="#8B7355" opacity="0.25"/>
+                        <line x1="65" y1="172" x2="175" y2="172" stroke="#8B7355" stroke-width="0.4"/>
+                        <line x1="65" y1="178" x2="175" y2="178" stroke="#8B7355" stroke-width="0.4"/>
+                        <line x1="65" y1="184" x2="175" y2="184" stroke="#8B7355" stroke-width="0.4"/>
+                        <circle cx="90" cy="120" r="18" fill="none" stroke="#8B7355" stroke-width="0.8" opacity="0.3"/>
+                        <circle cx="150" cy="120" r="18" fill="none" stroke="#8B7355" stroke-width="0.8" opacity="0.3"/>
+                    </svg>
+                    <div class="cat-overlay"><span class="cat-cta">Shop Now &rarr;</span></div>
+                </div>
+                <div class="cat-info">
+                    <h3>Kitchen Naturals</h3>
+                    <p>8 products</p>
+                </div>
+            </a>
+            <a href="collection.html?cat=aromatherapy" class="category-tile">
+                <div class="cat-img-wrap">
+                    <svg class="cat-img" viewBox="0 0 240 240" width="100%" height="100%">
+                        <rect width="240" height="240" fill="#E8E0D5"/>
+                        <rect x="95" y="95" width="50" height="75" rx="4" fill="#8B7355" opacity="0.25"/>
+                        <rect x="100" y="88" width="40" height="9" rx="2" fill="#8B7355" opacity="0.45"/>
+                        <line x1="120" y1="55" x2="120" y2="88" stroke="#3D3530" stroke-width="1.5"/>
+                        <path d="M120 45 Q115 35 120 25 Q125 35 120 45" fill="#D4C5A9" opacity="0.6"/>
+                        <path d="M112 40 Q107 30 109 20" stroke="#8B7355" stroke-width="0.8" fill="none" opacity="0.4"/>
+                        <path d="M128 40 Q133 30 131 20" stroke="#8B7355" stroke-width="0.8" fill="none" opacity="0.4"/>
+                        <circle cx="120" cy="132" r="20" fill="#D4C5A9" opacity="0.35"/>
+                        <text x="120" y="160" text-anchor="middle" font-family="Cormorant Garamond" font-size="9" fill="#8B7355" opacity="0.5" font-style="italic">gardenia</text>
+                    </svg>
+                    <div class="cat-overlay"><span class="cat-cta">Shop Now &rarr;</span></div>
+                </div>
+                <div class="cat-info">
+                    <h3>Aromatherapy</h3>
+                    <p>11 products</p>
+                </div>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ BESTSELLERS ============ -->
+<section class="section section-bestsellers" id="bestsellers">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Customer Favorites</span>
+            <h2 class="section-title">Bestsellers</h2>
+            <a href="collection.html" class="section-view-all">View all &rarr;</a>
+        </div>
+        <div class="product-grid" id="bestsellerGrid"></div>
+    </div>
+</section>
+
+<!-- ============ BRAND STORY FEATURE ============ -->
+<section class="section section-story-feature" id="story">
+    <div class="story-split">
+        <div class="story-image-wrap">
+            <div class="story-image">
+                <svg viewBox="0 0 480 560" width="100%" height="100%">
+                    <rect width="480" height="560" fill="#E8E0D5"/>
+                    <ellipse cx="240" cy="460" rx="160" ry="35" fill="#D4C5A9" opacity="0.5"/>
+                    <path d="M140 260 Q170 210 230 220 Q270 190 310 220 Q370 210 380 260 Q395 310 370 350 Q350 380 240 380 Q130 380 110 350 Q85 310 140 260Z" fill="#8B7355" opacity="0.2"/>
+                    <g stroke="#3D3530" stroke-width="1.2" fill="none" opacity="0.35">
+                        <path d="M160 280 Q190 250 220 265"/>
+                        <path d="M190 295 Q220 265 250 280"/>
+                        <path d="M220 310 Q250 280 280 295"/>
+                        <path d="M250 325 Q280 295 310 310"/>
+                    </g>
+                    <g stroke="#8B7355" stroke-width="0.8" opacity="0.4">
+                        <path d="M190 240 L185 222 M210 235 L208 215 M230 230 L230 210 M250 235 L252 215 M270 240 L275 222 M290 245 L295 228 M310 250 L316 233"/>
+                    </g>
+                    <circle cx="240" cy="140" r="55" fill="none" stroke="#8B7355" stroke-width="1" opacity="0.2"/>
+                    <text x="240" y="146" text-anchor="middle" font-family="Cormorant Garamond" font-size="16" fill="#8B7355" opacity="0.35" font-style="italic">handcrafted</text>
+                    <text x="240" y="166" text-anchor="middle" font-family="Jost" font-size="9" fill="#8B7355" opacity="0.25" letter-spacing="3">WITH CARE</text>
+                </svg>
+            </div>
+            <div class="story-image-badge">
+                <span class="story-badge-num">100%</span>
+                <span class="story-badge-text">Natural<br>Materials</span>
+            </div>
+        </div>
+        <div class="story-text">
+            <span class="section-eyebrow">Our Story</span>
+            <h2 class="section-title story-title">We believe the objects we live with should be <em>honest, natural,</em> and made to last.</h2>
+            <div class="story-body">
+                <p>AELADAILY was born from a simple conviction: that nourishment isn't a luxury reserved for special occasions. It's a daily practice.</p>
+                <p>We draw from <strong>Wabi-Sabi</strong> &mdash; the Japanese aesthetic that finds beauty in imperfection, simplicity, and the natural aging of materials. A cotton linen tablecloth that softens with each wash. A hand-woven rope basket that tells the story of its maker.</p>
+            </div>
+            <div class="story-values">
+                <div class="story-value">
+                    <span class="story-value-icon">&#127807;</span>
+                    <span class="story-value-text">Natural</span>
+                </div>
+                <div class="story-value">
+                    <span class="story-value-icon">&#9995;</span>
+                    <span class="story-value-text">Artisanal</span>
+                </div>
+                <div class="story-value">
+                    <span class="story-value-icon">&#129506;</span>
+                    <span class="story-value-text">Mindful</span>
+                </div>
+            </div>
+            <a href="about.html" class="btn-secondary">Read Our Story &rarr;</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ NEW ARRIVALS ============ -->
+<section class="section section-new-arrivals">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Just In</span>
+            <h2 class="section-title">New Arrivals</h2>
+            <a href="collection.html?cat=new" class="section-view-all">View all &rarr;</a>
+        </div>
+        <div class="product-grid" id="newArrivalsGrid"></div>
+    </div>
+</section>
+
+<!-- ============ QUOTE BANNER ============ -->
+<section class="quote-banner">
+    <div class="container">
+        <p class="quote-mark">&ldquo;</p>
+        <blockquote class="quote-text">The small rituals that make a house feel like home &mdash; the weight of a ceramic mug on a cork coaster, the scent of beeswax and essential oils, the sight of a macram&eacute; catching afternoon light.</blockquote>
+        <p class="quote-attribute">&mdash; The AELADAILY Philosophy</p>
+    </div>
+</section>
+
+<!-- ============ INSTAGRAM FEED ============ -->
+<section class="section section-instagram">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">Follow Us</span>
+            <h2 class="section-title">@aeladaily</h2>
+            <p class="section-desc">Daily rituals. Natural textures. Slow living.</p>
+        </div>
+        <div class="instagram-grid">
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#F5F1EA"/><rect x="24" y="36" width="72" height="48" rx="2" fill="none" stroke="#8B7355" stroke-width="1"/><circle cx="60" cy="60" r="14" fill="#D4C5A9" opacity="0.5"/><rect x="42" y="30" width="36" height="8" rx="1" fill="#8B7355" opacity="0.25"/><path d="M24 36 L20 28 M96 36 L100 28" stroke="#8B7355" stroke-width="0.8" opacity="0.3"/></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#E8E0D5"/><path d="M36 24h48v72H36z" fill="none" stroke="#8B7355" stroke-width="1"/><g stroke="#8B7355" stroke-width="0.5" opacity="0.4"><line x1="42" y1="36" x2="78" y2="36"/><line x1="42" y1="48" x2="78" y2="48"/><line x1="42" y1="60" x2="78" y2="60"/><line x1="42" y1="72" x2="78" y2="72"/><line x1="42" y1="84" x2="78" y2="84"/></g></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#D4C5A9"/><circle cx="60" cy="60" r="30" fill="#8B7355" opacity="0.25"/><circle cx="60" cy="60" r="18" fill="#F5F1EA" opacity="0.4"/><circle cx="60" cy="60" r="8" fill="#8B7355" opacity="0.15"/></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#F5F1EA"/><path d="M36 84 Q60 36 84 84" fill="none" stroke="#8B7355" stroke-width="1.5"/><line x1="60" y1="54" x2="60" y2="90" stroke="#8B7355" stroke-width="1"/><circle cx="60" cy="48" r="4" fill="#A8B5A0" opacity="0.5"/></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#E8E0D5"/><rect x="36" y="48" width="48" height="42" rx="3" fill="none" stroke="#8B7355" stroke-width="1"/><rect x="42" y="42" width="36" height="7" rx="1" fill="#8B7355" opacity="0.35"/><path d="M54 60 Q60 52 66 60" stroke="#3D3530" stroke-width="0.8" fill="none" opacity="0.3"/><line x1="48" y1="72" x2="72" y2="72" stroke="#8B7355" stroke-width="0.6" opacity="0.3"/></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+            <a href="#" class="ig-tile">
+                <svg viewBox="0 0 120 120" width="100%" height="100%"><rect width="120" height="120" fill="#C4B59A"/><g stroke="#8B7355" stroke-width="1.2" opacity="0.4"><path d="M30 90 L30 42 M42 90 L42 36 M54 90 L54 30 M66 90 L66 30 M78 90 L78 36 M90 90 L90 42"/></g><path d="M30 42 Q60 24 90 42" fill="none" stroke="#8B7355" stroke-width="1.5" opacity="0.5"/></svg>
+                <div class="ig-hover"><span>&#10095;</span></div>
+            </a>
+        </div>
+        <div class="ig-follow-cta">
+            <a href="#" class="btn-secondary">Follow @aeladaily</a>
+        </div>
+    </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="section section-newsletter">
+    <div class="container">
+        <div class="newsletter-box">
+            <span class="newsletter-script">Join us</span>
+            <h2 class="section-title">Become part of the<br>natural living community</h2>
+            <p>Get <strong>10% off your first order</strong>. Plus: new arrivals, artisan stories, and slow living inspiration.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter();">
+                <input type="email" placeholder="Your email address" required class="newsletter-input" id="newsletterEmail">
+                <button type="submit" class="btn-primary" id="newsletterBtn">Subscribe</button>
+            </form>
+            <p class="newsletter-fineprint">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="logo footer-logo">
+                        <span class="logo-wordmark">aeladaily</span>
+                        <span class="logo-subtitle">Natural Daily</span>
+                    </div>
+                    <p class="footer-desc">Natural materials. Handcrafted. Made for daily life. We bring wabi-sabi aesthetics into everyday European homes.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Pinterest"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 20l4-8M12 4c-3 0-5 2-5 4s2 3 3 3 2-1 2-3"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="collection.html">All Products</a></li>
+                        <li><a href="collection.html?cat=linen">Linen &amp; Textiles</a></li>
+                        <li><a href="collection.html?cat=woven">Woven Decor</a></li>
+                        <li><a href="collection.html?cat=kitchen">Kitchen Naturals</a></li>
+                        <li><a href="collection.html?cat=aromatherapy">Aromatherapy</a></li>
+                        <li><a href="collection.html?cat=lifestyle">Lifestyle</a></li>
+                        <li><a href="collection.html?cat=sale">Sale</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="#">Journal</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Wholesale</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Help &amp; Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping &amp; Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                    <p class="footer-contact-email">hello@aeladaily.com</p>
+                    <p class="footer-contact-hours">Mon&ndash;Fri 9&ndash;17 CET</p>
+                    <div class="payment-icons">
+                        <span class="pay-icon">VISA</span>
+                        <span class="pay-icon">MC</span>
+                        <span class="pay-icon">PayPal</span>
+                        <span class="pay-icon">Klarna</span>
+                        <span class="pay-icon">&#63743;Pay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-legal">
+        <div class="container">
+            <div class="legal-inner">
+                <p>&copy; 2026 AELADAILY &middot; Natural Daily</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Impressum</a>
+                    <a href="#">Widerrufsrecht</a>
+                    <a href="#" onclick="openCookieSettings(); return false;">Cookie Settings</a>
+                </div>
+                <p class="made-with">Made with &#10084; for natural living</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ============ QUICK VIEW MODAL ============ -->
+<div class="qv-overlay" id="qvOverlay" onclick="closeQuickView()"></div>
+<div class="qv-modal" id="qvModal">
+    <button class="qv-close overlay-close" onclick="closeQuickView()" aria-label="Close">&times;</button>
+    <div class="qv-content">
+        <div class="qv-image" id="qvImage"></div>
+        <div class="qv-info">
+            <span class="qv-tag" id="qvTag"></span>
+            <h3 class="qv-name" id="qvName"></h3>
+            <p class="qv-price" id="qvPrice"></p>
+            <div class="qv-rating" id="qvRating"></div>
+            <p class="qv-desc" id="qvDesc"></p>
+            <div class="qv-options">
+                <p class="qv-option-label">Quantity</p>
+                <div class="qty-selector qv-qty">
+                    <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                </div>
+            </div>
+            <button class="btn-primary btn-full qv-add-btn" onclick="addToCartFromQV()">Add to Cart &rarr;</button>
+            <div class="qv-meta">
+                <p>&#10003; In stock &mdash; ships in 1-2 days</p>
+                <p>&#10003; Free shipping over &euro;49</p>
+                <p>&#10003; 30-day returns</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ COOKIE BANNER ============ -->
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-content">
+        <p>We use cookies to enhance your browsing experience. By continuing to browse, you agree to our <a href="#">Cookie Policy</a>.</p>
+        <div class="cookie-actions">
+            <button class="btn-text" onclick="openCookieSettings()">Settings</button>
+            <button class="btn-primary btn-small" onclick="acceptCookies()">Accept All</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>

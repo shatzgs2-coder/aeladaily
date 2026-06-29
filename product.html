@@ -1,0 +1,736 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cotton Linen Tablecloth with Tassels — AELADAILY</title>
+    <meta name="description" content="Woven from 100% natural cotton linen with hand-knotted tassels. Gets softer with every wash. Shop the AELADAILY bestseller.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Jost:wght@300;400;500;600&family=Italianno&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body class="page-product">
+
+<!-- ============ MOBILE MENU OVERLAY ============ -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+    <div class="mobile-menu-inner">
+        <button class="mobile-close" onclick="toggleMobileMenu()" aria-label="Close menu">&times;</button>
+        <div class="mobile-logo">
+            <span class="logo-wordmark">aeladaily</span>
+            <span class="logo-subtitle">Natural Daily</span>
+        </div>
+        <nav class="mobile-nav">
+            <a href="index.html" class="mobile-link">Home</a>
+            <a href="collection.html" class="mobile-link">Shop All</a>
+            <div class="mobile-submenu">
+                <span class="mobile-submenu-title">Collections</span>
+                <a href="collection.html?cat=linen" class="mobile-sublink">Linen &amp; Textiles</a>
+                <a href="collection.html?cat=woven" class="mobile-sublink">Woven Decor</a>
+                <a href="collection.html?cat=kitchen" class="mobile-sublink">Kitchen Naturals</a>
+                <a href="collection.html?cat=aromatherapy" class="mobile-sublink">Aromatherapy</a>
+                <a href="collection.html?cat=lifestyle" class="mobile-sublink">Lifestyle</a>
+                <a href="collection.html?cat=sale" class="mobile-sublink sale">Sale</a>
+            </div>
+            <a href="about.html" class="mobile-link">Our Story</a>
+            <a href="#" class="mobile-link">Journal</a>
+            <a href="#" class="mobile-link">Contact</a>
+        </nav>
+        <div class="mobile-footer">
+            <a href="#">Account</a>
+            <a href="#">Cart (2)</a>
+        </div>
+    </div>
+</div>
+
+<!-- ============ SEARCH OVERLAY ============ -->
+<div class="search-overlay" id="searchOverlay">
+    <div class="search-content">
+        <button class="overlay-close" onclick="toggleSearch()" aria-label="Close search">&times;</button>
+        <p class="search-label">Search</p>
+        <input type="text" placeholder="What are you looking for?" class="search-input" id="searchInput">
+        <div class="search-suggestions">
+            <p class="search-hint">Popular searches</p>
+            <div class="search-tags">
+                <button class="search-tag" onclick="searchFor('Tablecloth')">Tablecloth</button>
+                <button class="search-tag" onclick="searchFor('Basket')">Basket</button>
+                <button class="search-tag" onclick="searchFor('Candle')">Candle</button>
+                <button class="search-tag" onclick="searchFor('Cushion')">Cushion</button>
+                <button class="search-tag" onclick="searchFor('Macrame')">Macrame</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ CART DRAWER ============ -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-drawer" id="cartDrawer">
+    <div class="cart-header">
+        <h3 class="cart-title">Your Cart <span class="cart-count-inline">(2)</span></h3>
+        <button class="overlay-close small" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+    </div>
+    <div class="cart-free-ship-bar">
+        <div class="free-ship-progress" style="width: 100%;"></div>
+        <p class="free-ship-text">You've unlocked free shipping! &#127881;</p>
+    </div>
+    <div class="cart-items">
+        <div class="cart-item">
+            <div class="cart-item-img linen-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><rect x="8" y="14" width="44" height="32" rx="2" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="8" y1="20" x2="52" y2="20" stroke="#8B7355" stroke-width="0.8"/><line x1="8" y1="40" x2="52" y2="40" stroke="#8B7355" stroke-width="0.8"/><circle cx="30" cy="30" r="8" fill="#D4C5A9" opacity="0.4"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Cotton Linen Tablecloth with Tassels</p>
+                <p class="cart-item-variant">Size: 140&times;200cm &middot; Natural White</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;23.10</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+        <div class="cart-item">
+            <div class="cart-item-img woven-bg">
+                <svg viewBox="0 0 60 60" width="50" height="50"><path d="M15 12h30v40H15z" fill="none" stroke="#8B7355" stroke-width="1.2"/><line x1="15" y1="20" x2="45" y2="20" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="28" x2="45" y2="28" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="36" x2="45" y2="36" stroke="#8B7355" stroke-width="0.6"/><line x1="15" y1="44" x2="45" y2="44" stroke="#8B7355" stroke-width="0.6"/><circle cx="30" cy="32" r="6" fill="#D4C5A9" opacity="0.3"/></svg>
+            </div>
+            <div class="cart-item-info">
+                <p class="cart-item-name">Macrame Wall Hanging &mdash; Large</p>
+                <p class="cart-item-variant">Color: Natural &middot; 60&times;100cm</p>
+                <div class="cart-item-bottom">
+                    <div class="qty-selector">
+                        <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                        <span class="qty-value">1</span>
+                        <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                    </div>
+                    <p class="cart-item-price">&euro;33.80</p>
+                </div>
+            </div>
+            <button class="cart-item-remove" onclick="removeCartItem(this)" aria-label="Remove">&times;</button>
+        </div>
+    </div>
+    <div class="cart-footer">
+        <div class="cart-note">
+            <input type="checkbox" id="giftWrap" class="cart-checkbox">
+            <label for="giftWrap">Add gift wrapping <span class="gift-price">(+&euro;3.50)</span></label>
+        </div>
+        <div class="cart-summary">
+            <span>Subtotal</span>
+            <span>&euro;56.90</span>
+        </div>
+        <div class="cart-summary">
+            <span>Shipping</span>
+            <span class="free-shipping">FREE &#10003;</span>
+        </div>
+        <div class="cart-summary total">
+            <span>Total</span>
+            <span>&euro;56.90</span>
+        </div>
+        <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+        <button class="btn-primary btn-full" onclick="window.location.href='#'">Checkout &rarr;</button>
+        <button class="btn-text btn-full" onclick="toggleCart()">Continue Shopping</button>
+    </div>
+</aside>
+
+<!-- ============ ANNOUNCEMENT BAR ============ -->
+<div class="announcement-bar" id="announcementBar">
+    <div class="announcement-track">
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+        <span>&#10022; FREE SHIPPING OVER &euro;49</span>
+        <span>&#10022; NATURAL MATERIALS ONLY</span>
+        <span>&#10022; HANDCRAFTED WITH CARE</span>
+        <span>&#10022; PLASTIC-FREE PACKAGING</span>
+        <span>&#10022; 30-DAY RETURNS</span>
+    </div>
+</div>
+
+<!-- ============ HEADER ============ -->
+<header class="site-header" id="siteHeader">
+    <div class="header-inner">
+        <nav class="nav-left">
+            <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+                <span></span><span></span><span></span>
+            </button>
+            <div class="nav-dropdown">
+                <a href="collection.html" class="nav-link">Shop <span class="nav-caret">&#8964;</span></a>
+                <div class="mega-menu">
+                    <div class="mega-menu-inner">
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Collections</h5>
+                            <a href="collection.html?cat=linen" class="mega-link">Linen &amp; Textiles</a>
+                            <a href="collection.html?cat=woven" class="mega-link">Woven Decor</a>
+                            <a href="collection.html?cat=kitchen" class="mega-link">Kitchen Naturals</a>
+                            <a href="collection.html?cat=aromatherapy" class="mega-link">Aromatherapy</a>
+                            <a href="collection.html?cat=lifestyle" class="mega-link">Lifestyle</a>
+                        </div>
+                        <div class="mega-col">
+                            <h5 class="mega-heading">Featured</h5>
+                            <a href="collection.html?cat=sale" class="mega-link sale">Sale</a>
+                            <a href="#" class="mega-link">New Arrivals</a>
+                            <a href="#" class="mega-link">Bestsellers</a>
+                            <a href="#" class="mega-link">Gift Cards</a>
+                            <a href="#" class="mega-link">Gift Guides</a>
+                        </div>
+                        <div class="mega-feature">
+                            <div class="mega-feature-img autumn-bg">
+                                <svg viewBox="0 0 200 120" width="100%" height="100%"><rect width="200" height="120" fill="#E8E0D5"/><circle cx="100" cy="60" r="30" fill="#D4C5A9" opacity="0.4"/><text x="100" y="65" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" font-style="italic">Autumn Edit</text></svg>
+                            </div>
+                            <p class="mega-feature-text">Cozy textures for the season</p>
+                            <a href="collection.html" class="mega-feature-link">Discover &rarr;</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="about.html" class="nav-link">Our Story</a>
+            <a href="#" class="nav-link">Journal</a>
+        </nav>
+        <div class="logo-center">
+            <a href="index.html" class="logo">
+                <span class="logo-wordmark">aeladaily</span>
+                <span class="logo-subtitle">Natural Daily</span>
+            </a>
+        </div>
+        <div class="nav-right">
+            <button class="icon-btn" onclick="toggleSearch()" aria-label="Search">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+            </button>
+            <button class="icon-btn" aria-label="Account">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </button>
+            <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="Cart">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+                <span class="cart-count">2</span>
+            </button>
+        </div>
+    </div>
+    <div class="category-bar">
+        <div class="category-inner">
+            <a href="collection.html?cat=linen" class="cat-link">Linen &amp; Textiles</a>
+            <a href="collection.html?cat=woven" class="cat-link">Woven Decor</a>
+            <a href="collection.html?cat=kitchen" class="cat-link">Kitchen Naturals</a>
+            <a href="collection.html?cat=aromatherapy" class="cat-link">Aromatherapy</a>
+            <a href="collection.html?cat=lifestyle" class="cat-link">Lifestyle</a>
+            <span class="cat-divider"></span>
+            <a href="collection.html?cat=new" class="cat-link">New In</a>
+            <a href="collection.html?cat=sale" class="cat-link sale-link">Sale</a>
+        </div>
+    </div>
+</header>
+
+<!-- ============ BREADCRUMB ============ -->
+<div class="pdp-breadcrumb">
+    <div class="container">
+        <a href="index.html">Home</a> <span class="crumb-sep">/</span>
+        <a href="collection.html">Shop</a> <span class="crumb-sep">/</span>
+        <a href="collection.html?cat=linen">Linen &amp; Textiles</a> <span class="crumb-sep">/</span>
+        <span class="crumb-current">Cotton Linen Tablecloth</span>
+    </div>
+</div>
+
+<!-- ============ PRODUCT DETAIL ============ -->
+<section class="pdp-main">
+    <div class="container">
+        <div class="pdp-layout">
+            <!-- Gallery -->
+            <div class="pdp-gallery">
+                <div class="gallery-main" id="galleryMain">
+                    <svg viewBox="0 0 600 750" width="100%" height="100%">
+                        <rect width="600" height="750" fill="#F5F1EA"/>
+                        <rect x="60" y="110" width="480" height="480" rx="6" fill="#E8E0D5"/>
+                        <line x1="60" y1="136" x2="540" y2="136" stroke="#C4B59A" stroke-width="1.2"/>
+                        <line x1="60" y1="564" x2="540" y2="564" stroke="#C4B59A" stroke-width="1.2"/>
+                        <circle cx="300" cy="350" r="64" fill="none" stroke="#8B7355" stroke-width="2"/>
+                        <circle cx="300" cy="350" r="40" fill="#D4C5A9" opacity="0.4"/>
+                        <circle cx="300" cy="350" r="20" fill="#8B7355" opacity="0.15"/>
+                        <!-- Tassels -->
+                        <path d="M60 590 L68 616 M100 590 L108 616 M140 590 L148 616 M180 590 L188 616 M220 590 L228 616 M260 590 L268 616 M300 590 L308 616 M340 590 L348 616 M380 590 L388 616 M420 590 L428 616 M460 590 L468 616 M500 590 L508 616 M540 590 L548 616" stroke="#8B7355" stroke-width="1.2"/>
+                        <!-- Texture lines -->
+                        <g stroke="#C4B59A" stroke-width="0.4" opacity="0.3">
+                            <line x1="80" y1="160" x2="520" y2="160"/>
+                            <line x1="80" y1="200" x2="520" y2="200"/>
+                            <line x1="80" y1="240" x2="520" y2="240"/>
+                            <line x1="80" y1="280" x2="520" y2="280"/>
+                            <line x1="80" y1="420" x2="520" y2="420"/>
+                            <line x1="80" y1="460" x2="520" y2="460"/>
+                            <line x1="80" y1="500" x2="520" y2="500"/>
+                            <line x1="80" y1="540" x2="520" y2="540"/>
+                        </g>
+                        <!-- Badge -->
+                        <rect x="40" y="40" width="100" height="28" rx="3" fill="#A8B5A0"/>
+                        <text x="90" y="58" text-anchor="middle" font-family="Jost" font-size="10" fill="#F5F1EA" font-weight="600" letter-spacing="1.5">BESTSELLER</text>
+                    </svg>
+                </div>
+                <div class="gallery-thumbs">
+                    <button class="thumb active" onclick="switchImage(this, 0)">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%"><rect width="100" height="100" fill="#F5F1EA"/><rect x="15" y="25" width="70" height="50" rx="2" fill="#E8E0D5"/><line x1="15" y1="30" x2="85" y2="30" stroke="#C4B59A" stroke-width="0.6"/><circle cx="50" cy="50" r="10" fill="#D4C5A9" opacity="0.4"/></svg>
+                    </button>
+                    <button class="thumb" onclick="switchImage(this, 1)">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%"><rect width="100" height="100" fill="#E8E0D5"/><rect x="20" y="15" width="60" height="70" rx="2" fill="#D4C5A9" opacity="0.4"/><g stroke="#8B7355" stroke-width="0.5" opacity="0.3"><line x1="25" y1="30" x2="75" y2="30"/><line x1="25" y1="45" x2="75" y2="45"/><line x1="25" y1="60" x2="75" y2="60"/><line x1="25" y1="75" x2="75" y2="75"/></g></svg>
+                    </button>
+                    <button class="thumb" onclick="switchImage(this, 2)">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%"><rect width="100" height="100" fill="#D4C5A9"/><path d="M20 80 L25 92 M35 80 L40 92 M50 80 L55 92 M65 80 L70 92 M80 80 L85 92" stroke="#8B7355" stroke-width="1"/><rect x="15" y="20" width="70" height="55" rx="2" fill="#E8E0D5" opacity="0.6"/></svg>
+                    </button>
+                    <button class="thumb" onclick="switchImage(this, 3)">
+                        <svg viewBox="0 0 100 100" width="100%" height="100%"><rect width="100" height="100" fill="#E8E0D5"/><circle cx="50" cy="50" r="25" fill="none" stroke="#8B7355" stroke-width="1"/><circle cx="50" cy="50" r="15" fill="#D4C5A9" opacity="0.3"/><text x="50" y="80" text-anchor="middle" font-family="Cormorant Garamond" font-size="8" fill="#8B7355" opacity="0.4" font-style="italic">detail</text></svg>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Product Info -->
+            <div class="pdp-info">
+                <div class="pdp-brand-tag">
+                    <span class="qv-tag">Bestseller</span>
+                    <span class="pdp-sku">SKU: AD-LN-001</span>
+                </div>
+                <h1 class="pdp-title">Cotton Linen Tablecloth with Tassels</h1>
+                <div class="pdp-rating-row">
+                    <span class="pdp-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                    <span class="pdp-rating-text">4.9 &middot; 47 reviews</span>
+                    <a href="#reviews" class="pdp-read-reviews">Read reviews &rarr;</a>
+                </div>
+                <div class="pdp-price-row">
+                    <span class="pdp-price">&euro;23.10</span>
+                    <span class="pdp-price-note">Taxes included</span>
+                </div>
+                <p class="pdp-short-desc">Woven from 100% natural cotton linen, this tablecloth brings soft, organic texture to your table. Hand-knotted tassels add artisanal charm. Gets softer with every wash.</p>
+
+                <!-- Size Selector -->
+                <div class="pdp-option">
+                    <p class="pdp-option-label">Size <span class="pdp-option-hint">Size guide &rarr;</span></p>
+                    <div class="pdp-variant-options">
+                        <button class="variant-option" onclick="selectVariant(this, 'size')">120&times;180cm</button>
+                        <button class="variant-option active" onclick="selectVariant(this, 'size')">140&times;200cm</button>
+                        <button class="variant-option" onclick="selectVariant(this, 'size')">140&times;220cm</button>
+                        <button class="variant-option" onclick="selectVariant(this, 'size')">160&times;230cm</button>
+                    </div>
+                </div>
+
+                <!-- Color Selector -->
+                <div class="pdp-option">
+                    <p class="pdp-option-label">Color</p>
+                    <div class="pdp-variant-options">
+                        <button class="variant-option color-option active" onclick="selectVariant(this, 'color')">
+                            <span class="color-swatch" style="background:#F5F1EA; border:1px solid #C4B59A;"></span>
+                            Natural White
+                        </button>
+                        <button class="variant-option color-option" onclick="selectVariant(this, 'color')">
+                            <span class="color-swatch" style="background:#E8E0D5;"></span>
+                            Oatmeal
+                        </button>
+                        <button class="variant-option color-option" onclick="selectVariant(this, 'color')">
+                            <span class="color-swatch" style="background:#8B7355;"></span>
+                            Walnut
+                        </button>
+                        <button class="variant-option color-option" onclick="selectVariant(this, 'color')">
+                            <span class="color-swatch" style="background:#3D3530;"></span>
+                            Charcoal
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Quantity + Add to Cart -->
+                <div class="pdp-purchase">
+                    <div class="pdp-qty-wrap">
+                        <p class="pdp-option-label">Quantity</p>
+                        <div class="qty-selector pdp-qty">
+                            <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                            <span class="qty-value">1</span>
+                            <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                        </div>
+                    </div>
+                    <div class="pdp-actions">
+                        <button class="btn-primary btn-large pdp-add-cart" onclick="addToCartPDP()">Add to Cart &mdash; &euro;23.10</button>
+                        <button class="pdp-wishlist" aria-label="Add to wishlist">
+                            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Trust Badges -->
+                <div class="pdp-trust">
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M9 12l2 2 4-4"/></svg>
+                        <span>In stock &mdash; ships in 1-2 days</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="1" y="3" width="15" height="13" rx="1"/><path d="M16 8h4l3 3v5h-7"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                        <span>Free EU shipping over &euro;49</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 12a9 9 0 1018 0 9 9 0 00-18 0z"/><path d="M3 12h18M12 3a14 14 0 010 18M12 3a14 14 0 000 18"/></svg>
+                        <span>30-day returns &mdash; no questions asked</span>
+                    </div>
+                    <div class="trust-item">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M12 2L3 7v5c0 5 3.5 9 9 10 5.5-1 9-5 9-10V7z"/></svg>
+                        <span>Plastic-free packaging &mdash; always</span>
+                    </div>
+                </div>
+
+                <!-- Payment Icons -->
+                <div class="pdp-payment">
+                    <span class="pdp-payment-label">Secure payment:</span>
+                    <div class="payment-icons">
+                        <span class="pay-icon">VISA</span>
+                        <span class="pay-icon">MC</span>
+                        <span class="pay-icon">PayPal</span>
+                        <span class="pay-icon">Klarna</span>
+                        <span class="pay-icon">&#63743;Pay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ TABS / ACCORDION ============ -->
+<section class="pdp-tabs-section">
+    <div class="container">
+        <div class="pdp-tabs">
+            <button class="pdp-tab active" onclick="switchTab(this, 'tab-description')">Description</button>
+            <button class="pdp-tab" onclick="switchTab(this, 'tab-materials')">Materials &amp; Care</button>
+            <button class="pdp-tab" onclick="switchTab(this, 'tab-shipping')">Shipping &amp; Returns</button>
+            <button class="pdp-tab" onclick="switchTab(this, 'tab-reviews')">Reviews (47)</button>
+        </div>
+        <div class="pdp-tab-content">
+            <!-- Description Tab -->
+            <div class="tab-panel active" id="tab-description">
+                <div class="tab-content-grid">
+                    <div class="tab-text">
+                        <h3>The everyday tablecloth, reimagined.</h3>
+                        <p>Our cotton linen tablecloth is woven from 100% natural fibers on traditional looms in Shandong, China &mdash; a region with centuries of textile craft heritage. The weave is tight enough for durability but loose enough to breathe, giving it that characteristic linen texture that softens beautifully with each wash.</p>
+                        <p>The hand-knotted tassels along both ends are made by the same artisans who weave the fabric. No two are exactly alike &mdash; and that's the point. Each tablecloth carries the subtle irregularities of handwork, the marks that distinguish craft from mass production.</p>
+                        <p>Use it for everyday meals or special gatherings. It works equally well over a bare wooden table or layered over a solid table cover. The more you wash it, the softer it becomes.</p>
+                    </div>
+                    <div class="tab-features">
+                        <div class="tab-feature">
+                            <span class="tab-feature-icon">&#127807;</span>
+                            <div>
+                                <h4>100% Cotton Linen</h4>
+                                <p>Natural fiber blend, no synthetics</p>
+                            </div>
+                        </div>
+                        <div class="tab-feature">
+                            <span class="tab-feature-icon">&#9995;</span>
+                            <div>
+                                <h4>Hand-Knotted Tassels</h4>
+                                <p>Each tassel tied by hand</p>
+                            </div>
+                        </div>
+                        <div class="tab-feature">
+                            <span class="tab-feature-icon">&#128087;</span>
+                            <div>
+                                <h4>Gets Softer With Wash</h4>
+                                <p>Pre-washed, ready to use</p>
+                            </div>
+                        </div>
+                        <div class="tab-feature">
+                            <span class="tab-feature-icon">&#9855;</span>
+                            <div>
+                                <h4>Oeko-Tex Certified</h4>
+                                <p>Tested for harmful substances</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Materials & Care Tab -->
+            <div class="tab-panel" id="tab-materials">
+                <div class="tab-content-narrow">
+                    <h3>Materials</h3>
+                    <ul class="tab-list">
+                        <li><strong>Composition:</strong> 55% Cotton, 45% Linen</li>
+                        <li><strong>Weight:</strong> 180 g/m&sup2; (medium weight)</li>
+                        <li><strong>Origin:</strong> Woven in Shandong, China</li>
+                        <li><strong>Certification:</strong> Oeko-Tex Standard 100, REACH compliant</li>
+                        <li><strong>Dye:</strong> Reactive dye, low-impact, AZO-free</li>
+                    </ul>
+                    <h3 class="tab-subheading">Care Instructions</h3>
+                    <ul class="tab-list">
+                        <li>Machine wash at 30&deg;C on gentle cycle</li>
+                        <li>Do not bleach. Use mild detergent only.</li>
+                        <li>Tumble dry low or line dry. Linen wrinkles naturally &mdash; embrace it or iron on medium heat while damp.</li>
+                        <li>Gets softer with each wash. Pre-shrunk during manufacturing.</li>
+                        <li>Avoid fabric softeners &mdash; they coat natural fibers and reduce absorbency.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Shipping & Returns Tab -->
+            <div class="tab-panel" id="tab-shipping">
+                <div class="tab-content-narrow">
+                    <h3>Shipping</h3>
+                    <ul class="tab-list">
+                        <li><strong>Free shipping</strong> on all EU orders over &euro;49</li>
+                        <li><strong>Standard delivery:</strong> 3-5 business days within Germany, 5-8 business days EU-wide</li>
+                        <li><strong>Express delivery:</strong> 1-2 business days (Germany only, &euro;9.90 surcharge)</li>
+                        <li><strong>Dispatch:</strong> Orders placed before 14:00 CET ship same day</li>
+                        <li><strong>Tracking:</strong> You'll receive a tracking link via email once your order ships</li>
+                        <li><strong>Packaging:</strong> Plastic-free. Recycled kraft paper, natural twine, compostable mailer.</li>
+                    </ul>
+                    <h3 class="tab-subheading">Returns</h3>
+                    <ul class="tab-list">
+                        <li><strong>30-day return policy</strong> &mdash; no questions asked</li>
+                        <li>Items must be unused and in original packaging</li>
+                        <li>Free return shipping within Germany</li>
+                        <li>EU returns: customer covers return shipping</li>
+                        <li>Refunds processed within 5 business days of receiving returned items</li>
+                        <li>See our <a href="#" style="color:var(--walnut-brown); text-decoration:underline;">Widerrufsrecht</a> page for full legal terms</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Reviews Tab -->
+            <div class="tab-panel" id="tab-reviews">
+                <div class="reviews-layout">
+                    <div class="reviews-summary">
+                        <div class="reviews-score">
+                            <span class="reviews-score-num">4.9</span>
+                            <span class="reviews-score-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                            <span class="reviews-score-count">Based on 47 reviews</span>
+                        </div>
+                        <div class="reviews-breakdown">
+                            <div class="review-bar"><span>5&#9733;</span><div class="bar-track"><div class="bar-fill" style="width:89%;"></div></div><span>42</span></div>
+                            <div class="review-bar"><span>4&#9733;</span><div class="bar-track"><div class="bar-fill" style="width:9%;"></div></div><span>4</span></div>
+                            <div class="review-bar"><span>3&#9733;</span><div class="bar-track"><div class="bar-fill" style="width:2%;"></div></div><span>1</span></div>
+                            <div class="review-bar"><span>2&#9733;</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span>0</span></div>
+                            <div class="review-bar"><span>1&#9733;</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span>0</span></div>
+                        </div>
+                        <button class="btn-secondary btn-small">Write a Review</button>
+                    </div>
+                    <div class="reviews-list">
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">Sofia M.</span>
+                                <span class="review-date">June 2026</span>
+                                <span class="review-verified">&#10003; Verified Purchase</span>
+                            </div>
+                            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                            <h4 class="review-title">Beautiful, natural, and gets softer every wash</h4>
+                            <p class="review-text">I've had this tablecloth for three months now and it keeps getting better. The linen has that gorgeous organic texture that makes even a simple breakfast feel special. The tassels are hand-knotted and you can tell &mdash; each one is slightly different. Exactly what I wanted.</p>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">Thomas K.</span>
+                                <span class="review-date">May 2026</span>
+                                <span class="review-verified">&#10003; Verified Purchase</span>
+                            </div>
+                            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                            <h4 class="review-title">Perfect wabi-sabi aesthetic</h4>
+                            <p class="review-text">Bought the oatmeal color for our wooden dining table. The texture is wonderful and the natural wrinkling adds character. My wife loves it. Shipping was fast and the plastic-free packaging was a nice touch.</p>
+                        </div>
+                        <div class="review-item">
+                            <div class="review-header">
+                                <span class="review-author">Anna L.</span>
+                                <span class="review-date">May 2026</span>
+                                <span class="review-verified">&#10003; Verified Purchase</span>
+                            </div>
+                            <span class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+                            <h4 class="review-title">Great quality, great price</h4>
+                            <p class="review-text">I was hesitant to buy linen online but this exceeded expectations. The weight is substantial, not flimsy. The tassels are a beautiful detail. Will definitely order more in different colors.</p>
+                        </div>
+                        <button class="btn-text reviews-load-more">Load more reviews &rarr;</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- ============ RELATED PRODUCTS ============ -->
+<section class="section pdp-related">
+    <div class="container">
+        <div class="section-header">
+            <span class="section-eyebrow">You May Also Like</span>
+            <h2 class="section-title">Complete the Look</h2>
+        </div>
+        <div class="product-grid" id="relatedGrid"></div>
+    </div>
+</section>
+
+<!-- ============ NEWSLETTER ============ -->
+<section class="section section-newsletter">
+    <div class="container">
+        <div class="newsletter-box">
+            <span class="newsletter-script">Join us</span>
+            <h2 class="section-title">Become part of the<br>natural living community</h2>
+            <p>Get <strong>10% off your first order</strong>. Plus: new arrivals, artisan stories, and slow living inspiration.</p>
+            <form class="newsletter-form" onsubmit="event.preventDefault(); subscribeNewsletter();">
+                <input type="email" placeholder="Your email address" required class="newsletter-input" id="newsletterEmail">
+                <button type="submit" class="btn-primary" id="newsletterBtn">Subscribe</button>
+            </form>
+            <p class="newsletter-fineprint">By subscribing you agree to our <a href="#">Privacy Policy</a>. Unsubscribe anytime.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ============ FOOTER ============ -->
+<footer class="site-footer">
+    <div class="footer-main">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-col footer-brand">
+                    <div class="logo footer-logo">
+                        <span class="logo-wordmark">aeladaily</span>
+                        <span class="logo-subtitle">Natural Daily</span>
+                    </div>
+                    <p class="footer-desc">Natural materials. Handcrafted. Made for daily life. We bring wabi-sabi aesthetics into everyday European homes.</p>
+                    <div class="social-links">
+                        <a href="#" class="social-link" aria-label="Instagram"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Pinterest"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 20l4-8M12 4c-3 0-5 2-5 4s2 3 3 3 2-1 2-3"/></svg></a>
+                        <a href="#" class="social-link" aria-label="Facebook"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg></a>
+                        <a href="#" class="social-link" aria-label="TikTok"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 12a4 4 0 104 4V4a5 5 0 005 5"/></svg></a>
+                    </div>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Shop</h4>
+                    <ul class="footer-links">
+                        <li><a href="collection.html">All Products</a></li>
+                        <li><a href="collection.html?cat=linen">Linen &amp; Textiles</a></li>
+                        <li><a href="collection.html?cat=woven">Woven Decor</a></li>
+                        <li><a href="collection.html?cat=kitchen">Kitchen Naturals</a></li>
+                        <li><a href="collection.html?cat=aromatherapy">Aromatherapy</a></li>
+                        <li><a href="collection.html?cat=lifestyle">Lifestyle</a></li>
+                        <li><a href="collection.html?cat=sale">Sale</a></li>
+                        <li><a href="#">Gift Cards</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Company</h4>
+                    <ul class="footer-links">
+                        <li><a href="about.html">Our Story</a></li>
+                        <li><a href="#">Journal</a></li>
+                        <li><a href="#">Sustainability</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Wholesale</a></li>
+                        <li><a href="#">Press</a></li>
+                    </ul>
+                </div>
+                <div class="footer-col">
+                    <h4 class="footer-heading">Help &amp; Contact</h4>
+                    <ul class="footer-links">
+                        <li><a href="#">FAQ</a></li>
+                        <li><a href="#">Shipping &amp; Returns</a></li>
+                        <li><a href="#">Contact Us</a></li>
+                        <li><a href="#">Track Your Order</a></li>
+                        <li><a href="#">Size Guide</a></li>
+                    </ul>
+                    <p class="footer-contact-email">hello@aeladaily.com</p>
+                    <p class="footer-contact-hours">Mon&ndash;Fri 9&ndash;17 CET</p>
+                    <div class="payment-icons">
+                        <span class="pay-icon">VISA</span>
+                        <span class="pay-icon">MC</span>
+                        <span class="pay-icon">PayPal</span>
+                        <span class="pay-icon">Klarna</span>
+                        <span class="pay-icon">&#63743;Pay</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="footer-legal">
+        <div class="container">
+            <div class="legal-inner">
+                <p>&copy; 2026 AELADAILY &middot; Natural Daily</p>
+                <div class="legal-links">
+                    <a href="#">Privacy Policy</a>
+                    <a href="#">Terms</a>
+                    <a href="#">Impressum</a>
+                    <a href="#">Widerrufsrecht</a>
+                    <a href="#" onclick="openCookieSettings(); return false;">Cookie Settings</a>
+                </div>
+                <p class="made-with">Made with &#10084; for natural living</p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- ============ QUICK VIEW MODAL ============ -->
+<div class="qv-overlay" id="qvOverlay" onclick="closeQuickView()"></div>
+<div class="qv-modal" id="qvModal">
+    <button class="qv-close overlay-close" onclick="closeQuickView()" aria-label="Close">&times;</button>
+    <div class="qv-content">
+        <div class="qv-image" id="qvImage"></div>
+        <div class="qv-info">
+            <span class="qv-tag" id="qvTag"></span>
+            <h3 class="qv-name" id="qvName"></h3>
+            <p class="qv-price" id="qvPrice"></p>
+            <div class="qv-rating" id="qvRating"></div>
+            <p class="qv-desc" id="qvDesc"></p>
+            <div class="qv-options">
+                <p class="qv-option-label">Quantity</p>
+                <div class="qty-selector qv-qty">
+                    <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                    <span class="qty-value">1</span>
+                    <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+                </div>
+            </div>
+            <button class="btn-primary btn-full qv-add-btn" onclick="addToCartFromQV()">Add to Cart &rarr;</button>
+            <div class="qv-meta">
+                <p>&#10003; In stock &mdash; ships in 1-2 days</p>
+                <p>&#10003; Free shipping over &euro;49</p>
+                <p>&#10003; 30-day returns</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ============ COOKIE BANNER ============ -->
+<div class="cookie-banner" id="cookieBanner">
+    <div class="cookie-content">
+        <p>We use cookies to enhance your browsing experience. By continuing to browse, you agree to our <a href="#">Cookie Policy</a>.</p>
+        <div class="cookie-actions">
+            <button class="btn-text" onclick="openCookieSettings()">Settings</button>
+            <button class="btn-primary btn-small" onclick="acceptCookies()">Accept All</button>
+        </div>
+    </div>
+</div>
+
+<script src="js/products.js"></script>
+<script src="js/main.js"></script>
+<script>
+// ============ PDP GALLERY ============
+function switchImage(thumb, index) {
+    document.querySelectorAll('.thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+    // In a real implementation, this would swap the main image
+    showToast(`View ${index + 1}`);
+}
+
+// ============ VARIANT SELECTOR ============
+function selectVariant(btn, type) {
+    const siblings = btn.parentElement.querySelectorAll('.variant-option');
+    siblings.forEach(s => s.classList.remove('active'));
+    btn.classList.add('active');
+}
+
+// ============ TABS ============
+function switchTab(tabBtn, panelId) {
+    document.querySelectorAll('.pdp-tab').forEach(t => t.classList.remove('active'));
+    document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+    tabBtn.classList.add('active');
+    document.getElementById(panelId).classList.add('active');
+}
+
+// ============ ADD TO CART (PDP) ============
+function addToCartPDP() {
+    showToast('Added to cart!');
+    setTimeout(() => toggleCart(), 400);
+}
+
+// ============ RENDER RELATED PRODUCTS ============
+document.addEventListener('DOMContentLoaded', () => {
+    // Render related products (show new arrivals as "related")
+    if (typeof PRODUCTS !== 'undefined') {
+        renderProducts(PRODUCTS.newArrivals, 'relatedGrid');
+    }
+});
+</script>
+</body>
+</html>
