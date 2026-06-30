@@ -1,0 +1,28 @@
+<!-- Quick View Modal Snippet -->
+<div class="qv-overlay" id="qvOverlay" onclick="closeQuickView()"></div>
+<div class="qv-modal" id="qvModal" aria-modal="true" role="dialog">
+  <button class="qv-close overlay-close" onclick="closeQuickView()" aria-label="Close">&times;</button>
+  <div class="qv-content" id="qvContent">
+    <div class="qv-image" id="qvImage"></div>
+    <div class="qv-info">
+      <span class="qv-tag" id="qvTag"></span>
+      <h3 class="qv-name" id="qvName"></h3>
+      <p class="qv-price" id="qvPrice"></p>
+      <p class="qv-desc" id="qvDesc"></p>
+      <div class="qv-options">
+        <p class="qv-option-label">Quantity</p>
+        <div class="qty-selector qv-qty">
+          <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+          <span class="qty-value">1</span>
+          <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+        </div>
+      </div>
+      <button class="btn-primary btn-full qv-add-btn" id="qvAddBtn">Add to Cart &rarr;</button>
+      <div class="qv-meta">
+        <p>&#10003; In stock &mdash; ships in 1-2 days</p>
+        <p>&#10003; Free shipping over &euro;49</p>
+        <p>&#10003; 30-day returns</p>
+      </div>
+    </div>
+  </div>
+</div>

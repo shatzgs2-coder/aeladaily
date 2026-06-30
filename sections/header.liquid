@@ -1,0 +1,131 @@
+<!-- Mobile Menu Overlay -->
+<div class="mobile-menu-overlay" id="mobileMenu">
+  <div class="mobile-menu-inner">
+    <button class="mobile-close" onclick="toggleMobileMenu()" aria-label="Close menu">&times;</button>
+    <div class="mobile-logo">
+      <span class="logo-wordmark">{{ shop.name }}</span>
+      <span class="logo-subtitle">Natural Daily</span>
+    </div>
+    <nav class="mobile-nav">
+      <a href="{{ routes.root_url }}" class="mobile-link">Home</a>
+      <a href="{{ routes.all_products_collection_url }}" class="mobile-link">Shop All</a>
+      <div class="mobile-submenu">
+        <span class="mobile-submenu-title">Collections</span>
+        {%- for collection in collections -%}
+          {%- unless collection.handle == 'frontpage' -%}
+            <a href="{{ collection.url }}" class="mobile-sublink">{{ collection.title }}</a>
+          {%- endunless -%}
+        {%- endfor -%}
+      </div>
+      <a href="{{ pages['our-story'].url | default: '/pages/our-story' }}" class="mobile-link">Our Story</a>
+      <a href="{{ blogs['journal'].url | default: '/blogs/journal' }}" class="mobile-link">Journal</a>
+      <a href="{{ routes.contact_url }}" class="mobile-link">Contact</a>
+    </nav>
+    <div class="mobile-footer">
+      <a href="{{ routes.account_url }}">Account</a>
+      <a href="{{ routes.cart_url }}">Cart ({{ cart.item_count }})</a>
+    </div>
+  </div>
+</div>
+
+<!-- Site Header -->
+<header class="site-header" id="siteHeader">
+  <div class="header-inner">
+    <nav class="nav-left">
+      <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+      <div class="nav-dropdown">
+        <a href="{{ routes.all_products_collection_url }}" class="nav-link">Shop <span class="nav-caret">&#8964;</span></a>
+        <div class="mega-menu">
+          <div class="mega-menu-inner">
+            <div class="mega-col">
+              <h5 class="mega-heading">Collections</h5>
+              {%- for collection in collections limit: 5 -%}
+                {%- unless collection.handle == 'frontpage' -%}
+                  <a href="{{ collection.url }}" class="mega-link">{{ collection.title }}</a>
+                {%- endunless -%}
+              {%- endfor -%}
+            </div>
+            <div class="mega-col">
+              <h5 class="mega-heading">Featured</h5>
+              <a href="/collections/sale" class="mega-link sale">Sale</a>
+              <a href="/collections/new-arrivals" class="mega-link">New Arrivals</a>
+              <a href="/collections/bestsellers" class="mega-link">Bestsellers</a>
+              <a href="/products/gift-card" class="mega-link">Gift Cards</a>
+              <a href="/pages/gift-guide" class="mega-link">Gift Guides</a>
+            </div>
+            <div class="mega-feature">
+              <div class="mega-feature-img autumn-bg">
+                {%- if settings.mega_menu_image != blank -%}
+                  {{ settings.mega_menu_image | image_url: width: 300 | image_tag: class: 'mega-img' }}
+                {%- else -%}
+                  <svg viewBox="0 0 200 120" width="100%" height="100%"><rect width="200" height="120" fill="#E8E0D5"/><text x="100" y="65" text-anchor="middle" font-family="Cormorant Garamond" font-size="14" fill="#8B7355" font-style="italic">Autumn Edit</text></svg>
+                {%- endif -%}
+              </div>
+              <p class="mega-feature-text">Cozy textures for the season</p>
+              <a href="{{ routes.all_products_collection_url }}" class="mega-feature-link">Discover &rarr;</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <a href="{{ pages['our-story'].url | default: '/pages/our-story' }}" class="nav-link">Our Story</a>
+      <a href="{{ blogs['journal'].url | default: '/blogs/journal' }}" class="nav-link">Journal</a>
+    </nav>
+
+    <div class="logo-center">
+      <a href="{{ routes.root_url }}" class="logo">
+        {%- if settings.logo != blank -%}
+          {{ settings.logo | image_url: width: 160 | image_tag: class: 'logo-img', alt: shop.name }}
+        {%- else -%}
+          <span class="logo-wordmark">{{ shop.name }}</span>
+          <span class="logo-subtitle">Natural Daily</span>
+        {%- endif -%}
+      </a>
+    </div>
+
+    <div class="nav-right">
+      <button class="icon-btn" onclick="toggleSearch()" aria-label="{{ 'general.search.search' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      </button>
+      <a href="{{ routes.account_url }}" class="icon-btn" aria-label="{{ 'customer.account.title' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+      </a>
+      <button class="icon-btn cart-btn" onclick="toggleCart()" aria-label="{{ 'sections.cart.title' | t }}">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count">{{ cart.item_count }}</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Category Bar -->
+  <div class="category-bar">
+    <div class="category-inner">
+      {%- for collection in collections limit: 7 -%}
+        {%- unless collection.handle == 'frontpage' -%}
+          <a href="{{ collection.url }}" class="cat-link {% if collection.handle == 'sale' %}sale-link{% endif %}">
+            {{ collection.title }}
+          </a>
+        {%- endunless -%}
+      {%- endfor -%}
+    </div>
+  </div>
+</header>
+
+{% schema %}
+{
+  "name": "Header",
+  "settings": [
+    {
+      "type": "image_picker",
+      "id": "logo",
+      "label": "Logo image"
+    },
+    {
+      "type": "image_picker",
+      "id": "mega_menu_image",
+      "label": "Mega menu featured image"
+    }
+  ]
+}
+{% endschema %}

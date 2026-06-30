@@ -1,0 +1,126 @@
+<!-- Footer Section -->
+<footer class="site-footer">
+  <div class="footer-main">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-col footer-brand">
+          <div class="logo footer-logo">
+            {%- if settings.logo != blank -%}
+              {{ settings.logo | image_url: width: 140 | image_tag: class: 'footer-logo-img', alt: shop.name }}
+            {%- else -%}
+              <span class="logo-wordmark">{{ shop.name }}</span>
+              <span class="logo-subtitle">Natural Daily</span>
+            {%- endif -%}
+          </div>
+          <p class="footer-desc">Natural materials. Handcrafted. Made for daily life. We bring wabi-sabi aesthetics into everyday European homes.</p>
+          <div class="social-links">
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
+              </a>
+            {%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}
+              <a href="{{ settings.social_pinterest_link }}" class="social-link" aria-label="Pinterest" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 20l4-8M12 4c-3 0-5 2-5 4s2 3 3 3 2-1 2-3"/></svg>
+              </a>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <a href="{{ settings.social_facebook_link }}" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Shop</h4>
+          <ul class="footer-links">
+            <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+            {%- for collection in collections limit: 6 -%}
+              {%- unless collection.handle == 'frontpage' -%}
+                <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+              {%- endunless -%}
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-links">
+            <li><a href="{{ pages['our-story'].url | default: '/pages/our-story' }}">Our Story</a></li>
+            <li><a href="{{ blogs['journal'].url | default: '/blogs/journal' }}">Journal</a></li>
+            <li><a href="{{ pages['sustainability'].url | default: '/pages/sustainability' }}">Sustainability</a></li>
+            <li><a href="{{ pages['wholesale'].url | default: '/pages/wholesale' }}">Wholesale</a></li>
+            <li><a href="{{ pages['press'].url | default: '/pages/press' }}">Press</a></li>
+          </ul>
+        </div>
+
+        <div class="footer-col">
+          <h4 class="footer-heading">Help &amp; Contact</h4>
+          <ul class="footer-links">
+            <li><a href="{{ pages['faq'].url | default: '/pages/faq' }}">FAQ</a></li>
+            <li><a href="{{ pages['shipping-returns'].url | default: '/pages/shipping-returns' }}">Shipping &amp; Returns</a></li>
+            <li><a href="{{ routes.contact_url }}">Contact Us</a></li>
+            <li><a href="{{ pages['track-order'].url | default: '/pages/track-order' }}">Track Your Order</a></li>
+          </ul>
+          <p class="footer-contact-email">{{ settings.contact_email | default: 'hello@aeladaily.com' }}</p>
+          <p class="footer-contact-hours">Mon&ndash;Fri 9&ndash;17 CET</p>
+          <div class="payment-icons">
+            {%- for type in shop.enabled_payment_types -%}
+              {{ type | payment_type_svg_tag: class: 'pay-icon-img' }}
+            {%- endfor -%}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer-legal">
+    <div class="container">
+      <div class="legal-inner">
+        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} &middot; Natural Daily</p>
+        <div class="legal-links">
+          <a href="{{ pages['privacy-policy'].url | default: routes.privacy_policy_url }}">Privacy Policy</a>
+          <a href="{{ pages['terms'].url | default: routes.terms_of_service_url }}">Terms</a>
+          <a href="{{ pages['impressum'].url | default: '/pages/impressum' }}">Impressum</a>
+          <a href="{{ pages['widerrufsrecht'].url | default: '/pages/widerrufsrecht' }}">Widerrufsrecht</a>
+          <a href="#" onclick="openCookieSettings(); return false;">Cookie Settings</a>
+        </div>
+        <p class="made-with">Made with &#10084; for natural living</p>
+      </div>
+    </div>
+  </div>
+</footer>
+
+{% schema %}
+{
+  "name": "Footer",
+  "settings": [
+    {
+      "type": "text",
+      "id": "contact_email",
+      "label": "Contact Email",
+      "default": "hello@aeladaily.com"
+    },
+    {
+      "type": "header",
+      "content": "Social Media"
+    },
+    {
+      "type": "url",
+      "id": "social_instagram_link",
+      "label": "Instagram URL"
+    },
+    {
+      "type": "url",
+      "id": "social_pinterest_link",
+      "label": "Pinterest URL"
+    },
+    {
+      "type": "url",
+      "id": "social_facebook_link",
+      "label": "Facebook URL"
+    }
+  ]
+}
+{% endschema %}

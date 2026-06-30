@@ -1,0 +1,9 @@
+<!-- Page Template - Used for Our Story, Impressum, etc. -->
+<div class="page-static container" style="max-width: 800px; margin: 0 auto; padding: 80px 20px;">
+  {%- if page.title != blank -%}
+    <h1 style="font-family: var(--font-heading); font-size: 42px; margin-bottom: 40px;">{{ page.title }}</h1>
+  {%- endif -%}
+  <div class="page-content rte">
+    {{ page.content }}
+  </div>
+</div>

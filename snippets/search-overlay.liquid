@@ -1,0 +1,21 @@
+<!-- Search Overlay Snippet -->
+<div class="search-overlay" id="searchOverlay">
+  <div class="search-content">
+    <button class="overlay-close" onclick="toggleSearch()" aria-label="Close search">&times;</button>
+    <p class="search-label">Search</p>
+    <form action="{{ routes.search_url }}" method="get">
+      <input type="hidden" name="type" value="product">
+      <input type="search" name="q" placeholder="What are you looking for?" class="search-input" id="searchInput" autofocus autocomplete="off">
+    </form>
+    <div class="search-suggestions">
+      <p class="search-hint">Popular searches</p>
+      <div class="search-tags">
+        <a href="{{ routes.search_url }}?type=product&q=tablecloth" class="search-tag">Tablecloth</a>
+        <a href="{{ routes.search_url }}?type=product&q=basket" class="search-tag">Basket</a>
+        <a href="{{ routes.search_url }}?type=product&q=candle" class="search-tag">Candle</a>
+        <a href="{{ routes.search_url }}?type=product&q=cushion" class="search-tag">Cushion</a>
+        <a href="{{ routes.search_url }}?type=product&q=macrame" class="search-tag">Macrame</a>
+      </div>
+    </div>
+  </div>
+</div>

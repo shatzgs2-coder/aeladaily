@@ -1,0 +1,70 @@
+<!-- Cart Drawer Snippet -->
+<div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
+<aside class="cart-drawer" id="cartDrawer" aria-label="{{ 'sections.cart.title' | t | default: 'Cart' }}">
+  <div class="cart-header">
+    <h3 class="cart-title">Your Cart <span class="cart-count-inline" id="cartCountInline">({{ cart.item_count }})</span></h3>
+    <button class="overlay-close small" onclick="toggleCart()" aria-label="Close cart">&times;</button>
+  </div>
+
+  {%- assign free_shipping_threshold = 4900 -%}
+  {%- assign remaining = free_shipping_threshold | minus: cart.total_price -%}
+  <div class="cart-free-ship-bar">
+    {%- if cart.total_price >= free_shipping_threshold -%}
+      <div class="free-ship-progress" style="width: 100%;"></div>
+      <p class="free-ship-text">You've unlocked free shipping! &#127881;</p>
+    {%- else -%}
+      <div class="free-ship-progress" style="width: {{ cart.total_price | times: 100 | divided_by: free_shipping_threshold }}%;"></div>
+      <p class="free-ship-text">Add {{ remaining | money }} more for free shipping</p>
+    {%- endif -%}
+  </div>
+
+  <div class="cart-items" id="cartItemsContainer">
+    {%- for item in cart.items -%}
+      <div class="cart-item" data-line="{{ forloop.index }}">
+        <div class="cart-item-img">
+          {%- if item.image != blank -%}
+            {{ item.image | image_url: width: 120 | image_tag: alt: item.title, style: 'width: 50px; height: 50px; object-fit: cover; border-radius: 2px;' }}
+          {%- else -%}
+            <div style="width:50px;height:50px;background:var(--cream);display:flex;align-items:center;justify-content:center;border-radius:2px;">
+              <svg viewBox="0 0 50 50" width="40" height="40"><rect width="50" height="50" fill="#F5F1EA"/></svg>
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="cart-item-info">
+          <p class="cart-item-name">{{ item.product.title }}</p>
+          {%- unless item.variant.title == 'Default Title' -%}
+            <p class="cart-item-variant">{{ item.variant.title }}</p>
+          {%- endunless -%}
+          <div class="cart-item-bottom">
+            <div class="qty-selector">
+              <button class="qty-btn" onclick="updateCartQty('{{ item.key }}', {{ item.quantity | minus: 1 }})">&minus;</button>
+              <span class="qty-value">{{ item.quantity }}</span>
+              <button class="qty-btn" onclick="updateCartQty('{{ item.key }}', {{ item.quantity | plus: 1 }})">&plus;</button>
+            </div>
+            <p class="cart-item-price">{{ item.line_price | money }}</p>
+          </div>
+        </div>
+        <button class="cart-item-remove" onclick="updateCartQty('{{ item.key }}', 0)" aria-label="Remove">&times;</button>
+      </div>
+    {%- else -%}
+      <div class="cart-empty" style="text-align:center; padding: 40px 20px;">
+        <p style="font-family: var(--font-heading); font-size: 18px; margin-bottom: 16px;">Your cart is empty</p>
+        <a href="{{ routes.all_products_collection_url }}" class="btn-secondary" onclick="toggleCart()">Start Shopping</a>
+      </div>
+    {%- endfor -%}
+  </div>
+
+  {%- if cart.item_count > 0 -%}
+    <div class="cart-footer">
+      <div class="cart-note">
+        <input type="checkbox" id="giftWrap" class="cart-checkbox">
+        <label for="giftWrap">Add gift wrapping <span class="gift-price">(+&euro;3.50)</span></label>
+      </div>
+      <div class="cart-summary"><span>Subtotal</span><span>{{ cart.total_price | money }}</span></div>
+      <div class="cart-summary"><span>Shipping</span><span class="free-shipping">Calculated at checkout</span></div>
+      <p class="cart-tax-note">Taxes included. Shipping calculated at checkout.</p>
+      <a href="{{ routes.cart_url }}" class="btn-primary btn-full">Checkout &rarr;</a>
+      <button class="btn-text btn-full" onclick="toggleCart()">Continue Shopping</button>
+    </div>
+  {%- endif -%}
+</aside>

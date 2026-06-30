@@ -1,0 +1,70 @@
+<!-- Newsletter Section -->
+<section class="section section-newsletter">
+  <div class="container">
+    <div class="newsletter-box">
+      <span class="newsletter-script">{{ section.settings.script_text | default: 'Join us' }}</span>
+      <h2 class="section-title">{{ section.settings.heading | default: 'Become part of the natural living community' }}</h2>
+      <p>{{ section.settings.subtext | default: 'Get 10% off your first order. Plus: new arrivals, artisan stories, and slow living inspiration.' }}</p>
+      {% form 'customer', id: 'NewsletterForm' %}
+        <input type="hidden" name="contact[tags]" value="newsletter">
+        <div class="newsletter-form">
+          <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | default: 'Your email address' }}" required class="newsletter-input" id="newsletterEmail" autocorrect="off" autocapitalize="off">
+          <button type="submit" class="btn-primary" name="commit">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+        </div>
+        {%- if form.posted_successfully? -%}
+          <p class="newsletter-success">Thank you for subscribing! Your 10% discount code is on its way.</p>
+        {%- endif -%}
+      {% endform %}
+      <p class="newsletter-fineprint">{{ section.settings.fineprint | default: 'By subscribing you agree to our Privacy Policy. Unsubscribe anytime.' }}</p>
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Newsletter",
+  "settings": [
+    {
+      "type": "text",
+      "id": "script_text",
+      "label": "Script Accent Text",
+      "default": "Join us"
+    },
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Become part of the natural living community"
+    },
+    {
+      "type": "textarea",
+      "id": "subtext",
+      "label": "Subtext",
+      "default": "Get 10% off your first order. Plus: new arrivals, artisan stories, and slow living inspiration."
+    },
+    {
+      "type": "text",
+      "id": "email_placeholder",
+      "label": "Email Placeholder",
+      "default": "Your email address"
+    },
+    {
+      "type": "text",
+      "id": "button_label",
+      "label": "Button Label",
+      "default": "Subscribe"
+    },
+    {
+      "type": "text",
+      "id": "fineprint",
+      "label": "Fine Print",
+      "default": "By subscribing you agree to our Privacy Policy. Unsubscribe anytime."
+    }
+  ],
+  "presets": [
+    {
+      "name": "Newsletter"
+    }
+  ]
+}
+{% endschema %}

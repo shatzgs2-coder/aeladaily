@@ -1,0 +1,22 @@
+{
+  "en": {
+    "general": {
+      "search": {
+        "search": "Search"
+      }
+    },
+    "accessibility": {
+      "skip_to_text": "Skip to content"
+    },
+    "customer": {
+      "account": {
+        "title": "Account"
+      }
+    },
+    "sections": {
+      "cart": {
+        "title": "Your Cart"
+      }
+    }
+  }
+}

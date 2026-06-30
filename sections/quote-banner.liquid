@@ -1,0 +1,33 @@
+<!-- Quote Banner Section -->
+<section class="quote-banner">
+  <div class="container">
+    <p class="quote-mark">&ldquo;</p>
+    <blockquote class="quote-text">{{ section.settings.quote | default: 'The small rituals that make a house feel like home — the weight of a ceramic mug on a cork coaster, the scent of beeswax and essential oils, the sight of a macramé catching afternoon light.' }}</blockquote>
+    <p class="quote-attribute">{{ section.settings.attribution | default: '— The AELADAILY Philosophy' }}</p>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Quote Banner",
+  "settings": [
+    {
+      "type": "textarea",
+      "id": "quote",
+      "label": "Quote Text",
+      "default": "The small rituals that make a house feel like home."
+    },
+    {
+      "type": "text",
+      "id": "attribution",
+      "label": "Attribution",
+      "default": "— The AELADAILY Philosophy"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Quote Banner"
+    }
+  ]
+}
+{% endschema %}

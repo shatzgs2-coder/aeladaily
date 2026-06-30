@@ -1,0 +1,10 @@
+<!-- Cookie Banner Snippet -->
+<div class="cookie-banner" id="cookieBanner">
+  <div class="cookie-content">
+    <p>We use cookies to enhance your browsing experience. By continuing to browse, you agree to our <a href="{{ pages['privacy-policy'].url | default: routes.privacy_policy_url }}">Cookie Policy</a>.</p>
+    <div class="cookie-actions">
+      <button class="btn-text" onclick="openCookieSettings()">Settings</button>
+      <button class="btn-primary btn-small" onclick="acceptCookies()">Accept All</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,22 @@
+{
+  "de": {
+    "general": {
+      "search": {
+        "search": "Suche"
+      }
+    },
+    "accessibility": {
+      "skip_to_text": "Zum Inhalt springen"
+    },
+    "customer": {
+      "account": {
+        "title": "Konto"
+      }
+    },
+    "sections": {
+      "cart": {
+        "title": "Warenkorb"
+      }
+    }
+  }
+}

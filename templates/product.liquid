@@ -1,0 +1,205 @@
+<!-- Product Template -->
+<div class="page-product">
+  <div class="container">
+    <nav class="pdp-breadcrumb breadcrumb" aria-label="breadcrumb">
+      <a href="{{ routes.root_url }}">Home</a>
+      <span class="breadcrumb-sep">/</span>
+      {%- for collection in product.collections limit: 1 -%}
+        <a href="{{ collection.url }}">{{ collection.title }}</a>
+        <span class="breadcrumb-sep">/</span>
+      {%- endfor -%}
+      <span>{{ product.title }}</span>
+    </nav>
+
+    <div class="pdp-layout">
+      <!-- Image Gallery -->
+      <div class="pdp-gallery">
+        <div class="pdp-main-img" id="pdpMainImg">
+          {%- if product.featured_image != blank -%}
+            {{ product.featured_image | image_url: width: 800 | image_tag: class: 'pdp-photo', alt: product.title, id: 'mainProductImg' }}
+          {%- else -%}
+            <div class="pdp-img-placeholder">
+              <svg viewBox="0 0 480 560" width="100%" height="100%"><rect width="480" height="560" fill="#F5F1EA"/><text x="240" y="290" text-anchor="middle" font-family="Cormorant Garamond" font-size="18" fill="#8B7355" font-style="italic">{{ product.title }}</text></svg>
+            </div>
+          {%- endif -%}
+        </div>
+        <div class="pdp-thumbnails">
+          {%- for image in product.images limit: 5 -%}
+            <button class="pdp-thumb {% if forloop.first %}active{% endif %}" onclick="switchImage('{{ image | image_url: width: 800 }}', this)">
+              {{ image | image_url: width: 120 | image_tag: class: 'pdp-thumb-img', alt: product.title, loading: 'lazy' }}
+            </button>
+          {%- else -%}
+            {%- for i in (1..4) -%}
+              <div class="pdp-thumb pdp-thumb-placeholder">
+                <svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#E8E0D5"/></svg>
+              </div>
+            {%- endfor -%}
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Product Info -->
+      <div class="pdp-info">
+        <div class="pdp-badges">
+          {%- if product.tags contains 'bestseller' -%}
+            <span class="pdp-badge badge-bestseller">Bestseller</span>
+          {%- endif -%}
+          {%- if product.tags contains 'new' -%}
+            <span class="pdp-badge badge-new">New Arrival</span>
+          {%- endif -%}
+        </div>
+
+        <h1 class="pdp-title">{{ product.title }}</h1>
+
+        <div class="pdp-price-block">
+          {%- if product.compare_at_price > product.price -%}
+            <span class="pdp-price price-sale">{{ product.price | money }}</span>
+            <span class="pdp-price-compare">{{ product.compare_at_price | money }}</span>
+            <span class="pdp-discount">{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</span>
+          {%- else -%}
+            <span class="pdp-price">{{ product.price | money }}</span>
+          {%- endif -%}
+          <span class="pdp-tax">incl. VAT</span>
+        </div>
+
+        {%- form 'product', product, id: 'ProductForm', class: 'pdp-form' -%}
+          {%- unless product.has_only_default_variant -%}
+            {%- for option in product.options_with_values -%}
+              <div class="pdp-option">
+                <p class="pdp-option-label">{{ option.name }}: <strong id="selected-{{ option.name | handleize }}">{{ option.values.first }}</strong></p>
+                <div class="pdp-option-values">
+                  {%- for value in option.values -%}
+                    <button type="button"
+                      class="pdp-option-btn {% if forloop.first %}active{% endif %}"
+                      data-option="{{ option.position }}"
+                      data-value="{{ value }}"
+                      onclick="selectOption(this, '{{ option.name | handleize }}')">
+                      {{ value }}
+                    </button>
+                  {%- endfor -%}
+                </div>
+              </div>
+            {%- endfor -%}
+          {%- endunless -%}
+
+          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId">
+
+          <div class="pdp-qty-row">
+            <p class="pdp-option-label">Quantity</p>
+            <div class="pdp-qty-wrap">
+              <div class="qty-selector pdp-qty">
+                <button type="button" class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
+                <span class="qty-value">1</span>
+                <button type="button" class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
+              </div>
+              <input type="hidden" name="quantity" id="ProductQty" value="1">
+            </div>
+          </div>
+
+          <div class="pdp-cta-group">
+            <button type="submit" name="add" class="btn-primary btn-full pdp-add-btn"
+              {%- unless product.selected_or_first_available_variant.available -%}disabled{%- endunless -%}>
+              {%- if product.selected_or_first_available_variant.available -%}
+                Add to Cart &rarr;
+              {%- else -%}
+                Sold Out
+              {%- endif -%}
+            </button>
+          </div>
+        {%- endform -%}
+
+        <!-- Trust Badges -->
+        <div class="pdp-trust-badges">
+          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M5 18l3.5-7h11L23 18"/><path d="M5 18v3.5h18V18"/></svg><span>Free shipping over &euro;49</span></div>
+          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>30-day returns</span></div>
+          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M14 3C9 7 5 11 5 16a9 9 0 0018 0c0-5-4-9-9-13z"/></svg><span>100% natural materials</span></div>
+          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><rect x="7" y="7" width="14" height="14" rx="2"/><path d="M12 14l2 2 3-3"/></svg><span>Ships in 1-2 days</span></div>
+        </div>
+
+        <!-- Product Tabs -->
+        <div class="pdp-tabs">
+          <div class="tab-nav">
+            <button class="tab-btn active" onclick="switchTab(this, 'description')">Description</button>
+            <button class="tab-btn" onclick="switchTab(this, 'materials')">Materials</button>
+            <button class="tab-btn" onclick="switchTab(this, 'shipping')">Shipping</button>
+            <button class="tab-btn" onclick="switchTab(this, 'reviews')">Reviews</button>
+          </div>
+          <div id="tab-description" class="tab-panel active">
+            {{ product.description }}
+          </div>
+          <div id="tab-materials" class="tab-panel">
+            <p>All AELADAILY products are crafted from 100% natural, sustainably sourced materials. This product features premium natural fibers and organic components.</p>
+            <ul>
+              {%- for tag in product.tags -%}
+                {%- if tag contains 'material:' -%}
+                  <li>{{ tag | remove: 'material:' | strip | capitalize }}</li>
+                {%- endif -%}
+              {%- endfor -%}
+            </ul>
+          </div>
+          <div id="tab-shipping" class="tab-panel">
+            <ul>
+              <li><strong>Free EU shipping</strong> on orders over &euro;49</li>
+              <li>Standard delivery: 3-5 business days</li>
+              <li>Express delivery: 1-2 business days (+&euro;9.90)</li>
+              <li>Returns accepted within 30 days</li>
+              <li>Plastic-free, recyclable packaging</li>
+            </ul>
+          </div>
+          <div id="tab-reviews" class="tab-panel">
+            <p>Customer reviews will appear here once your Shopify store is connected.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Related Products -->
+    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
+      <div class="section pdp-related">
+        <div class="section-header">
+          <span class="section-eyebrow">You May Also Like</span>
+          <h2 class="section-title">Related Products</h2>
+        </div>
+        <div class="product-grid">
+          {%- for product in recommendations.products limit: 4 -%}
+            <div class="product-card">
+              <a href="{{ product.url }}" class="product-card-link">
+                <div class="product-img">
+                  {%- if product.featured_image != blank -%}
+                    {{ product.featured_image | image_url: width: 480 | image_tag: class: 'product-photo', alt: product.title, loading: 'lazy' }}
+                  {%- else -%}
+                    <div class="product-img-placeholder"><svg viewBox="0 0 240 300" width="100%" height="100%"><rect width="240" height="300" fill="#F5F1EA"/></svg></div>
+                  {%- endif -%}
+                </div>
+                <div class="product-info">
+                  <p class="product-name">{{ product.title }}</p>
+                  <p class="product-price">{{ product.price | money }}</p>
+                </div>
+              </a>
+            </div>
+          {%- endfor -%}
+        </div>
+      </div>
+    {%- endif -%}
+  </div>
+</div>
+
+<script>
+function switchImage(url, btn) {
+  document.getElementById('mainProductImg').src = url;
+  document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
+  btn.classList.add('active');
+}
+function selectOption(btn, optionName) {
+  const group = btn.closest('.pdp-option-values');
+  group.querySelectorAll('.pdp-option-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('selected-' + optionName).textContent = btn.dataset.value;
+}
+function switchTab(btn, tabId) {
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('tab-' + tabId).classList.add('active');
+}
+</script>
