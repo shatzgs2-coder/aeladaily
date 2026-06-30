@@ -12,10 +12,18 @@
     <style>
         /* Collection page specific styles */
         .collection-hero {
-            background: var(--cream);
+            background: url('img/European_style_home_interior_b_2026-06-30T00-00-41.png') center / cover no-repeat;
             padding: 60px 0 40px;
             text-align: center;
+            position: relative;
         }
+        .collection-hero::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(180deg, rgba(245, 241, 234, 0.85) 0%, rgba(245, 241, 234, 0.75) 100%);
+        }
+        .collection-hero > * { position: relative; z-index: 1; }
         .collection-breadcrumb {
             font-size: 12px;
             color: var(--taupe);
