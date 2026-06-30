@@ -1,21 +1,42 @@
-<!-- Search Overlay Snippet -->
-<div class="search-overlay" id="searchOverlay">
-  <div class="search-content">
-    <button class="overlay-close" onclick="toggleSearch()" aria-label="Close search">&times;</button>
-    <p class="search-label">Search</p>
-    <form action="{{ routes.search_url }}" method="get">
+<!-- Search Overlay - Full-screen search overlay -->
+<div class="search-overlay" id="search-overlay" aria-hidden="true">
+  <div class="search-overlay-bg" data-action="close-search"></div>
+  <div class="search-overlay-inner">
+    <form action="{{ routes.search_url }}" method="get" role="search" class="search-form">
       <input type="hidden" name="type" value="product">
-      <input type="search" name="q" placeholder="What are you looking for?" class="search-input" id="searchInput" autofocus autocomplete="off">
-    </form>
-    <div class="search-suggestions">
-      <p class="search-hint">Popular searches</p>
-      <div class="search-tags">
-        <a href="{{ routes.search_url }}?type=product&q=tablecloth" class="search-tag">Tablecloth</a>
-        <a href="{{ routes.search_url }}?type=product&q=basket" class="search-tag">Basket</a>
-        <a href="{{ routes.search_url }}?type=product&q=candle" class="search-tag">Candle</a>
-        <a href="{{ routes.search_url }}?type=product&q=cushion" class="search-tag">Cushion</a>
-        <a href="{{ routes.search_url }}?type=product&q=macrame" class="search-tag">Macrame</a>
+      <div class="search-input-wrap">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+        <input
+          type="search"
+          name="q"
+          placeholder="{{ 'general.search.search' | t | default: 'Search products...' }}"
+          autocomplete="off"
+          autocorrect="off"
+          spellcheck="false"
+          aria-label="Search"
+          class="search-input"
+          id="search-input"
+        >
+        <button type="button" class="search-close" data-action="close-search" aria-label="Close search">&times;</button>
       </div>
-    </div>
+    </form>
+    <p class="search-hint">Press Enter to search, Esc to close</p>
   </div>
 </div>
+
+<style>
+  .search-overlay{position:fixed;inset:0;z-index:2500;display:flex;align-items:flex-start;justify-content:center;padding-top:15vh;pointer-events:none;opacity:0;visibility:hidden;transition:all 0.3s ease;}
+  .search-overlay.is-open{pointer-events:auto;opacity:1;visibility:visible;}
+  .search-overlay-bg{position:absolute;inset:0;background:rgba(61,53,48,0.5);backdrop-filter:blur(6px);}
+  .search-overlay-inner{position:relative;z-index:2;width:min(600px,90vw);background:#fff;border-radius:16px;box-shadow:0 20px 60px rgba(0,0,0,0.18);overflow:hidden;transform:translateY(-10px);transition:transform 0.3s ease;}
+  .search-overlay.is-open .search-overlay-inner{transform:translateY(0);}
+
+  .search-form{padding:4px;}
+  .search-input-wrap{display:flex;align-items:center;gap:12px;padding:14px 20px;border:2px solid #EEE;border-radius:12px;background:#FAFAFA;transition:border-color 0.2s;}
+  .search-input-wrap:focus-within{border-color:var(--color-primary,#8B7355);background:#fff;}
+  .search-input{flex:1;border:none;font-family:var(--font-body,'Jost',sans-serif);font-size:17px;color:#333;outline:none;background:transparent;}
+  .search-input::placeholder{color:#BBB;}
+  .search-close{background:none;border:none;font-size:28px;cursor:pointer;color:#DDD;padding:0;width:32px;height:32px;display:flex;align-items:center;justify-content:center;}
+
+  .search-hint{text-align:center;font-size:12px;color:#CCC;margin-top:14px;padding-bottom:16px;}
+</style>

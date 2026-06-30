@@ -1,205 +1,426 @@
-<!-- Product Template -->
-<div class="page-product">
-  <div class="container">
-    <nav class="pdp-breadcrumb breadcrumb" aria-label="breadcrumb">
-      <a href="{{ routes.root_url }}">Home</a>
-      <span class="breadcrumb-sep">/</span>
-      {%- for collection in product.collections limit: 1 -%}
-        <a href="{{ collection.url }}">{{ collection.title }}</a>
-        <span class="breadcrumb-sep">/</span>
-      {%- endfor -%}
-      <span>{{ product.title }}</span>
-    </nav>
-
-    <div class="pdp-layout">
-      <!-- Image Gallery -->
-      <div class="pdp-gallery">
-        <div class="pdp-main-img" id="pdpMainImg">
-          {%- if product.featured_image != blank -%}
-            {{ product.featured_image | image_url: width: 800 | image_tag: class: 'pdp-photo', alt: product.title, id: 'mainProductImg' }}
+<!-- Product Template - Full product detail page -->
+{%- assign product = product -%}
+<div class="product-page" data-product-handle="{{ product.handle }}">
+  <!-- Breadcrumb -->
+  <nav class="breadcrumb" aria-label="Breadcrumb">
+    <div class="container">
+      <ol class="breadcrumb-list">
+        <li><a href="{{ routes.root_url }}">Home</a></li>
+        <li>
+          {%- if collection -%}
+            <a href="{{ collection.url }}">{{ collection.title }}</a>
           {%- else -%}
-            <div class="pdp-img-placeholder">
-              <svg viewBox="0 0 480 560" width="100%" height="100%"><rect width="480" height="560" fill="#F5F1EA"/><text x="240" y="290" text-anchor="middle" font-family="Cormorant Garamond" font-size="18" fill="#8B7355" font-style="italic">{{ product.title }}</text></svg>
-            </div>
+            <a href="{{ routes.all_products_collection_url }}">Shop</a>
           {%- endif -%}
-        </div>
-        <div class="pdp-thumbnails">
-          {%- for image in product.images limit: 5 -%}
-            <button class="pdp-thumb {% if forloop.first %}active{% endif %}" onclick="switchImage('{{ image | image_url: width: 800 }}', this)">
-              {{ image | image_url: width: 120 | image_tag: class: 'pdp-thumb-img', alt: product.title, loading: 'lazy' }}
-            </button>
-          {%- else -%}
-            {%- for i in (1..4) -%}
-              <div class="pdp-thumb pdp-thumb-placeholder">
-                <svg viewBox="0 0 100 100"><rect width="100" height="100" fill="#E8E0D5"/></svg>
+        </li>
+        <li aria-current="page"><span>{{ product.title }}</span></li>
+      </ol>
+    </div>
+  </nav>
+
+  <!-- Product Detail Section -->
+  <section class="product-detail section" data-animate>
+    <div class="container">
+      <div class="product-detail__grid">
+
+        <!-- Image Gallery -->
+        <div class="product-gallery">
+          <!-- Main Image -->
+          <div class="gallery-main">
+            {%- if product.featured_image != blank -%}
+              {{
+                product.featured_image
+                | image_url: width: 720
+                | image_tag:
+                  widths: '400, 540, 720',
+                  alt: product.featured_image.alt | default: product.title,
+                  id: 'main-product-image',
+                  class: 'gallery-main-img',
+                  loading: 'eager'
+              }}
+            {%- else -%}
+              <div class="gallery-placeholder">
+                <svg viewBox="0 0 600 750" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+                  <rect width="600" height="750" fill="#EDE8E0"/>
+                  <text x="300" y="385" text-anchor="middle" font-family="'Italianno', cursive" font-size="36" fill="#B8B0A5">{{ product.title }}</text>
+                </svg>
               </div>
-            {%- endfor -%}
-          {%- endfor -%}
-        </div>
-      </div>
+            {%- endif -%}
 
-      <!-- Product Info -->
-      <div class="pdp-info">
-        <div class="pdp-badges">
-          {%- if product.tags contains 'bestseller' -%}
-            <span class="pdp-badge badge-bestseller">Bestseller</span>
-          {%- endif -%}
-          {%- if product.tags contains 'new' -%}
-            <span class="pdp-badge badge-new">New Arrival</span>
-          {%- endif -%}
-        </div>
-
-        <h1 class="pdp-title">{{ product.title }}</h1>
-
-        <div class="pdp-price-block">
-          {%- if product.compare_at_price > product.price -%}
-            <span class="pdp-price price-sale">{{ product.price | money }}</span>
-            <span class="pdp-price-compare">{{ product.compare_at_price | money }}</span>
-            <span class="pdp-discount">{{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}% off</span>
-          {%- else -%}
-            <span class="pdp-price">{{ product.price | money }}</span>
-          {%- endif -%}
-          <span class="pdp-tax">incl. VAT</span>
-        </div>
-
-        {%- form 'product', product, id: 'ProductForm', class: 'pdp-form' -%}
-          {%- unless product.has_only_default_variant -%}
-            {%- for option in product.options_with_values -%}
-              <div class="pdp-option">
-                <p class="pdp-option-label">{{ option.name }}: <strong id="selected-{{ option.name | handleize }}">{{ option.values.first }}</strong></p>
-                <div class="pdp-option-values">
-                  {%- for value in option.values -%}
-                    <button type="button"
-                      class="pdp-option-btn {% if forloop.first %}active{% endif %}"
-                      data-option="{{ option.position }}"
-                      data-value="{{ value }}"
-                      onclick="selectOption(this, '{{ option.name | handleize }}')">
-                      {{ value }}
-                    </button>
-                  {%- endfor -%}
-                </div>
-              </div>
-            {%- endfor -%}
-          {%- endunless -%}
-
-          <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}" id="ProductVariantId">
-
-          <div class="pdp-qty-row">
-            <p class="pdp-option-label">Quantity</p>
-            <div class="pdp-qty-wrap">
-              <div class="qty-selector pdp-qty">
-                <button type="button" class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
-                <span class="qty-value">1</span>
-                <button type="button" class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
-              </div>
-              <input type="hidden" name="quantity" id="ProductQty" value="1">
-            </div>
-          </div>
-
-          <div class="pdp-cta-group">
-            <button type="submit" name="add" class="btn-primary btn-full pdp-add-btn"
-              {%- unless product.selected_or_first_available_variant.available -%}disabled{%- endunless -%}>
-              {%- if product.selected_or_first_available_variant.available -%}
-                Add to Cart &rarr;
-              {%- else -%}
-                Sold Out
+            <!-- Badges on main image -->
+            <div class="gallery-badges">
+              {%- if product.tags contains 'bestseller' or product.tags contains 'best-seller' -%}
+                <span class="badge badge--bestseller badge--lg">Bestseller</span>
+              {%- elsif product.tags contains 'new' -%}
+                <span class="badge badge--new badge--lg">New Arrival</span>
               {%- endif -%}
+            </div>
+
+            <!-- Zoom icon overlay -->
+            <button class="gallery-zoom-btn" id="gallery-zoom-btn" aria-label="Zoom image" title="Click to zoom">
+              <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/></svg>
             </button>
           </div>
-        {%- endform -%}
 
-        <!-- Trust Badges -->
-        <div class="pdp-trust-badges">
-          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M5 18l3.5-7h11L23 18"/><path d="M5 18v3.5h18V18"/></svg><span>Free shipping over &euro;49</span></div>
-          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg><span>30-day returns</span></div>
-          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><path d="M14 3C9 7 5 11 5 16a9 9 0 0018 0c0-5-4-9-9-13z"/></svg><span>100% natural materials</span></div>
-          <div class="trust-badge"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#A8B5A0" stroke-width="1.5"><rect x="7" y="7" width="14" height="14" rx="2"/><path d="M12 14l2 2 3-3"/></svg><span>Ships in 1-2 days</span></div>
+          <!-- Thumbnails -->
+          {%- if product.images.size > 1 -%}
+            <div class="gallery-thumbs">
+              {%- for image in product.images limit: 4 -%}
+                <button
+                  class="gallery-thumb{% if forloop.first %} is-active{% endif %}"
+                  data-image-id="{{ image.id }}"
+                  data-full-src="{{ image | image_url: width: 720 }}"
+                  aria-label="{{ 'View ' | append: image.alt | append: ' image ' | append: forloop.index }}"
+                >
+                  {{ image | image_url: width: 100 | image_tag: loading: 'lazy', class: 'thumb-img', alt: image.alt }}
+                </button>
+              {%- endfor -%}
+            </div>
+          {%- endif -%}
         </div>
 
-        <!-- Product Tabs -->
-        <div class="pdp-tabs">
-          <div class="tab-nav">
-            <button class="tab-btn active" onclick="switchTab(this, 'description')">Description</button>
-            <button class="tab-btn" onclick="switchTab(this, 'materials')">Materials</button>
-            <button class="tab-btn" onclick="switchTab(this, 'shipping')">Shipping</button>
-            <button class="tab-btn" onclick="switchTab(this, 'reviews')">Reviews</button>
+        <!-- Product Info -->
+        <div class="product-info">
+          {%- if product.vendor != blank -%}
+            <p class="product-info-vendor">{{ product.vendor }}</p>
+          {%- endif -%}
+
+          <h1 class="product-info-title">{{ product.title }}</h1>
+
+          <!-- Rating (placeholder) -->
+          <div class="product-info-rating">
+            <span class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</span>
+            <a href="#reviews" class="rating-link">(42 reviews)</a>
           </div>
-          <div id="tab-description" class="tab-panel active">
-            {{ product.description }}
+
+          <!-- Price -->
+          <div class="product-info-price-row">
+            <span class="product-info-price">{{ product.price | money }}</span>
+            {%- if product.compare_at_price > product.price -%}
+              <span class="product-info-compare-at">{{ product.compare_at_price | money }}</span>
+              <span class="product-info-save">You save {{ product.compare_at_price | minus: product.price | money }} ({{ product.compare_at_price | minus: product.price | times: 100 | divided_by: product.compare_at_price }}%)</span>
+            {%- endif -%}
           </div>
-          <div id="tab-materials" class="tab-panel">
-            <p>All AELADAILY products are crafted from 100% natural, sustainably sourced materials. This product features premium natural fibers and organic components.</p>
-            <ul>
-              {%- for tag in product.tags -%}
-                {%- if tag contains 'material:' -%}
-                  <li>{{ tag | remove: 'material:' | strip | capitalize }}</li>
+
+          <!-- Short description / excerpt -->
+          {%- if product.description != blank -%}
+            <div class="product-info-excerpt">
+              {{ product.description | truncatewords: 30 }}
+            </div>
+          {%- endif -%}
+
+          <!-- Variant Selection Form -->
+          {% form 'product', product, id: 'product-form', class: 'product-form' %}
+            <input type="hidden" name="id" value="{{ product.variants.first.id }}" data-selected-variant>
+
+            <!-- Variants -->
+            {%- unless product.has_only_default_variant -%}
+              <div class="product-options">
+                {%- for option in product.options_with_values -%}
+                  <fieldset class="option-fieldset">
+                    <legend class="option-label">{{ option.name }}: <strong>{{ option.selected_value }}</strong></legend>
+                    <div class="option-values">
+                      {%- for value in option.values -%}
+                        <input
+                          type="radio"
+                          name="{{ option.name | handleize }}"
+                          value="{{ value | escape }}"
+                          id="option-{{ option.name | handleize }}-{{ forloop.index }}"
+                          {% if value == option.selected_value %}checked{% endif %}
+                          class="sr-only"
+                        >
+                        <label
+                          for="option-{{ option.name | handleize }}-{{ forloop.index }}"
+                          class="option-swatch"
+                        >
+                          {{ value }}
+                        </label>
+                      {%- endfor -%}
+                    </div>
+                  </fieldset>
+                {%- endfor -%}
+              </div>
+            {%- endunless -%}
+
+            <!-- Quantity -->
+            <div class="quantity-selector">
+              <label for="quantity" class="sr-only">Quantity</label>
+              <div class="qty-controls">
+                <button type="button" class="qty-btn qty-minus" data-action="decrease-qty" aria-label="Decrease quantity">&minus;</button>
+                <input type="number" id="quantity" name="quantity" min="1" value="1" class="qty-input" pattern="[0-9]*" inputmode="numeric">
+                <button type="button" class="qty-btn qty-plus" data-action="increase-qty" aria-label="Increase quantity">&plus;</button>
+              </div>
+            </div>
+
+            <!-- Add to Cart Button -->
+            <div class="product-actions">
+              {%- if product.available -%}
+                <button type="submit" name="add" class="btn btn--primary btn--lg btn--fullwidth add-to-cart-main" data-action="add-to-cart">
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 5v14M5 12h14"/></svg>
+                  Add to Cart — {{ product.price | money }}
+                </button>
+              {%- else -%}
+                <button type="button" class="btn btn--lg btn--fullwidth btn--soldout" disabled>Sold Out</button>
+              {%- endif -%}
+
+              <!-- Buy Now / Checkout -->
+              {%- if product.available and section.settings.show_buy_now -%}
+                <button type="submit" name="checkout" class="btn btn--outline btn--lg btn--fullwidth buy-now-btn">
+                  Buy It Now
+                </button>
+              {%- endif -%}
+
+              <!-- Wishlist button -->
+              <button type="button" class="wishlist-btn" aria-label="Add to wishlist">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+                Add to Wishlist
+              </button>
+            </div>
+          {% endform %}
+
+          <!-- Trust Signals under CTA -->
+          <div class="product-trust-inline">
+            <span>&#128666; Free EU shipping over €49</span>
+            <span>&#128274; Secure checkout</span>
+            <span>&#128260; 30-day returns</span>
+          </div>
+
+          <!-- Accordion Tabs (Description / Materials / Shipping) -->
+          <div class="product-tabs" id="product-tabs">
+            <button class="product-tab-trigger is-active" data-tab="description" aria-expanded="true">
+              Description
+            </button>
+            <button class="product-tab-trigger" data-tab="materials" aria-expanded="false">
+              Materials &amp; Care
+            </button>
+            <button class="product-tab-trigger" data-tab="shipping" aria-expanded="false">
+              Shipping &amp; Returns
+            </button>
+            <button class="product-tab-trigger" data-tab="reviews" aria-expanded="false">
+              Reviews
+            </button>
+
+            <div class="product-tab-panel" id="tab-description">
+              <div class="tab-content rte">
+                {{ product.description }}
+              </div>
+            </div>
+            <div class="product-tab-panel hidden" id="tab-materials">
+              <div class="tab-content">
+                {%- if section.settings.materials_text != blank -%}
+                  {{ section.settings.materials_text }}
+                {%- else -%}
+                  <p>Crafted from carefully selected natural materials with attention to detail. Each piece may have slight variations that make it uniquely yours.</p>
+                  <ul style="line-height:2; color:#666;">
+                    <li>Handcrafted with natural materials</li>
+                    <li>Slight variations make each piece unique</li>
+                    <li>Clean with a soft dry cloth</li>
+                    <li>Avoid direct sunlight for extended periods</li>
+                    <li>Not suitable for dishwasher/microwave</li>
+                  </ul>
                 {%- endif -%}
-              {%- endfor -%}
-            </ul>
-          </div>
-          <div id="tab-shipping" class="tab-panel">
-            <ul>
-              <li><strong>Free EU shipping</strong> on orders over &euro;49</li>
-              <li>Standard delivery: 3-5 business days</li>
-              <li>Express delivery: 1-2 business days (+&euro;9.90)</li>
-              <li>Returns accepted within 30 days</li>
-              <li>Plastic-free, recyclable packaging</li>
-            </ul>
-          </div>
-          <div id="tab-reviews" class="tab-panel">
-            <p>Customer reviews will appear here once your Shopify store is connected.</p>
+              </div>
+            </div>
+            <div class="product-tab-panel hidden" id="tab-shipping">
+              <div class="tab-content">
+                <h4 style="margin-bottom:10px;">Shipping</h4>
+                <table style="border-collapse:collapse; font-size:14px; line-height:2;">
+                  <tr><td style="padding-right:20px;">Germany</td><td><strong>€3.95</strong> — Free over €49</td></tr>
+                  <tr><td style="padding-right:20px;">EU Countries</td><td><strong>€5.95</strong> — Free over €69</td></tr>
+                  <tr><td style="padding-right:20px;">UK / Switzerland</td><td><strong>€9.95</strong></td></tr>
+                </table>
+                <p style="margin-top:16px;font-size:13px;color:#888;">Orders ship within 1–2 business days. Delivery time: 3–7 business days within EU.</p>
+
+                <h4 style="margin-top:24px;margin-bottom:10px;">Returns</h4>
+                <p style="font-size:13px;color:#666;line-height:1.7;">We accept returns within 30 days of delivery. Items must be unused and in original packaging. Return shipping costs are the responsibility of the buyer unless the item is defective.</p>
+              </div>
+            </div>
+            <div class="product-tab-panel hidden" id="tab-reviews">
+              <div class="tab-content">
+                <p style="color:#999;text-align:center;padding:32px 0;">No reviews yet. Be the first to review this product!</p>
+                <!-- Reviews app placeholder -->
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
+  </section>
 
-    <!-- Related Products -->
-    {%- if recommendations.performed? and recommendations.products_count > 0 -%}
-      <div class="section pdp-related">
-        <div class="section-header">
-          <span class="section-eyebrow">You May Also Like</span>
-          <h2 class="section-title">Related Products</h2>
-        </div>
-        <div class="product-grid">
-          {%- for product in recommendations.products limit: 4 -%}
-            <div class="product-card">
-              <a href="{{ product.url }}" class="product-card-link">
-                <div class="product-img">
-                  {%- if product.featured_image != blank -%}
-                    {{ product.featured_image | image_url: width: 480 | image_tag: class: 'product-photo', alt: product.title, loading: 'lazy' }}
-                  {%- else -%}
-                    <div class="product-img-placeholder"><svg viewBox="0 0 240 300" width="100%" height="100%"><rect width="240" height="300" fill="#F5F1EA"/></svg></div>
-                  {%- endif -%}
-                </div>
-                <div class="product-info">
-                  <p class="product-name">{{ product.title }}</p>
-                  <p class="product-price">{{ product.price | money }}</p>
-                </div>
-              </a>
-            </div>
-          {%- endfor -%}
-        </div>
+  <!-- Related Products Recommendations -->
+  <section class="related-products section" data-animate>
+    <div class="container">
+      <h2 class="section-heading" style="text-align:center;margin-bottom:36px;">You May Also Like</h2>
+      <div class="product-grid" id="related-products-grid">
+        <!-- Filled dynamically by Shopify recommendations -->
       </div>
-    {%- endif -%}
-  </div>
+    </div>
+  </section>
 </div>
 
 <script>
-function switchImage(url, btn) {
-  document.getElementById('mainProductImg').src = url;
-  document.querySelectorAll('.pdp-thumb').forEach(t => t.classList.remove('active'));
-  btn.classList.add('active');
-}
-function selectOption(btn, optionName) {
-  const group = btn.closest('.pdp-option-values');
-  group.querySelectorAll('.pdp-option-btn').forEach(b => b.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('selected-' + optionName).textContent = btn.dataset.value;
-}
-function switchTab(btn, tabId) {
-  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
-  btn.classList.add('active');
-  document.getElementById('tab-' + tabId).classList.add('active');
-}
+document.addEventListener('DOMContentLoaded', function() {
+  // Image switching
+  var thumbs = document.querySelectorAll('.gallery-thumb');
+  var mainImg = document.getElementById('main-product-image');
+  thumbs.forEach(function(thumb) {
+    thumb.addEventListener('click', function() {
+      thumbs.forEach(function(t) { t.classList.remove('is-active'); });
+      thumb.classList.add('is-active');
+      mainImg.src = thumb.dataset.fullSrc;
+    });
+  });
+
+  // Tab switching
+  var tabTriggers = document.querySelectorAll('.product-tab-trigger');
+  tabTriggers.forEach(function(trigger) {
+    trigger.addEventListener('click', function() {
+      tabTriggers.forEach(function(t) { t.classList.remove('is-active'); t.setAttribute('aria-expanded','false'); });
+      trigger.classList.add('is-active'); trigger.setAttribute('aria-expanded','true');
+      document.querySelectorAll('.product-tab-panel').forEach(function(p) { p.classList.add('hidden'); });
+      document.getElementById('tab-' + trigger.dataset.tab).classList.remove('hidden');
+    });
+  });
+
+  // Quantity controls
+  document.querySelector('.qty-minus') && document.querySelector('.qty-minus').addEventListener('click', function() {
+    var input = document.querySelector('#quantity'); if(input.value > 1) input.value = parseInt(input.value) - 1;
+  });
+  document.querySelector('.qty-plus') && document.querySelector('.qty-plus').addEventListener('click', function() {
+    var input = document.querySelector('#quantity'); input.value = parseInt(input.value) + 1;
+  });
+});
 </script>
+
+<style>
+  /* Breadcrumb */
+  .breadcrumb { padding: 16px 0; border-bottom: 1px solid var(--color-border, #E8E0D5); }
+  .breadcrumb-list { display: flex; gap: 8px; list-style: none; margin: 0; padding: 0; font-size: 12px; flex-wrap: wrap; }
+  .breadcrumb-list li::after { content: '/'; margin-left: 8px; color: #CCC; }
+  .breadcrumb-list li:last-child::after { display: none; }
+  .breadcrumb-list a { color: #999; text-decoration: none; transition: color 0.2s; }
+  .breadcrumb-list a:hover { color: var(--color-primary); }
+  .breadcrumb-list span { color: var(--color-text); }
+
+  /* Product Grid */
+  .product-detail__grid { display: grid; grid-template-columns: 1fr 1fr; gap: 48px; align-items: start; }
+
+  /* Gallery */
+  .product-gallery { position: sticky; top: 120px; }
+  .gallery-main {
+    position: relative;
+    border-radius: 16px;
+    overflow: hidden;
+    background: #EDE8E0;
+    aspect-ratio: 4 / 5;
+    margin-bottom: 14px;
+  }
+  .gallery-main-img { width: 100%; height: 100%; object-fit: cover; cursor: zoom-in; transition: transform 0.35s; }
+  .gallery-placeholder { width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; }
+  .gallery-badges { position: absolute; top: 16px; left: 16px; z-index: 2; display: flex; gap: 8px; }
+  .badge--lg { padding: 6px 14px; font-size: 12px; }
+  .gallery-zoom-btn {
+    position: absolute; bottom: 16px; right: 16px; z-index: 2;
+    background: rgba(255,255,255,0.9); border: none; border-radius: 50%;
+    width: 44px; height: 44px; cursor: pointer; display: flex; align-items: center; justify-content: center;
+    color: var(--color-text); opacity: 0; transition: opacity 0.25s;
+  }
+  .gallery-main:hover .gallery-zoom-btn { opacity: 1; }
+
+  .gallery-thumbs { display: flex; gap: 10px; }
+  .gallery-thumb {
+    width: 70px; aspect-ratio: 1; border-radius: 8px; overflow: hidden; border: 2px solid transparent;
+    cursor: pointer; padding: 0; background: none; opacity: 0.65; transition: all 0.25s ease;
+  }
+  .gallery-thumb.is-active, .gallery-thumb:hover { border-color: var(--color-primary); opacity: 1; }
+  .thumb-img { width: 100%; height: 100%; object-fit: cover; }
+
+  /* Info */
+  .product-info-vendor { font-size: 11px; letter-spacing: 0.08em; text-transform: uppercase; color: #999; margin: 0 0 8px; }
+  .product-info-title { font-family: var(--font-heading, 'Cormorant Garamond', serif); font-size: clamp(28px, 3vw, 38px); font-weight: 500; line-height: 1.15; margin: 0 0 12px; }
+  .product-info-rating { display: flex; align-items: center; gap: 8px; margin-bottom: 16px; }
+  .stars { color: #D4A853; font-size: 15px; letter-spacing: -2px; }
+  .rating-link { font-size: 12px; color: #999; text-decoration: underline; }
+
+  .product-info-price-row { display: flex; align-items: baseline; gap: 12px; margin-bottom: 20px; padding-bottom: 20px; border-bottom: 1px solid var(--color-border); }
+  .product-info-price { font-family: var(--font-body, 'Jost', sans-serif); font-size: 24px; font-weight: 600; color: var(--color-text); }
+  .product-info-compare-at { font-size: 17px; color: #AAA; text-decoration: line-through; }
+  .product-info-save { font-size: 12px; color: #C45C4A; font-weight: 500; background: rgba(196,92,74,0.08); padding: 2px 8px; border-radius: 4px; }
+
+  .product-info-excerpt { font-size: 14px; line-height: 1.7; color: #666; margin-bottom: 24px; }
+
+  /* Options */
+  .option-fieldset { border: none; padding: 0; margin: 0 0 18px; }
+  .option-label { font-family: var(--font-body, 'Jost', sans-serif); font-size: 13px; font-weight: 500; margin-bottom: 8px; display: block; }
+  .option-values { display: flex; flex-wrap: wrap; gap: 8px; }
+  .option-swatch {
+    padding: 9px 18px; border: 1.5px solid var(--color-border); border-radius: 8px;
+    font-family: var(--font-body, 'Jost', sans-serif); font-size: 13px; cursor: pointer;
+    transition: all 0.2s; background: transparent;
+  }
+  .option-swatch:hover { border-color: var(--color-primary); }
+  :checked + .option-swatch { border-color: var(--color-text); background: var(--color-text); color: #fff; }
+  .sr-only { position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+
+  /* Quantity */
+  .quantity-selector { margin-bottom: 24px; }
+  .qty-controls { display: inline-flex; align-items: center; border: 1.5px solid var(--color-border); border-radius: 8px; overflow: hidden; }
+  .qty-btn { width: 42px; height: 42px; border: none; background: none; font-size: 18px; cursor: pointer; display:flex; align-items:center; justify-content:center; color: var(--color-text); transition: background 0.2s;}
+  .qty-btn:hover { background: var(--color-bg); }
+  .qty-input { width: 52px; height: 42px; border: none; text-align: center; font-family: var(--font-body, 'Jost', sans-serif); font-size: 15px; font-weight: 500; outline: none; border-left: 1.5px solid var(--color-border); border-right: 1.5px solid var(--color-border);}
+
+  /* Actions */
+  .product-actions { display: flex; flex-direction: column; gap: 10px; margin-bottom: 20px; }
+  .btn--fullwidth { width: 100%; justify-content: center; }
+  .wishlist-btn {
+    display: flex; align-items: center; justify-content: center; gap: 6px;
+    padding: 10px; border: 1.5px solid var(--color-border); border-radius: 8px;
+    background: none; cursor: pointer; font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px; font-weight: 500; color: var(--color-text); transition: all 0.2s;
+  }
+  .wishlist-btn:hover { border-color: var(--color-primary); color: var(--color-primary); }
+
+  /* Trust Inline */
+  .product-trust-inline { display: flex; flex-wrap: wrap; gap: 16px; font-size: 12px; color: #999; margin-bottom: 28px; }
+
+  /* Tabs */
+  .product-tabs { border-top: 1px solid var(--color-border); padding-top: 20px; }
+  .product-tab-trigger {
+    display: block; width: 100%; padding: 14px 0; text-align: left;
+    background: none; border: none; border-bottom: 1px solid var(--color-border);
+    font-family: var(--font-body, 'Jost', sans-serif); font-size: 14px; font-weight: 500;
+    color: #777; cursor: pointer; transition: all 0.2s; position:relative;
+  }
+  .product-tab-trigger::after { content: '+'; float:right; font-size: 18px; line-height: 1; color: #CCC; }
+  .product-tab-trigger.is-active { color: var(--color-text); }
+  .product-tab-trigger.is-active::after { content: '\2013'; }
+  .product-tab-panel { padding: 20px 0; animation: fadeIn 0.3s ease; }
+  .product-tab-panel.hidden { display: none; }
+
+  @keyframes fadeIn { from { opacity:0; transform: translateY(4px); } to { opacity:1; transform: translateY(0); } }
+
+  @media (max-width: 992px) {
+    .product-detail__grid { grid-template-columns: 1fr; gap: 32px; }
+    .product-gallery { position: static; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Product Information",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "show_buy_now",
+      "label": "Show Buy It Now button",
+      "default": true
+    },
+    {
+      "type": "richtext",
+      "id": "materials_text",
+      "label": "Materials & Care text"
+    }
+  ]
+}
+{% endschema %}

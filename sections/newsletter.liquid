@@ -1,33 +1,179 @@
-<!-- Newsletter Section -->
-<section class="section section-newsletter">
+<!-- Newsletter - Email subscription section -->
+<div class="newsletter section" data-animate>
   <div class="container">
-    <div class="newsletter-box">
-      <span class="newsletter-script">{{ section.settings.script_text | default: 'Join us' }}</span>
-      <h2 class="section-title">{{ section.settings.heading | default: 'Become part of the natural living community' }}</h2>
-      <p>{{ section.settings.subtext | default: 'Get 10% off your first order. Plus: new arrivals, artisan stories, and slow living inspiration.' }}</p>
-      {% form 'customer', id: 'NewsletterForm' %}
-        <input type="hidden" name="contact[tags]" value="newsletter">
-        <div class="newsletter-form">
-          <input type="email" name="contact[email]" placeholder="{{ section.settings.email_placeholder | default: 'Your email address' }}" required class="newsletter-input" id="newsletterEmail" autocorrect="off" autocapitalize="off">
-          <button type="submit" class="btn-primary" name="commit">{{ section.settings.button_label | default: 'Subscribe' }}</button>
+    <div class="newsletter-inner">
+      {%- if section.settings.script_text != blank -%}
+        <span class="newsletter-script">{{ section.settings.script_text }}</span>
+      {%- endif -%}
+      <h2 class="newsletter-heading">{{ section.settings.heading }}</h2>
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="newsletter-subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
+      {% form 'customer', id: 'newsletter-form', class: 'newsletter-form' %}
+        <input type="hidden" name="contact[tags]" value="newsletter, homepage">
+
+        <div class="newsletter-input-group">
+          <input
+            type="email"
+            name="contact[email]"
+            placeholder="Enter your email address"
+            required
+            aria-label="Email for newsletter subscription"
+            class="newsletter-input"
+          >
+          <button type="submit" class="btn btn--primary newsletter-btn">
+            {{ section.settings.btn_label | default: "Subscribe" }}
+          </button>
         </div>
+
+        {%- if form.errors -%}
+          <div class="form-error" role="alert">
+            {% for field in form.errors %}
+              {{ form.errors.messages[field] }}{% unless forloop.last %}, {% endunless %}
+            {% endfor %}
+          </div>
+        {%- endif -%}
+
         {%- if form.posted_successfully? -%}
-          <p class="newsletter-success">Thank you for subscribing! Your 10% discount code is on its way.</p>
+          <div class="form-success-msg" role="alert">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 6L9 17l-5-5"/></svg>
+            Welcome! Check your inbox for your 10% discount code.
+          </div>
         {%- endif -%}
       {% endform %}
-      <p class="newsletter-fineprint">{{ section.settings.fineprint | default: 'By subscribing you agree to our Privacy Policy. Unsubscribe anytime.' }}</p>
+
+      <!-- Privacy note -->
+      {%- if section.settings.privacy_note != blank -%}
+        <p class="newsletter-privacy">{{ section.settings.privacy_note }}</p>
+      {%- else -%}
+        <p class="newsletter-privacy">By subscribing, you agree to our <a href="/pages/datenschutz">Privacy Policy</a>. Unsubscribe anytime.</p>
+      {%- endif -%}
     </div>
   </div>
-</section>
+</div>
+
+<style>
+  .newsletter {
+    background: var(--color-accent, #A8B5A0);
+    padding: 80px 0;
+    text-align: center;
+    color: #fff;
+  }
+  .newsletter-inner {
+    max-width: 520px;
+    margin: 0 auto;
+  }
+  .newsletter-script {
+    font-family: var(--font-script, 'Italianno', cursive);
+    font-size: 26px;
+    display: block;
+    margin-bottom: 8px;
+    opacity: 0.9;
+  }
+  .newsletter-heading {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: clamp(28px, 4vw, 40px);
+    font-weight: 500;
+    line-height: 1.15;
+    color: #fff;
+    margin: 0 0 14px;
+  }
+  .newsletter-subtext {
+    font-size: 15px;
+    opacity: 0.88;
+    line-height: 1.6;
+    margin: 0 0 28px;
+  }
+
+  .newsletter-form { margin-bottom: 16px; }
+  .newsletter-input-group {
+    display: flex;
+    gap: 0;
+    border-radius: 10px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  }
+  .newsletter-input {
+    flex: 1;
+    min-width: 0;
+    padding: 15px 20px;
+    border: none;
+    outline: none;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 14px;
+    color: var(--color-text);
+    background: transparent;
+  }
+  .newsletter-input::placeholder { color: #AAA; }
+  .newsletter-btn {
+    flex-shrink: 0;
+    padding: 15px 28px;
+    background: var(--color-text, #3D3530);
+    color: #fff;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.25s ease;
+    border-radius: 0;
+  }
+  .newsletter-btn:hover { background: #2A2421; transform: none; }
+
+  /* Form Messages */
+  .form-error {
+    background: rgba(196,92,74,0.12);
+    color: #C45C4A;
+    padding: 10px 16px;
+    border-radius: 6px;
+    font-size: 13px;
+    margin-top: 12px;
+  }
+  .form-success-msg {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: rgba(255,255,255,0.18);
+    color: #fff;
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-size: 14px;
+    margin-top: 12px;
+  }
+
+  .newsletter-privacy {
+    font-size: 11px;
+    opacity: 0.7;
+    line-height: 1.55;
+    margin: 0;
+  }
+  .newsletter-privacy a {
+    color: inherit;
+    text-decoration: underline;
+  }
+
+  @media (max-width: 768px) {
+    .newsletter { padding: 56px 0; }
+    .newsletter-input-group { flex-direction: column; }
+    .newsletter-btn { border-radius: 0 0 8px 8px; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Newsletter",
+  "tag": "section",
   "settings": [
     {
       "type": "text",
       "id": "script_text",
-      "label": "Script Accent Text",
+      "label": "Script text (above heading)",
       "default": "Join us"
     },
     {
@@ -39,26 +185,19 @@
     {
       "type": "textarea",
       "id": "subtext",
-      "label": "Subtext",
+      "label": "Subheading",
       "default": "Get 10% off your first order. Plus: new arrivals, artisan stories, and slow living inspiration."
     },
     {
       "type": "text",
-      "id": "email_placeholder",
-      "label": "Email Placeholder",
-      "default": "Your email address"
-    },
-    {
-      "type": "text",
-      "id": "button_label",
-      "label": "Button Label",
+      "id": "btn_label",
+      "label": "Button label",
       "default": "Subscribe"
     },
     {
-      "type": "text",
-      "id": "fineprint",
-      "label": "Fine Print",
-      "default": "By subscribing you agree to our Privacy Policy. Unsubscribe anytime."
+      "type": "textarea",
+      "id": "privacy_note",
+      "label": "Privacy note"
     }
   ],
   "presets": [

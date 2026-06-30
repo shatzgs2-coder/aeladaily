@@ -1,68 +1,216 @@
-<!-- Brand Story Feature Section -->
-<section class="section section-story-feature" id="story">
-  <div class="story-split">
-    <div class="story-image-wrap">
-      <div class="story-image">
+<!-- Brand Story - Split layout with image + brand values -->
+<div class="brand-story section" data-animate>
+  <div class="container">
+    <div class="brand-story__grid">
+      <!-- Image Side -->
+      <div class="brand-story__visual">
         {%- if section.settings.image != blank -%}
-          {{ section.settings.image | image_url: width: 600 | image_tag: class: 'story-photo', alt: section.settings.heading, loading: 'lazy' }}
+          <div class="brand-story__img-wrapper">
+            {{
+              section.settings.image
+              | image_url: width: 700
+              | image_tag:
+                widths: '400, 550, 700',
+                alt: section.settings.image.alt | default: 'AELADAILY Brand Story',
+                loading: 'lazy',
+                class: 'brand-story__img'
+            }}
+          </div>
         {%- else -%}
-          <svg viewBox="0 0 480 560" width="100%" height="100%">
-            <rect width="480" height="560" fill="#E8E0D5"/>
-            <text x="240" y="290" text-anchor="middle" font-family="Cormorant Garamond" font-size="16" fill="#8B7355" font-style="italic">handcrafted</text>
-            <text x="240" y="310" text-anchor="middle" font-family="Jost" font-size="9" fill="#8B7355" letter-spacing="3">WITH CARE</text>
-          </svg>
+          <div class="brand-story__placeholder">
+            <svg viewBox="0 0 500 600" fill="none" xmlns="http://www.w3.org/2000/svg" width="100%" height="100%">
+              <rect width="500" height="600" fill="#E8E0D5"/>
+              <circle cx="250" cy="260" r="80" stroke="#C4BDB3" stroke-width="1.5"/>
+              <path d="M220 280c0-16.6 13.4-30 30-30s30 13.4 30 30-13.4 30-30 30" stroke="#C4BDB3" stroke-width="1.5" fill="none"/>
+              <text x="250" y="400" text-anchor="middle" font-family="'Italianno', cursive" font-size="32" fill="#B8B0A5">Handcrafted</text>
+            </svg>
+          </div>
+        {%- endif -%}
+
+        {%- if section.settings.badge_text != blank -%}
+          <div class="brand-story__badge">
+            <span>{{ section.settings.badge_text }}</span>
+          </div>
         {%- endif -%}
       </div>
-      <div class="story-image-badge">
-        <span class="story-badge-num">{{ section.settings.badge_number | default: '100%' }}</span>
-        <span class="story-badge-text">{{ section.settings.badge_text | default: 'Natural Materials' | newline_to_br }}</span>
-      </div>
-    </div>
-    <div class="story-text">
-      <span class="section-eyebrow">{{ section.settings.eyebrow | default: 'Our Story' }}</span>
-      <h2 class="section-title story-title">{{ section.settings.heading | default: 'We believe the objects we live with should be honest, natural, and made to last.' }}</h2>
-      <div class="story-body">
-        {{ section.settings.body | default: '<p>AELADAILY was born from a simple conviction: that nourishment isn\'t a luxury reserved for special occasions. It\'s a daily practice.</p>' }}
-      </div>
-      <div class="story-values">
+
+      <!-- Content Side -->
+      <div class="brand-story__content">
+        {%- if section.settings.eyebrow != blank -%}
+          <span class="section-eyebrow">{{ section.settings.eyebrow }}</span>
+        {%- endif -%}
+
+        <h2 class="section-heading">{{ section.settings.heading }}</h2>
+
+        {%- if section.settings.text != blank -%}
+          <div class="brand-story__text rte">
+            {{ section.settings.text }}
+          </div>
+        {%- endif -%}
+
+        <!-- Brand Values (blocks) -->
         {%- for block in section.blocks -%}
-          <div class="story-value" {{ block.shopify_attributes }}>
-            <span class="story-value-icon">{{ block.settings.icon }}</span>
-            <span class="story-value-text">{{ block.settings.label }}</span>
+          <div class="brand-value {{ block.type }}" {{ block.shopify_attributes }}>
+            <span class="brand-value__icon">{{ block.settings.icon }}</span>
+            <div class="brand-value__text">
+              <strong>{{ block.settings.title }}</strong>
+              <p>{{ block.settings.description }}</p>
+            </div>
           </div>
         {%- endfor -%}
+
+        {%- if section.settings.cta_label != blank and section.settings.cta_url != blank -%}
+          <a href="{{ section.settings.cta_url }}" class="btn btn--primary">
+            {{ section.settings.cta_label }} &rarr;
+          </a>
+        {%- endif -%}
       </div>
-      <a href="{{ section.settings.cta_url | default: '/pages/our-story' }}" class="btn-secondary">{{ section.settings.cta_label | default: 'Read Our Story' }} &rarr;</a>
     </div>
   </div>
-</section>
+</div>
+
+<style>
+  .brand-story {
+    background: var(--color-white, #FFFFFF);
+    padding: 90px 0;
+  }
+  .brand-story__grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 64px;
+    align-items: center;
+  }
+
+  /* Visual */
+  .brand-story__visual { position: relative; }
+  .brand-story__img-wrapper {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 5 / 6;
+  }
+  .brand-story__img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .brand-story__placeholder {
+    border-radius: 16px;
+    overflow: hidden;
+    aspect-ratio: 5 / 6;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: #F5F1EA;
+  }
+
+  /* Badge */
+  .brand-story__badge {
+    position: absolute;
+    bottom: -20px;
+    right: -10px;
+    z-index: 2;
+    background: var(--color-primary, #8B7355);
+    color: #fff;
+    padding: 14px 24px;
+    border-radius: 40px;
+    font-family: var(--font-script, 'Italianno', cursive);
+    font-size: 22px;
+    box-shadow: 0 8px 24px rgba(139,115,85,0.25);
+  }
+
+  /* Content */
+  .brand-story__content {
+    padding-left: 12px;
+  }
+  .brand-story__content .section-heading {
+    text-align: left;
+    margin-bottom: 20px;
+  }
+  .brand-story__text {
+    font-size: 15px;
+    line-height: 1.75;
+    color: #66605A;
+    margin-bottom: 28px;
+  }
+  .brand-story__text p { margin: 0 0 14px; }
+  .brand-story__text p:last-child { margin-bottom: 0; }
+
+  /* Values */
+  .brand-values {
+    display: flex;
+    flex-direction: column;
+    gap: 18px;
+    margin-bottom: 32px;
+  }
+  .brand-value {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+    padding: 18px;
+    border-radius: 10px;
+    background: var(--color-bg, #F5F1EA);
+    transition: transform 0.3s ease;
+  }
+  .brand-value:hover {
+    transform: translateX(4px);
+  }
+  .brand-value__icon {
+    font-size: 26px;
+    line-height: 1;
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-white, #FFFFFF);
+    border-radius: 50%;
+  }
+  .brand-value__text strong {
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--color-text);
+    display: block;
+    margin-bottom: 3px;
+  }
+  .brand-value__text p {
+    font-size: 13px;
+    color: #77706A;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  @media (max-width: 992px) {
+    .brand-story { padding: 60px 0; }
+    .brand-story__grid { grid-template-columns: 1fr; gap: 48px; }
+    .brand-story__content { padding-left: 0; text-align: center; }
+    .brand-story__content .section-heading { text-align: center; }
+    .brand-values { align-items: stretch; }
+    .brand-story__badge { bottom: auto; top: -15px; right: 50%; transform: translateX(50%); }
+  }
+
+  @media (max-width: 480px) {
+    .brand-story { padding: 48px 0; }
+    .brand-value { padding: 14px; gap: 10px; }
+  }
+</style>
 
 {% schema %}
 {
-  "name": "Brand Story Feature",
+  "name": "Brand Story",
+  "tag": "section",
   "settings": [
     {
       "type": "image_picker",
       "id": "image",
-      "label": "Story Image"
-    },
-    {
-      "type": "text",
-      "id": "badge_number",
-      "label": "Badge Number",
-      "default": "100%"
-    },
-    {
-      "type": "text",
-      "id": "badge_text",
-      "label": "Badge Text",
-      "default": "Natural\nMaterials"
+      "label": "Image"
     },
     {
       "type": "text",
       "id": "eyebrow",
       "label": "Eyebrow",
-      "default": "Our Story"
+      "default": "Our Philosophy"
     },
     {
       "type": "text",
@@ -72,13 +220,19 @@
     },
     {
       "type": "richtext",
-      "id": "body",
-      "label": "Body Text"
+      "id": "text",
+      "label": "Text content"
+    },
+    {
+      "type": "text",
+      "id": "badge_text",
+      "label": "Badge text on image",
+      "default": "Since 2024"
     },
     {
       "type": "text",
       "id": "cta_label",
-      "label": "CTA Label",
+      "label": "CTA button label",
       "default": "Read Our Story"
     },
     {
@@ -90,30 +244,36 @@
   "blocks": [
     {
       "type": "value",
-      "name": "Brand Value",
+      "name": "Value Item",
       "settings": [
         {
-          "type": "text",
+          "type": "html",
           "id": "icon",
-          "label": "Icon (emoji or text)",
-          "default": "🌿"
+          "label": "Icon (emoji or SVG)",
+          "default": "\u{1F33F}"
         },
         {
           "type": "text",
-          "id": "label",
-          "label": "Label",
+          "id": "title",
+          "label": "Title",
           "default": "Natural"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Sourced from nature's finest materials."
         }
       ]
     }
   ],
   "presets": [
     {
-      "name": "Brand Story Feature",
+      "name": "Brand Story",
       "blocks": [
-        { "type": "value", "settings": { "icon": "🌿", "label": "Natural" } },
-        { "type": "value", "settings": { "icon": "✋", "label": "Artisanal" } },
-        { "type": "value", "settings": { "icon": "🤍", "label": "Mindful" } }
+        { "type": "value", "settings": { "icon": "\u{1F33F}", "title": "Natural", "description": "Sourced from nature's finest materials." } },
+        { "type": "value", "settings": { "icon": "\u270B", "title": "Artisanal", "description": "Handcrafted by skilled artisans." } },
+        { "type": "value", "settings": { "icon": "\u{1F90D}", "title": "Mindful", "description": "Made with intention and care." } }
       ]
     }
   ]

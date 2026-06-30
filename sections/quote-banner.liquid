@@ -1,21 +1,87 @@
-<!-- Quote Banner Section -->
-<section class="quote-banner">
+<!-- Quote Banner - Inspirational quote section -->
+<div class="quote-banner" data-animate>
   <div class="container">
-    <p class="quote-mark">&ldquo;</p>
-    <blockquote class="quote-text">{{ section.settings.quote | default: 'The small rituals that make a house feel like home — the weight of a ceramic mug on a cork coaster, the scent of beeswax and essential oils, the sight of a macramé catching afternoon light.' }}</blockquote>
-    <p class="quote-attribute">{{ section.settings.attribution | default: '— The AELADAILY Philosophy' }}</p>
+    <div class="quote-inner">
+      {%- if section.settings.icon != blank -%}
+        <span class="quote-icon">{{ section.settings.icon }}</span>
+      {%- else -%}
+        <span class="quote-icon">&ldquo;</span>
+      {%- endif -%}
+
+      <blockquote class="quote-text">
+        {{ section.settings.quote }}
+      </blockquote>
+
+      {%- if section.settings.attribution != blank -%}
+        <cite class="quote-attribution">
+          {{ section.settings.attribution }}
+        </cite>
+      {%- endif -%}
+    </div>
   </div>
-</section>
+</div>
+
+<style>
+  .quote-banner {
+    background: var(--color-text, #3D3530);
+    padding: 80px 0;
+    color: rgba(245,241,234,0.9);
+    text-align: center;
+  }
+  .quote-inner {
+    max-width: 720px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  .quote-icon {
+    display: block;
+    font-family: 'Georgia', serif;
+    font-size: 64px;
+    line-height: 1;
+    color: var(--color-primary, #8B7355);
+    margin-bottom: 16px;
+  }
+  .quote-text {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: clamp(20px, 3vw, 28px);
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.6;
+    color: rgba(245,241,234,0.88);
+    margin: 0 0 20px;
+    border: none;
+    quotes: none;
+  }
+  .quote-attribution {
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--color-accent, #A8B5A0);
+    font-style: normal;
+  }
+
+  @media (max-width: 768px) {
+    .quote-banner { padding: 56px 0; }
+    .quote-icon { font-size: 48px; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Quote Banner",
+  "tag": "section",
   "settings": [
+    {
+      "type": "html",
+      "id": "icon",
+      "label": "Quote icon"
+    },
     {
       "type": "textarea",
       "id": "quote",
-      "label": "Quote Text",
-      "default": "The small rituals that make a house feel like home."
+      "label": "Quote text",
+      "default": "The small rituals that make a house feel like home — the weight of a ceramic mug on a cork coaster, the scent of beeswax and essential oils, the sight of a macramé catching afternoon light."
     },
     {
       "type": "text",

@@ -1,0 +1,142 @@
+<!-- Instagram Feed - Social proof section with image grid -->
+<div class="instagram-feed section" data-animate>
+  <div class="container">
+    <div class="instagram-header">
+      <span class="section-eyebrow">@aeladaily</span>
+      <h2 class="section-heading">Follow our journey</h2>
+      {%- if section.settings.link_url != blank -%}
+        <a href="{{ section.settings.link_url }}" target="_blank" rel="noopener noreferrer" class="btn btn--outline btn--sm">
+          Follow on Instagram
+        </a>
+      {%- endif -%}
+    </div>
+
+    <div class="instagram-grid">
+      {%- for i in (1..6) -%}
+        <a
+          href="{{ section.settings.link_url | default: 'https://instagram.com/aeladaily' }}"
+          target="_blank"
+          rel="noopener noreferrer"
+          class="instagram-item"
+          aria-label="Instagram post {{ i }}"
+        >
+          {%- if section.blocks.size >= i and section.blocks[i].settings.image != blank -%}
+            {{
+              section.blocks[i].settings.image
+              | image_url: width: 360
+              | image_tag:
+                loading: 'lazy',
+                alt: 'AELADAILY Instagram',
+                class: 'instagram-img'
+            }}
+          {%- else -%}
+            <div class="instagram-placeholder">
+              <svg viewBox="0 0 200 200" width="100%" height="100%">
+                <rect fill="#EDE8E0" width="200" height="200"/>
+                <g transform="translate(100,100)">
+                  <rect x="-28" y="-28" width="56" height="56" rx="12" stroke="#C4BDB3" stroke-width="1.5" fill="none"/>
+                  <circle cx="0" cy="0" r="10" stroke="#C4BDB3" stroke-width="1.5" fill="none"/>
+                  <circle cx="14" cy="-14" r="3" fill="#C4BDB3"/>
+                </g>
+              </svg>
+            </div>
+          {%- endif -%}
+          <div class="instagram-overlay">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="currentColor"><path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4a5.8 5.8 0 01-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8A5.8 5.8 0 017.8 2m-.2 2A3.6 3.6 0 004 7.6v8.8C4 18.39 5.61 20 7.6 20h8.8a3.6 3.6 0 003.6-3.6V7.6C20 5.61 18.39 4 16.4 4H7.6m9.65 1.5a1.25 1.25 0 011.25 1.25A1.25 1.25 0 0117.25 8 1.25 1.25 0 0116 6.75a1.25 1.25 0 011.25-1.25M12 7a5 5 0 015 5 5 5 0 01-5 5 5 5 0 01-5-5 5 5 0 015-5m0 2a3 3 0 00-3 3 3 3 0 003 3 3 3 0 003-3 3 3 0 00-3-3z"/></svg>
+          </div>
+        </a>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .instagram-feed {
+    background: var(--color-bg, #F5F1EA);
+    padding: 72px 0;
+  }
+  .instagram-header {
+    text-align: center;
+    margin-bottom: 36px;
+  }
+  .instagram-header .section-heading { margin-bottom: 18px; }
+
+  .instagram-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 10px;
+  }
+
+  .instagram-item {
+    position: relative;
+    display: block;
+    aspect-ratio: 1;
+    overflow: hidden;
+    border-radius: 10px;
+    text-decoration: none;
+  }
+  .instagram-placeholder,
+  .instagram-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.45s cubic-bezier(0.4,0,0.2,1);
+  }
+  .instagram-item:hover .instagram-placeholder,
+  .instagram-item:hover .instagram-img {
+    transform: scale(1.06);
+  }
+  .instagram-overlay {
+    position: absolute;
+    inset: 0;
+    background: rgba(139,115,85,0.55);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    opacity: 0;
+    transition: opacity 0.35s ease;
+  }
+  .instagram-item:hover .instagram-overlay { opacity: 1; }
+
+  @media (max-width: 992px) {
+    .instagram-grid { grid-template-columns: repeat(4, 1fr); }
+  }
+  @media (max-width: 480px) {
+    .instagram-grid { grid-template-columns: repeat(3, 1fr); gap: 8px; }
+    .instagram-feed { padding: 48px 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Instagram Feed",
+  "tag": "section",
+  "settings": [
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Instagram profile URL"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "image_item",
+      "name": "Image",
+      "limit": 6,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image",
+          "label": "Post image"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Instagram Feed"
+    }
+  ]
+}
+{% endschema %}

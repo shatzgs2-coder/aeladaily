@@ -1,40 +1,191 @@
-<!-- Hero Banner Section -->
-<section class="hero" id="hero">
-  <div class="hero-bg">
-    <div class="hero-texture"></div>
-    <div class="hero-content">
-      <p class="hero-eyebrow"><span class="hero-eyebrow-line"></span> {{ section.settings.eyebrow | default: 'Natural Daily' }} <span class="hero-eyebrow-line"></span></p>
-      <h1 class="hero-title">{{ section.settings.heading | default: 'Bring nature' }}<br><em>{{ section.settings.heading_italic | default: 'home.' }}</em></h1>
-      <p class="hero-subtitle">{{ section.settings.subtext | default: 'Natural materials. Handcrafted with care.<br>Made for the rituals of everyday life.' }}</p>
+<!-- Hero Banner - Full-width hero with background image, text overlay and CTAs -->
+<div class="hero-banner" data-animate>
+  {%- if section.settings.image != blank -%}
+    <div class="hero-banner__bg">
+      {{
+        section.settings.image
+        | image_url: width: 1920
+        | image_tag:
+          widths: '600, 900, 1200, 1500, 1920',
+          alt: section.settings.image.alt | default: 'AELADAILY Hero Banner',
+          loading: 'eager',
+          class: 'hero-banner__img'
+      }}
+    </div>
+  {%- else -%}
+    <div class="hero-banner__bg hero-banner__bg--placeholder" style="background-image: url('{{ 'hero-bg.png' | asset_url }}');"></div>
+  {%- endif -%}
+
+  <div class="hero-banner__overlay"></div>
+
+  <div class="container hero-banner__content">
+    <div class="hero-banner__text">
+      {%- if section.settings.eyebrow != blank -%}
+        <span class="hero-eyebrow">{{ section.settings.eyebrow }}</span>
+      {%- endif -%}
+
+      <h1 class="hero-heading">
+        {{ section.settings.heading }}
+        {%- if section.settings.heading_italic != blank -%}
+          <em>{{ section.settings.heading_italic }}</em>
+        {%- endif -%}
+      </h1>
+
+      {%- if section.settings.subtext != blank -%}
+        <p class="hero-subtext">{{ section.settings.subtext }}</p>
+      {%- endif -%}
+
       <div class="hero-actions">
-        <a href="{{ section.settings.cta_primary_url | default: routes.all_products_collection_url }}" class="btn-primary btn-large">{{ section.settings.cta_primary_label | default: 'Shop the Collection' }}</a>
-        <a href="{{ section.settings.cta_secondary_url | default: '/pages/our-story' }}" class="btn-ghost-light">{{ section.settings.cta_secondary_label | default: 'Our Story' }}</a>
-      </div>
-    </div>
-    <div class="hero-scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-    <div class="hero-badge">
-      <div class="hero-badge-circle">
-        <svg viewBox="0 0 100 100" width="100%" height="100%">
-          <defs><path id="circle-path" d="M50,50 m-38,0 a38,38 0 1,1 76,0 a38,38 0 1,1 -76,0"/></defs>
-          <text font-size="9" font-family="Jost" letter-spacing="2" fill="#8B7355"><textPath href="#circle-path">NATURAL MATERIALS &bull; HANDCRAFTED &bull; PLASTIC FREE &bull; </textPath></text>
-        </svg>
-        <div class="hero-badge-center">&#10047;</div>
+        {%- if section.settings.cta_primary_label != blank and section.settings.cta_primary_url != blank -%}
+          <a href="{{ section.settings.cta_primary_url }}" class="btn btn--primary btn--lg">
+            {{ section.settings.cta_primary_label }}
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="m7 17 9.2-9.2M17 17V7H7"/></svg>
+          </a>
+        {%- endif -%}
+        {%- if section.settings.cta_secondary_label != blank and section.settings.cta_secondary_url != blank -%}
+          <a href="{{ section.settings.cta_secondary_url }}" class="btn btn--outline btn--lg">
+            {{ section.settings.cta_secondary_label }}
+          </a>
+        {%- endif -%}
       </div>
     </div>
   </div>
-</section>
+
+  <!-- Decorative badge element -->
+  <div class="hero-badge" aria-hidden="true">
+    <svg width="80" height="80" viewBox="0 0 100 100" fill="none">
+      <circle cx="50" cy="50" r="46" stroke="currentColor" stroke-width="1" stroke-dasharray="4 3"/>
+      <circle cx="50" cy="50" r="38" stroke="currentColor" stroke-width="0.5"/>
+      <text x="50" y="45" text-anchor="middle" font-family="'Italianno', cursive" font-size="18" fill="currentColor">Natural</text>
+      <text x="50" y="63" text-anchor="middle" font-family="'Italianno', cursive" font-size="14" fill="currentColor">Daily</text>
+    </svg>
+  </div>
+</div>
+
+<style>
+  .hero-banner {
+    position: relative;
+    min-height: 90vh;
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+  }
+  .hero-banner__bg,
+  .hero-banner__bg img {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+  .hero-banner__bg--placeholder {
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+  }
+  .hero-banner__overlay {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(135deg, rgba(61,53,48,0.65) 0%, rgba(61,53,48,0.35) 50%, rgba(168,181,160,0.15) 100%);
+  }
+  .hero-banner__content {
+    position: relative;
+    z-index: 2;
+    max-width: 640px;
+    padding: 60px 20px;
+  }
+
+  /* Text */
+  .hero-eyebrow {
+    display: inline-block;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: var(--color-accent, #A8B5A0);
+    margin-bottom: 16px;
+    padding-bottom: 12px;
+    border-bottom: 1px solid rgba(168,181,160,0.4);
+  }
+  .hero-heading {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: clamp(40px, 6vw, 72px);
+    font-weight: 400;
+    line-height: 1.08;
+    color: var(--color-white, #FFFFFF);
+    margin: 0 0 24px;
+    letter-spacing: -0.01em;
+  }
+  .hero-heading em {
+    font-style: italic;
+    font-family: var(--font-script, 'Italianno', cursive);
+    font-weight: 400;
+    display: block;
+    font-size: 1.15em;
+    color: var(--color-accent, #A8B5A0);
+    margin-top: -4px;
+  }
+  .hero-subtext {
+    font-size: clamp(15px, 1.8vw, 18px);
+    line-height: 1.7;
+    color: rgba(255,255,255,0.85);
+    max-width: 480px;
+    margin: 0 0 36px;
+  }
+
+  /* CTA Buttons */
+  .hero-actions {
+    display: flex;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+
+  /* Badge */
+  .hero-badge {
+    position: absolute;
+    right: 8%;
+    bottom: 20%;
+    z-index: 2;
+    color: rgba(255,255,255,0.25);
+    animation: badge-float 6s ease-in-out infinite;
+  }
+
+  @keyframes badge-float {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-12px); }
+  }
+
+  @media (max-width: 992px) {
+    .hero-banner { min-height: 75vh; }
+    .hero-banner__content { max-width: 100%; text-align: center; padding: 40px 20px; }
+    .hero-subtext { max-width: 520px; margin-left: auto; margin-right: auto; }
+    .hero-actions { justify-content: center; }
+    .hero-eyebrow { justify-content: center; display: inline-block; }
+    .hero-badge { display: none; }
+  }
+
+  @media (max-width: 480px) {
+    .hero-banner { min-height: 68vh; }
+    .hero-actions { flex-direction: column; align-items: stretch; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Hero Banner",
+  "tag": "section",
   "settings": [
+    {
+      "type": "image_picker",
+      "id": "image",
+      "label": "Background image"
+    },
     {
       "type": "text",
       "id": "eyebrow",
-      "label": "Eyebrow Text",
+      "label": "Eyebrow text",
       "default": "Natural Daily"
     },
     {
@@ -46,20 +197,20 @@
     {
       "type": "text",
       "id": "heading_italic",
-      "label": "Heading Italic Part",
+      "label": "Heading italic (script)",
       "default": "home."
     },
     {
       "type": "textarea",
       "id": "subtext",
-      "label": "Subtext",
+      "label": "Subheading",
       "default": "Natural materials. Handcrafted with care. Made for the rituals of everyday life."
     },
     {
       "type": "text",
       "id": "cta_primary_label",
-      "label": "Primary CTA Label",
-      "default": "Shop the Collection"
+      "label": "Primary CTA label",
+      "default": "Shop Collection"
     },
     {
       "type": "url",
@@ -69,7 +220,7 @@
     {
       "type": "text",
       "id": "cta_secondary_label",
-      "label": "Secondary CTA Label",
+      "label": "Secondary CTA label",
       "default": "Our Story"
     },
     {

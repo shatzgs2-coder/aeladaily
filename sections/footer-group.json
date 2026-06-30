@@ -1,9 +1,1 @@
-{
-  "sections": {
-    "footer": {
-      "type": "footer",
-      "settings": {}
-    }
-  },
-  "order": ["footer"]
-}
+{"sections": {"footer": {"type": "footer", "settings": {}}}, "order": ["footer"]}

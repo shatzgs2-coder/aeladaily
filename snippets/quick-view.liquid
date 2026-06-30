@@ -1,28 +1,94 @@
-<!-- Quick View Modal Snippet -->
-<div class="qv-overlay" id="qvOverlay" onclick="closeQuickView()"></div>
-<div class="qv-modal" id="qvModal" aria-modal="true" role="dialog">
-  <button class="qv-close overlay-close" onclick="closeQuickView()" aria-label="Close">&times;</button>
-  <div class="qv-content" id="qvContent">
-    <div class="qv-image" id="qvImage"></div>
-    <div class="qv-info">
-      <span class="qv-tag" id="qvTag"></span>
-      <h3 class="qv-name" id="qvName"></h3>
-      <p class="qv-price" id="qvPrice"></p>
-      <p class="qv-desc" id="qvDesc"></p>
-      <div class="qv-options">
-        <p class="qv-option-label">Quantity</p>
-        <div class="qty-selector qv-qty">
-          <button class="qty-btn" onclick="updateQty(this,-1)">&minus;</button>
-          <span class="qty-value">1</span>
-          <button class="qty-btn" onclick="updateQty(this,1)">&plus;</button>
-        </div>
-      </div>
-      <button class="btn-primary btn-full qv-add-btn" id="qvAddBtn">Add to Cart &rarr;</button>
-      <div class="qv-meta">
-        <p>&#10003; In stock &mdash; ships in 1-2 days</p>
-        <p>&#10003; Free shipping over &euro;49</p>
-        <p>&#10003; 30-day returns</p>
-      </div>
+<!-- Quick View - Modal for quick product preview -->
+<div class="quick-view" id="quick-view-modal" aria-hidden="true">
+  <div class="qv-overlay" data-action="close-quick-view"></div>
+  <div class="qv-panel" role="dialog" aria-modal="true" aria-label="Quick product view">
+    <button class="qv-close" data-action="close-quick-view" aria-label="Close">&times;</button>
+    <div class="qv-content" id="quick-view-content">
+      <!-- Dynamically filled by JS -->
     </div>
   </div>
 </div>
+
+<style>
+  .quick-view{position:fixed;inset:0;z-index:2800;display:flex;align-items:center;justify-content:center;pointer-events:none;opacity:0;visibility:hidden;transition:all 0.3s ease;}
+  .quick-view.is-open{pointer-events:auto;opacity:1;visibility:visible;}
+  .qv-overlay{position:absolute;inset:0;background:rgba(61,53,48,0.5);backdrop-filter:blur(4px);}
+  .qv-panel{position:relative;z-index:2;width:min(860px,92vw);max-height:85vh;background:#fff;border-radius:16px;box-shadow:0 24px 64px rgba(0,0,0,0.18);overflow-y:auto;transform:scale(0.95) translateY(10px);transition:transform 0.35s cubic-bezier(0.4,0,0.2,1);}
+  .quick-view.is-open .qv-panel{transform:scale(1) translateY(0);}
+
+  .qv-close{position:absolute;top:16px;right:16px;z-index:5;width:36px;height:36px;border-radius:50%;border:none;background:#F5F1EA;cursor:pointer;font-size:22px;color:#999;display:flex;align-items:center;justify-content:center;}
+  .qv-close:hover{background:#EEE;color:#333;}
+
+  .qv-content{padding:32px;}
+  @media(max-width:768px){.qv-panel{width:95vw;}.qv-content{padding:20px;}}
+</style>
+
+<script>
+// Quick View functionality
+document.addEventListener('DOMContentLoaded', function() {
+  // Handle Quick View button clicks
+  document.addEventListener('click', function(e) {
+    var trigger = e.target.closest('[data-action="quick-view"]');
+    if (!trigger) return;
+    e.preventDefault();
+
+    var handle = trigger.dataset.productHandle;
+    if (!handle) return;
+
+    var modal = document.getElementById('quick-view-modal');
+    var content = document.getElementById('quick-view-content');
+
+    // Show loading state
+    modal.classList.add('is-open');
+    modal.setAttribute('aria-hidden', 'false');
+    content.innerHTML = '<div style="text-align:center;padding:40px;"><p style="color:#999;">Loading...</p></div>';
+
+    // Fetch product data via Shopify Product API
+    fetch('/products/' + handle + '.js')
+      .then(function(r) { return r.json(); })
+      .then(function(product) {
+        var img = product.featured_image || '';
+        var price = (product.price / 100).toFixed(2);
+        var comparePrice = product.compare_at_price ? (product.compare_at_price / 100).toFixed(2) : '';
+
+        content.innerHTML =
+          '<div style="display:grid;grid-template-columns:1fr 1fr;gap:28px;">' +
+          '<div><img src="' + img.replace('.jpg', '_480x480.jpg') + '" alt="' + product.title + '" style="width:100%;border-radius:12px;"></div>' +
+          '<div>' +
+            '<h3 style="font-family:\'Cormorant Garamond\',serif;font-size:22px;margin:0 0 8px;">' + product.title + '</h3>' +
+            '<p style="font-size:20px;font-weight:600;margin-bottom:14px;">€' + price + (comparePrice ? ' <s style="font-size:15px;color:#AAA;">€' + comparePrice + '</s>' : '') + '</p>' +
+            '<p style="font-size:13px;line-height:1.6;color:#666;margin-bottom:20px;">' + (product.description ? product.description.replace(/<[^>]*>/g,'').substring(0,180) + '...' : 'Beautifully handcrafted piece for your home.') + '</p>' +
+            '<form class="qv-form"><input type="hidden" name="id" value="' + product.variants[0].id + '">' +
+              '<div style="margin-bottom:16px;"><label style="display:block;font-size:12px;text-transform:uppercase;letter-spacing:0.06em;color:#888;margin-bottom:6px;">Quantity</label>' +
+                '<div style="display:inline-flex;"><button type="button" onclick="var i=this.nextElementSibling;i.value=Math.max(1,+i.value-1);" style="width:38px;height:38px;border:1.5px solid #E8E0D5;background:none;cursor:pointer;font-size:18px;">&minus;</button>' +
+                '<input type="number" value="1" min="1" style="width:52px;height:38px;border:1.5px solid #E8E0D5;border-left:none;border-right:none;text-align:center;font-size:14px;">' +
+                '<button type="button" onclick="var i=this.previousElementSibling;i.value=+i.value+1;" style="width:38px;height:38px;border:1.5px solid #E8E0D5;background:none;cursor:pointer;font-size:18px;">&plus;</button></div></div>' +
+              '<a href="' + product.url + '" class="btn btn--primary btn--lg btn--fullwidth" style="text-decoration:none;text-align:center;padding:14px;">View Full Details &rarr;</a>' +
+            '</form></div></div>';
+      })
+      .catch(function(err) {
+        content.innerHTML = '<p style="text-align:center;color:#C45C4A;padding:30px;">Could not load product.</p>';
+      });
+  });
+
+  // Close handlers
+  function closeQuickView() {
+    var modal = document.getElementById('quick-view-modal');
+    modal.classList.remove('is-open');
+    modal.setAttribute('aria-hidden', 'true');
+    document.body.style.overflow = '';
+  }
+
+  document.querySelectorAll('[data-action="close-quick-view"]').forEach(function(el) {
+    el.addEventListener('click', closeQuickView);
+  });
+
+  // Close on Escape
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') {
+      var qv = document.getElementById('quick-view-modal');
+      if (qv && qv.classList.contains('is-open')) closeQuickView();
+    }
+  });
+});
+</script>

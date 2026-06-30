@@ -1,10 +1,103 @@
-<!-- Cookie Banner Snippet -->
-<div class="cookie-banner" id="cookieBanner">
-  <div class="cookie-content">
-    <p>We use cookies to enhance your browsing experience. By continuing to browse, you agree to our <a href="{{ pages['privacy-policy'].url | default: routes.privacy_policy_url }}">Cookie Policy</a>.</p>
+<!-- Cookie Banner - GDPR compliant consent banner -->
+<div class="cookie-banner" id="cookie-banner" role="dialog" aria-label="Cookie consent">
+  <div class="cookie-inner">
+    <div class="cookie-text">
+      <p>We use cookies to enhance your browsing experience and analyze site traffic. By clicking "Accept All", you consent to our use of cookies. <a href="/pages/datenschutz">Learn more</a></p>
+    </div>
     <div class="cookie-actions">
-      <button class="btn-text" onclick="openCookieSettings()">Settings</button>
-      <button class="btn-primary btn-small" onclick="acceptCookies()">Accept All</button>
+      <button class="cookie-btn cookie-btn--accept" data-action="accept-cookies">Accept All</button>
+      <button class="cookie-btn cookie-btn--decline" data-action="decline-cookies">Necessary Only</button>
     </div>
   </div>
 </div>
+
+<style>
+  .cookie-banner {
+    position: fixed;
+    bottom: -100%;
+    left: 0;
+    right: 0;
+    z-index: 4000;
+    background: var(--color-text, #3D3530);
+    color: rgba(245,241,234,0.9);
+    padding: 20px 0;
+    box-shadow: 0 -4px 24px rgba(0,0,0,0.12);
+    transition: bottom 0.5s cubic-bezier(0.4,0,0.2,1);
+  }
+  .cookie-banner.is-visible { bottom: 0; }
+  .cookie-inner {
+    max-width: 1100px;
+    margin: 0 auto;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 24px;
+  }
+  .cookie-text p {
+    font-size: 13px; line-height: 1.55; margin: 0;
+    max-width: 680px;
+  }
+  .cookie-text a {
+    color: var(--color-accent, #A8B5A0); text-decoration: underline;
+  }
+
+  .cookie-actions { display: flex; gap: 10px; flex-shrink: 0; }
+  .cookie-btn {
+    padding: 10px 22px;
+    border-radius: 8px;
+    border: none;
+    cursor: pointer;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    white-space: nowrap;
+    transition: all 0.2s ease;
+  }
+  .cookie-btn--accept {
+    background: var(--color-primary, #8B7355); color: #fff;
+  }
+  .cookie-btn--accept:hover { opacity: 0.88; }
+  .cookie-btn--decline {
+    background: transparent;
+    border: 1px solid rgba(245,241,234,0.25);
+    color: rgba(245,241,234,0.7);
+  }
+  .cookie-btn--decline:hover { border-color: rgba(245,241,234,0.5); color: #fff; }
+
+  @media (max-width: 768px) {
+    .cookie-inner { flex-direction: column; align-items: stretch; text-align: center; }
+    .cookie-actions { justify-content: center; }
+    .cookie-text p { max-width: none; }
+  }
+</style>
+
+<script>
+(function() {
+  var banner = document.getElementById('cookie-banner');
+  if (!banner) return;
+
+  // Check if user has already consented
+  if (localStorage.getItem('aeladaily_cookie_consent')) return;
+
+  // Show banner after a short delay
+  setTimeout(function() { banner.classList.add('is-visible'); }, 1500);
+
+  function acceptCookies() {
+    localStorage.setItem('aeladaily_cookie_consent', 'accepted');
+    hideBanner();
+  }
+  function declineCookies() {
+    localStorage.setItem('aeladaily_cookie_consent', 'necessary');
+    hideBanner();
+  }
+  function hideBanner() {
+    banner.classList.remove('is-visible');
+  }
+
+  banner.querySelector('[data-action="accept-cookies"]').addEventListener('click', acceptCookies);
+  banner.querySelector('[data-action="decline-cookies"]').addEventListener('click', declineCookies);
+})();
+</script>

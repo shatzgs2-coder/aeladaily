@@ -1,125 +1,503 @@
-<!-- Footer Section -->
-<footer class="site-footer">
-  <div class="footer-main">
+<!-- Footer - Comprehensive footer with brand, links, social, legal, payment -->
+<footer class="site-footer" id="site-footer">
+  <!-- Shipping & Trust Bar (visible on all pages) -->
+  <div class="footer__shipping-bar">
     <div class="container">
-      <div class="footer-grid">
-        <div class="footer-col footer-brand">
-          <div class="logo footer-logo">
-            {%- if settings.logo != blank -%}
-              {{ settings.logo | image_url: width: 140 | image_tag: class: 'footer-logo-img', alt: shop.name }}
-            {%- else -%}
-              <span class="logo-wordmark">{{ shop.name }}</span>
-              <span class="logo-subtitle">Natural Daily</span>
-            {%- endif -%}
+      <div class="shipping-grid">
+        <div class="shipping-item">
+          <div class="shipping-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
           </div>
-          <p class="footer-desc">Natural materials. Handcrafted. Made for daily life. We bring wabi-sabi aesthetics into everyday European homes.</p>
-          <div class="social-links">
-            {%- if settings.social_instagram_link != blank -%}
-              <a href="{{ settings.social_instagram_link }}" class="social-link" aria-label="Instagram" target="_blank" rel="noopener">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1" fill="currentColor"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if settings.social_pinterest_link != blank -%}
-              <a href="{{ settings.social_pinterest_link }}" class="social-link" aria-label="Pinterest" target="_blank" rel="noopener">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 20l4-8M12 4c-3 0-5 2-5 4s2 3 3 3 2-1 2-3"/></svg>
-              </a>
-            {%- endif -%}
-            {%- if settings.social_facebook_link != blank -%}
-              <a href="{{ settings.social_facebook_link }}" class="social-link" aria-label="Facebook" target="_blank" rel="noopener">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 2h-3a5 5 0 00-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 011-1h3z"/></svg>
-              </a>
-            {%- endif -%}
+          <div class="shipping-text">
+            <strong>Free Shipping</strong>
+            <span>On orders over €49 within EU</span>
           </div>
         </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Shop</h4>
-          <ul class="footer-links">
-            <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
-            {%- for collection in collections limit: 6 -%}
-              {%- unless collection.handle == 'frontpage' -%}
-                <li><a href="{{ collection.url }}">{{ collection.title }}</a></li>
-              {%- endunless -%}
-            {%- endfor -%}
-          </ul>
+        <div class="shipping-item">
+          <div class="shipping-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s-8-4.5-8-11.8A8 8 0 0 1 12 2a8 8 0 0 1 8 8.2c0 7.3-8 11.8-8 11.8z"/><circle cx="12" cy="10" r="3"/></svg>
+          </div>
+          <div class="shipping-text">
+            <strong>Sustainably Sourced</strong>
+            <span>Natural materials from ethical suppliers</span>
+          </div>
         </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Company</h4>
-          <ul class="footer-links">
-            <li><a href="{{ pages['our-story'].url | default: '/pages/our-story' }}">Our Story</a></li>
-            <li><a href="{{ blogs['journal'].url | default: '/blogs/journal' }}">Journal</a></li>
-            <li><a href="{{ pages['sustainability'].url | default: '/pages/sustainability' }}">Sustainability</a></li>
-            <li><a href="{{ pages['wholesale'].url | default: '/pages/wholesale' }}">Wholesale</a></li>
-            <li><a href="{{ pages['press'].url | default: '/pages/press' }}">Press</a></li>
-          </ul>
+        <div class="shipping-item">
+          <div class="shipping-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+          </div>
+          <div class="shipping-text">
+            <strong>Easy Returns</strong>
+            <span>30-day return policy across Europe</span>
+          </div>
         </div>
-
-        <div class="footer-col">
-          <h4 class="footer-heading">Help &amp; Contact</h4>
-          <ul class="footer-links">
-            <li><a href="{{ pages['faq'].url | default: '/pages/faq' }}">FAQ</a></li>
-            <li><a href="{{ pages['shipping-returns'].url | default: '/pages/shipping-returns' }}">Shipping &amp; Returns</a></li>
-            <li><a href="{{ routes.contact_url }}">Contact Us</a></li>
-            <li><a href="{{ pages['track-order'].url | default: '/pages/track-order' }}">Track Your Order</a></li>
-          </ul>
-          <p class="footer-contact-email">{{ settings.contact_email | default: 'hello@aeladaily.com' }}</p>
-          <p class="footer-contact-hours">Mon&ndash;Fri 9&ndash;17 CET</p>
-          <div class="payment-icons">
-            {%- for type in shop.enabled_payment_types -%}
-              {{ type | payment_type_svg_tag: class: 'pay-icon-img' }}
-            {%- endfor -%}
+        <div class="shipping-item">
+          <div class="shipping-icon">
+            <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+          </div>
+          <div class="shipping-text">
+            <strong>Dedicated Support</strong>
+            <span>Reply within 24 hours (DE/EN)</span>
           </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="footer-legal">
+  <!-- Main Footer Content -->
+  <div class="footer__main">
     <div class="container">
-      <div class="legal-inner">
-        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }} &middot; Natural Daily</p>
-        <div class="legal-links">
-          <a href="{{ pages['privacy-policy'].url | default: routes.privacy_policy_url }}">Privacy Policy</a>
-          <a href="{{ pages['terms'].url | default: routes.terms_of_service_url }}">Terms</a>
-          <a href="{{ pages['impressum'].url | default: '/pages/impressum' }}">Impressum</a>
-          <a href="{{ pages['widerrufsrecht'].url | default: '/pages/widerrufsrecht' }}">Widerrufsrecht</a>
-          <a href="#" onclick="openCookieSettings(); return false;">Cookie Settings</a>
+      <div class="footer-grid">
+
+        <!-- Brand Column -->
+        <div class="footer-col footer-brand">
+          <a href="{{ routes.root_url }}" class="footer-logo">
+            <span>AELA<span class="accent">DAILY</span></span>
+          </a>
+          {%- if section.settings.brand_text != blank -%}
+            <p class="footer-brand__text">{{ section.settings.brand_text }}</p>
+          {%- else -%}
+            <p class="footer-brand__text">Natural materials handcrafted into everyday objects that bring warmth and authenticity to your home.</p>
+          {%- endif -%}
+
+          <!-- Social Media -->
+          {%- if settings.social_instagram_link != blank or settings.social_pinterest_link != blank or settings.social_facebook_link != blank or settings.social_tiktok_link != blank -%}
+          <div class="footer-social">
+            {%- if settings.social_instagram_link != blank -%}
+              <a href="{{ settings.social_instagram_link }}" target="_blank" rel="noopener noreferrer" aria-label="Instagram" class="footer-social__link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><rect x="2" y="2" width="20" height="20" rx="5"/><circle cx="12" cy="12" r="5"/><circle cx="17.5" cy="6.5" r="1.5" fill="var(--color-bg)"/></svg>
+              </a>
+            {%- endif -%}
+            {%- if settings.social_pinterest_link != blank -%}
+              <a href="{{ settings.social_pinterest_link }}" target="_blank" rel="noopener noreferrer" aria-label="Pinterest" class="footer-social__link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2C6.477 2 2 6.477 2 12c0 4.237 2.636 7.855 6.356 9.312-.088-.791-.167-2.005.035-2.868.182-.78 1.172-4.97 1.172-4.97s-.299-.6-.299-1.486c0-1.39.806-2.428 1.81-2.428.852 0 1.264.64 1.264 1.408 0 .858-.546 2.14-.828 3.33-.236.995.5 1.807 1.48 1.807 1.778 0 3.144-1.874 3.144-4.58 0-2.393-1.72-4.068-4.176-4.068-2.845 0-4.516 2.135-4.516 4.34 0 .859.331 1.781.745 2.281a.3.3 0 01.069.288l-.278 1.133c-.044.183-.145.222-.335.134-1.249-.581-2.03-2.407-2.03-3.874 0-3.154 2.292-6.052 6.608-6.052 3.469 0 6.165 2.473 6.165 5.776 0 3.447-2.173 6.22-5.19 6.22-1.013 0-1.965-.525-2.291-1.148l-.623 2.378c-.226.869-.835 1.958-1.244 2.621.937.29 1.931.446 2.962.446 5.523 0 10-4.477 10-10S17.523 2 12 2z"/></svg>
+              </a>
+            {%- endif -%}
+            {%- if settings.social_facebook_link != blank -%}
+              <a href="{{ settings.social_facebook_link }}" target="_blank" rel="noopener noreferrer" aria-label="Facebook" class="footer-social__link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/></svg>
+              </a>
+            {%- endif -%}
+            {-% if settings.social_tiktok_link != blank -%}
+              <a href="{{ settings.social_tiktok_link }}" target="_blank" rel="noopener noreferrer" aria-label="TikTok" class="footer-social__link">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15 1.07-.14 1.61.24 1.64 1.82 3.02 3.5 2.87 1.12-.01 2.19-.66 2.77-1.61.19-.33.4-.67.41-1.06.1-1.79.06-3.57.07-5.36.01-4.03-.01-8.05.02-12.07z"/></svg>
+              </a>
+            {%- endif -%}
+          </div>
+          {%- endif -%}
         </div>
-        <p class="made-with">Made with &#10084; for natural living</p>
+
+        <!-- Shop Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Shop</h4>
+          <ul class="footer-links">
+            {%- for link in linklists[section.settings.shop_menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- else -%}
+              <li><a href="{{ routes.all_products_collection_url }}">All Products</a></li>
+              <li><a href="/collections/new-arrivals">New Arrivals</a></li>
+              <li><a href="/collections/bestsellers">Bestsellers</a></li>
+              <li><a href="/collections/home-decor">Home Decor</a></li>
+              <li><a href="/collections/tableware">Tableware</a></li>
+              <li><a href="/collections/gifts">Gift Sets</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <!-- Company Column -->
+        <div class="footer-col">
+          <h4 class="footer-heading">Company</h4>
+          <ul class="footer-links">
+            {%- for link in linklists[section.settings.company_menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- else -%}
+              <li><a href="{{ pages['about-us'].url | default: '/pages/about-us' }}">Our Story</a></li>
+              <li><a href="{{ pages['journal'].url | default: '/blogs/journal' }}">Journal</a></li>
+              <li><a href="#">Sustainability</a></li>
+              <li><a href="#">Careers</a></li>
+              <li><a href="#">Press</a></li>
+              <li><a href="#">Wholesale</a></li>
+            {%- endfor -%}
+          </ul>
+        </div>
+
+        <!-- Help Column + Newsletter -->
+        <div class="footer-col footer-help">
+          <h4 class="footer-heading">Help</h4>
+          <ul class="footer-links">
+            {%- for link in linklists[section.settings.help_menu].links -%}
+              <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+            {%- else -%}
+              <li><a href="{{ pages['faq'].url | default: '/pages/faq' }}">FAQ</a></li>
+              <li><a href="{{ pages['shipping'].url | default: '/pages/shipping' }}">Shipping Info</a></li>
+              <li><a href="{{ pages['returns'].url | default: '/pages/returns' }}">Returns</a></li>
+              <li><a href="{{ pages['contact'].url | default: '/pages/contact' }}">Contact Us</a></li>
+              <li><a href="#">Size Guide</a></li>
+              <li><a href="#">Track Order</a></li>
+            {%- endfor -%}
+          </ul>
+
+          <!-- Contact Email -->
+          {%- if section.settings.contact_email != blank -%}
+            <p class="footer-contact">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              {{ section.settings.contact_email }}
+            </p>
+          {%- elsif settings.contact_email != blank -%}
+            <p class="footer-contact">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7"/></svg>
+              {{ settings.contact_email }}
+            </p>
+          {%- endif -%}
+
+          <!-- Mini newsletter signup in footer -->
+          <div class="footer-newsletter-mini">
+            {% form 'customer', id: 'footer-newsletter-form' %}
+              <input type="hidden" name="contact[tags]" value="newsletter">
+              <input
+                type="email"
+                name="contact[email]"
+                placeholder="Your email address"
+                required
+                aria-label="Email for newsletter"
+                class="footer-newsletter-input"
+              >
+              <button type="submit" class="footer-newsletter-btn">Join</button>
+              {%- if form.posted_successfully? -%}
+                <p class="form-success" style="margin-top:8px;font-size:13px;color:var(--color-accent);">Welcome aboard! Check your email for 10% off.</p>
+              {%- endif -%}
+            {% endform %}
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Bottom bar: Payment icons + Legal links + Copyright -->
+  <div class="footer__bottom">
+    <div class="container footer-bottom-inner">
+      <!-- Payment Icons -->
+      <div class="footer-payments">
+        <span class="footer-label">We accept:</span>
+        <div class="payment-icons">
+          {%- for type in shop.enabled_payment_types -%}
+            <span class="payment-icon">{{ type | payment_type_svg_tag }}</span>
+          {%- endfor -%}
+        </div>
+      </div>
+
+      <!-- Legal Links (Germany/EU compliance) -->
+      <nav class="footer-legal" aria-label="Legal navigation">
+        <ul class="legal-links">
+          {%- for link in linklists[section.settings.legal_menu].links -%}
+            <li><a href="{{ link.url }}">{{ link.title }}</a></li>
+          {%- else -%}
+            <li><a href="{{ pages['impressum'].url | default: '/pages/impressum' }}">Impressum</a></li>
+            <li><a href="{{ pages['widerrufsrecht'].url | default: '/pages/widerrufsrecht' }}">Widerrufsrecht</a></li>
+            <li><a href="{{ pages['datenschutz'].url | default: '/pages/datenschutz' }}">Datenschutz</a></li>
+            <li><a href="{{ pages['agb'].url | default: '/pages/agb' }}">AGB</a></li>
+          {%- endfor -%}
+        </ul>
+      </nav>
+
+      <!-- Copyright -->
+      <div class="footer-copyright">
+        <p>&copy; {{ 'now' | date: '%Y' }} {{ shop.name }}. All rights reserved.</p>
       </div>
     </div>
   </div>
 </footer>
+
+<style>
+  /* ===== SHIPPING BAR ===== */
+  .footer__shipping-bar {
+    background: var(--color-white, #FFFFFF);
+    border-top: 1px solid var(--color-border, #E8E0D5);
+    padding: 32px 0;
+  }
+  .shipping-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 24px;
+  }
+  .shipping-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 14px;
+  }
+  .shipping-icon {
+    flex-shrink: 0;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: var(--color-bg, #F5F1EA);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--color-primary, #8B7355);
+  }
+  .shipping-text {
+    display: flex;
+    flex-direction: column;
+  }
+  .shipping-text strong {
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    font-weight: 600;
+    letter-spacing: 0.03em;
+  }
+  .shipping-text span {
+    font-size: 12px;
+    color: #888;
+    margin-top: 2px;
+  }
+
+  /* ===== MAIN FOOTER ===== */
+  .footer__main {
+    background: var(--color-text, #3D3530);
+    color: rgba(245,241,234,0.85);
+    padding: 56px 0 48px;
+  }
+  .footer-grid {
+    display: grid;
+    grid-template-columns: 1.5fr 1fr 1fr 1.4fr;
+    gap: 40px;
+  }
+
+  /* Brand */
+  .footer-brand {}
+  .footer-logo {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: 26px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--color-bg, #F5F1EA);
+    display: inline-block;
+    margin-bottom: 16px;
+    letter-spacing: 0.02em;
+  }
+  .footer-logo .accent { color: var(--color-primary, #8B7355); }
+  .footer-brand__text {
+    font-size: 14px;
+    line-height: 1.7;
+    color: rgba(245,241,234,0.65);
+    margin: 0 0 20px;
+    max-width: 280px;
+  }
+
+  /* Social */
+  .footer-social {
+    display: flex;
+    gap: 12px;
+  }
+  .footer-social__link {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    border: 1px solid rgba(245,241,234,0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: rgba(245,241,234,0.7);
+    transition: all 0.25s ease;
+  }
+  .footer-social__link:hover {
+    background: var(--color-primary, #8B7355);
+    border-color: var(--color-primary, #8B7355);
+    color: #fff;
+  }
+
+  /* Columns */
+  .footer-heading {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--color-bg, #F5F1EA);
+    margin: 0 0 18px;
+    letter-spacing: 0.02em;
+  }
+  .footer-links {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 20px;
+  }
+  .footer-links li { margin-bottom: 10px; }
+  .footer-links a {
+    font-size: 13px;
+    color: rgba(245,241,234,0.65);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .footer-links a:hover { color: var(--color-bg, #F5F1EA); }
+
+  /* Contact */
+  .footer-contact {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: rgba(245,241,234,0.65);
+    margin: 16px 0;
+  }
+
+  /* Mini Newsletter */
+  .footer-newsletter-mini {
+    display: flex;
+    gap: 0;
+    margin-top: 16px;
+  }
+  .footer-newsletter-input {
+    flex: 1;
+    min-width: 0;
+    padding: 10px 14px;
+    border: 1px solid rgba(245,241,234,0.2);
+    border-right: none;
+    border-radius: 6px 0 0 6px;
+    background: rgba(255,255,255,0.06);
+    color: var(--color-bg, #F5F1EA);
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    outline: none;
+  }
+  .footer-newsletter-input::placeholder { color: rgba(245,241,234,0.4); }
+  .footer-newsletter-btn {
+    padding: 10px 18px;
+    background: var(--color-primary, #8B7355);
+    color: #fff;
+    border: none;
+    border-radius: 0 6px 6px 0;
+    cursor: pointer;
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    font-weight: 500;
+    transition: opacity 0.2s;
+    white-space: nowrap;
+  }
+  .footer-newsletter-btn:hover { opacity: 0.88; }
+
+  /* ===== BOTTOM BAR ===== */
+  .footer__bottom {
+    background: #2A2421;
+    padding: 20px 0;
+  }
+  .footer-bottom-inner {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  .footer-payments {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .footer-label {
+    font-size: 11px;
+    color: rgba(245,241,234,0.45);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+  }
+  .payment-icons {
+    display: flex;
+    gap: 6px;
+    flex-wrap: wrap;
+  }
+  .payment-icon svg { height: 20px; opacity: 0.55; transition: opacity 0.2s; }
+  .payment-icon:hover svg { opacity: 0.9; }
+
+  .legal-links {
+    display: flex;
+    gap: 20px;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    flex-wrap: wrap;
+  }
+  .legal-links a {
+    font-size: 12px;
+    color: rgba(245,241,234,0.45);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  .legal-links a:hover { color: rgba(245,241,234,0.8); }
+
+  .footer-copyright {
+    width: 100%;
+    text-align: center;
+  }
+  .footer-copyright p {
+    font-size: 11px;
+    color: rgba(245,241,234,0.35);
+    margin: 12px 0 0;
+  }
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width: 992px) {
+    .shipping-grid {
+      grid-template-columns: repeat(2, 1fr);
+      gap: 20px;
+    }
+    .footer-grid {
+      grid-template-columns: 1fr 1fr;
+      gap: 32px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    .footer__shipping-bar { padding: 24px 0; }
+    .footer__main { padding: 40px 0 32px; }
+    .footer-grid { grid-template-columns: 1fr; gap: 32px; }
+    .footer-bottom-inner { flex-direction: column; text-align: center; }
+    .legal-links { justify-content: center; gap: 16px; }
+    .shipping-grid { grid-template-columns: 1fr 1fr; }
+  }
+
+  @media (max-width: 480px) {
+    .shipping-grid { grid-template-columns: 1fr; }
+    .shipping-item { justify-content: center; text-align: center; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Footer",
   "settings": [
     {
+      "type": "textarea",
+      "id": "brand_text",
+      "label": "Brand description",
+      "default": "Natural materials handcrafted into everyday objects that bring warmth and authenticity to your home."
+    },
+    {
+      "type": "link_list",
+      "id": "shop_menu",
+      "label": "Shop menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "company_menu",
+      "label": "Company menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "help_menu",
+      "label": "Help menu",
+      "default": "main-menu"
+    },
+    {
+      "type": "link_list",
+      "id": "legal_menu",
+      "label": "Legal menu (Impressum/Widerruf/etc.)",
+      "default": "main-menu"
+    },
+    {
       "type": "text",
       "id": "contact_email",
-      "label": "Contact Email",
+      "label": "Contact email override",
       "default": "hello@aeladaily.com"
-    },
-    {
-      "type": "header",
-      "content": "Social Media"
-    },
-    {
-      "type": "url",
-      "id": "social_instagram_link",
-      "label": "Instagram URL"
-    },
-    {
-      "type": "url",
-      "id": "social_pinterest_link",
-      "label": "Pinterest URL"
-    },
-    {
-      "type": "url",
-      "id": "social_facebook_link",
-      "label": "Facebook URL"
     }
   ]
 }

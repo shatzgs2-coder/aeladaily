@@ -1,22 +1,105 @@
-<!-- Announcement Bar Section -->
-<div class="announcement-bar" id="announcementBar">
-  <div class="announcement-track">
-    <span>&#10022; FREE SHIPPING OVER &euro;49</span>
-    <span>&#10022; NATURAL MATERIALS ONLY</span>
-    <span>&#10022; HANDCRAFTED WITH CARE</span>
-    <span>&#10022; PLASTIC-FREE PACKAGING</span>
-    <span>&#10022; 30-DAY RETURNS</span>
-    <span>&#10022; FREE SHIPPING OVER &euro;49</span>
-    <span>&#10022; NATURAL MATERIALS ONLY</span>
-    <span>&#10022; HANDCRAFTED WITH CARE</span>
-    <span>&#10022; PLASTIC-FREE PACKAGING</span>
-    <span>&#10022; 30-DAY RETURNS</span>
+<!-- Announcement Bar - Scrolling marquee with promotional text -->
+<div class="announcement-bar" role="region" aria-label="Announcement">
+  <div class="announcement-bar__inner">
+    <div class="announcement-bar__marquee">
+      <span class="announcement-bar__text">
+        {%- if section.settings.text != blank -%}
+          {{ section.settings.text }}
+        {%- else -%}
+          Free shipping on orders over €49 across Europe &middot; Handcrafted natural materials &middot; Sustainable slow living &middot;
+        {%- endif -%}
+      </span>
+      <span class="announcement-bar__text" aria-hidden="true">
+        {%- if section.settings.text != blank -%}
+          {{ section.settings.text }}
+        {%- else -%}
+          Free shipping on orders over €49 across Europe &middot; Handcrafted natural materials &middot; Sustainable slow living &middot;
+        {%- endif -%}
+      </span>
+    </div>
+    {%- if section.settings.link_text != blank and section.settings.link_url != blank -%}
+      <a href="{{ section.settings.link_url }}" class="announcement-bar__link">{{ section.settings.link_text }} &rarr;</a>
+    {%- endif -%}
   </div>
 </div>
+
+<style>
+  .announcement-bar {
+    background: var(--color-text, #3D3530);
+    color: var(--color-bg, #F5F1EA);
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    overflow: hidden;
+    position: relative;
+    z-index: 1000;
+  }
+  .announcement-bar__inner {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 8px 20px;
+    position: relative;
+  }
+  .announcement-bar__marquee {
+    display: flex;
+    overflow: hidden;
+    white-space: nowrap;
+    flex: 1;
+    justify-content: center;
+  }
+  .announcement-bar__text {
+    display: inline-block;
+    padding: 0 50px;
+    animation: marquee-scroll 30s linear infinite;
+  }
+  .announcement-bar__link {
+    color: var(--color-accent, #A8B5A0);
+    text-decoration: none;
+    white-space: nowrap;
+    margin-left: 20px;
+    padding-left: 20px;
+    border-left: 1px solid rgba(245,241,234,0.2);
+    transition: opacity 0.3s ease;
+    font-weight: 500;
+  }
+  .announcement-bar__link:hover { opacity: 0.7; }
+
+  @keyframes marquee-scroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  @media (max-width: 768px) {
+    .announcement-bar { font-size: 11px; }
+    .announcement-bar__inner { padding: 6px 16px; }
+    .announcement-bar__text { padding: 0 30px; }
+    .announcement-bar__link { display: none; }
+  }
+</style>
 
 {% schema %}
 {
   "name": "Announcement Bar",
-  "settings": []
+  "settings": [
+    {
+      "type": "text",
+      "id": "text",
+      "label": "Announcement text",
+      "default": "Free shipping on orders over €49 across Europe · Handcrafted natural materials · Sustainable slow living ·"
+    },
+    {
+      "type": "text",
+      "id": "link_text",
+      "label": "Link text",
+      "default": "Shop Now"
+    },
+    {
+      "type": "url",
+      "id": "link_url",
+      "label": "Link URL"
+    }
+  ]
 }
 {% endschema %}

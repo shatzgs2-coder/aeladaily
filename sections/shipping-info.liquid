@@ -1,0 +1,131 @@
+<!-- Shipping Info Bar - Prominent shipping/returns/delivery information on homepage -->
+<div class="shipping-info-bar" data-animate>
+  <div class="container">
+    <div class="shipping-grid-home">
+      {%- for block in section.blocks -%}
+        <div class="shipping-card" {{ block.shopify_attributes }}>
+          <div class="shipping-card__icon">{{ block.settings.icon }}</div>
+          <div class="shipping-card__content">
+            <h4 class="shipping-card__title">{{ block.settings.title }}</h4>
+            <p class="shipping-card__desc">{{ block.settings.description }}</p>
+            {%- if block.settings.link_text != blank and block.settings.link_url != blank -%}
+              <a href="{{ block.settings.link_url }}" class="shipping-card__link">{{ block.settings.link_text }} &rarr;</a>
+            {%- endif -%}
+          </div>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .shipping-info-bar {
+    background: var(--color-primary, #8B7355);
+    padding: 48px 0;
+    color: #fff;
+  }
+  .shipping-grid-home {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 32px;
+    align-items: start;
+  }
+  .shipping-card {
+    text-align: center;
+    padding: 20px 16px;
+  }
+  .shipping-card__icon {
+    font-size: 36px;
+    margin-bottom: 14px;
+    line-height: 1;
+  }
+  .shipping-card__title {
+    font-family: var(--font-heading, 'Cormorant Garamond', serif);
+    font-size: 17px;
+    font-weight: 600;
+    margin: 0 0 6px;
+    letter-spacing: 0.01em;
+  }
+  .shipping-card__desc {
+    font-size: 13px;
+    line-height: 1.55;
+    opacity: 0.88;
+    margin: 0;
+  }
+  .shipping-card__link {
+    display: inline-block;
+    font-size: 12px;
+    font-weight: 500;
+    text-decoration: underline;
+    color: #fff;
+    margin-top: 8px;
+    opacity: 0.85;
+    transition: opacity 0.2s;
+  }
+  .shipping-card__link:hover { opacity: 1; }
+
+  @media (max-width: 992px) {
+    .shipping-grid-home { grid-template-columns: repeat(2, 1fr); gap: 24px; }
+  }
+  @media (max-width: 480px) {
+    .shipping-info-bar { padding: 36px 0; }
+    .shipping-grid-home { grid-template-columns: 1fr; gap: 18px; }
+    .shipping-card { padding: 14px; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Shipping Information",
+  "tag": "section",
+  "settings": [],
+  "blocks": [
+    {
+      "type": "info_item",
+      "name": "Info Item",
+      "limit": 4,
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon",
+          "default": "\uD83D\uDE90"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title",
+          "default": "Free EU Shipping"
+        },
+        {
+          "type": "textarea",
+          "id": "description",
+          "label": "Description",
+          "default": "Complimentary delivery on all orders over €49 across the European Union."
+        },
+        {
+          "type": "text",
+          "id": "link_text",
+          "label": "Link text"
+        },
+        {
+          "type": "url",
+          "id": "link_url",
+          "label": "Link URL"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Shipping Information",
+      "blocks": [
+        { "type": "info_item", "settings": { "icon": "\uD83D\uDE90", "title": "Free EU Shipping", "description": "Complimentary delivery on orders over €49." } },
+        { "type": "info_item", "settings": { "icon": "\uD83D\uDCC5", "title": "3-7 Day Delivery", "description": "Tracked and insured shipping from our European warehouse." } },
+        { "type": "info_item", "settings": { "icon": "\u{1F504}", "title": "30-Day Returns", "description": "Not satisfied? Return within 30 days for a full refund." } },
+        { "type": "info_item", "settings": { "icon": "\uD83D\uDE91", "title": "Secure Checkout", "description": "SSL encrypted payments via Stripe and PayPal." } }
+      ]
+    }
+  ]
+}
+{% endschema %}

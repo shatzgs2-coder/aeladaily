@@ -1,0 +1,103 @@
+<!-- Trust Badges - Trust signals and certifications -->
+<div class="trust-badges section" data-animate>
+  <div class="container">
+    <div class="trust-grid">
+      {%- for block in section.blocks -%}
+        <div class="trust-item" {{ block.shopify_attributes }}>
+          {%- if block.settings.icon != blank -%}
+            <span class="trust-icon">{{ block.settings.icon }}</span>
+          {%- endif -%}
+          <h4 class="trust-title">{{ block.settings.title }}</h4>
+          <p class="trust-desc">{{ block.settings.text }}</p>
+        </div>
+      {%- endfor -%}
+    </div>
+  </div>
+</div>
+
+<style>
+  .trust-badges {
+    background: var(--color-bg, #F5F1EA);
+    padding: 56px 0;
+  }
+  .trust-grid {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 24px;
+    text-align: center;
+  }
+  .trust-item {
+    padding: 16px 8px;
+  }
+  .trust-icon {
+    font-size: 32px;
+    display: block;
+    margin-bottom: 10px;
+  }
+  .trust-title {
+    font-family: var(--font-body, 'Jost', sans-serif);
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    color: var(--color-text);
+    margin: 0 0 4px;
+  }
+  .trust-desc {
+    font-size: 11px;
+    color: #999;
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  @media (max-width: 992px) {
+    .trust-grid { grid-template-columns: repeat(3, 1fr); gap: 20px; }
+  }
+  @media (max-width: 480px) {
+    .trust-grid { grid-template-columns: repeat(2, 1fr); gap: 16px; }
+    .trust-badges { padding: 40px 0; }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "Trust Badges",
+  "tag": "section",
+  "blocks": [
+    {
+      "type": "badge_item",
+      "name": "Badge",
+      "settings": [
+        {
+          "type": "html",
+          "id": "icon",
+          "label": "Icon"
+        },
+        {
+          "type": "text",
+          "id": "title",
+          "label": "Title"
+        },
+        {
+          "type": "text",
+          "id": "text",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Trust Badges",
+      "blocks": [
+        { "type": "badge_item", "settings": { "icon": "\uD83C\uDFAF", "title": "Handmade", "text": "Every piece is crafted by hand" } },
+        { "type": "badge_item", "settings": { "icon": "\uD83C\uDF0E", "title": "Eco-Friendly", "text": "Sustainable materials only" } },
+        { "type": "badge_item", "settings": { "icon": "\uD83D\uDCDE", "title": "24/7 Support", "text": "We are here to help" } },
+        { "type": "badge_item", "settings": { "icon": "\uD83D\uDD12", "title": "Secure Pay", "text": "SSL encrypted checkout" } },
+        { "type": "badge_item", "settings": { "icon": "\u2605", "title": "4.9/5 Rating", "text": "2000+ happy customers" } },
+        { "type": "badge_item", "settings": { "icon": "\uD83D\uDCE6", "title": "EU Warehouse", "text": "Fast delivery from Europe" } }
+      ]
+    }
+  ]
+}
+{% endschema %}

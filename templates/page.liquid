@@ -1,9 +1,14 @@
-<!-- Page Template - Used for Our Story, Impressum, etc. -->
-<div class="page-static container" style="max-width: 800px; margin: 0 auto; padding: 80px 20px;">
-  {%- if page.title != blank -%}
-    <h1 style="font-family: var(--font-heading); font-size: 42px; margin-bottom: 40px;">{{ page.title }}</h1>
-  {%- endif -%}
-  <div class="page-content rte">
-    {{ page.content }}
+<!-- Page Template - Static pages (About, Impressum, etc.) -->
+<div class="page-static section">
+  <div class="container">
+    <div class="page-content-wrapper" style="max-width: 800px; margin: 0 auto; padding: 40px 20px;">
+      {%- if page.title != blank -%}
+        <h1 style="font-family: var(--font-heading, 'Cormorant Garamond', serif); font-size: clamp(32px, 4vw, 48px); font-weight: 500; margin-bottom: 28px;">{{ page.title }}</h1>
+      {%- endif -%}
+
+      <div class="rte" style="font-size: 15px; line-height: 1.8; color: #555;">
+        {{ page.content }}
+      </div>
+    </div>
   </div>
 </div>
